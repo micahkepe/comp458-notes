@@ -1,0 +1,29 @@
+\section{Lecture 2: Review of Linear Algebra Concepts}
+\dfn{Vectors: Row and Column Vectors}{A \textbf{vector} is an ordered list of numbers, which can be represented as either a row or column vector. The components of vectors in quantum computing belong to the field of complex numbers ($\mathbb{C}$).}
+
+\subsection*{Column Vectors}
+A column vector is a vertical arrangement of numbers:
+\[ \mathbf{v} = \begin{bmatrix} v_1 \\ v_2 \\ \vdots \\ v_n \end{bmatrix}, \quad v_i \in \mathbb{C}. \]
+
+\subsection*{Row Vectors}
+A row vector is the complex conjugate transpose (adjoint) of a column vector:
+\[ \mathbf{v}^\dagger = \begin{bmatrix} \overline{v_1} & \overline{v_2} & \dots & \overline{v_n} \end{bmatrix}. \]
+
+\dfn{Inner Product}{The \textbf{inner product} of two vectors $\mathbf{v}, \mathbf{w} \in \mathbb{C}^n$ is defined as:
+\[ \langle \mathbf{v}, \mathbf{w} \rangle = \mathbf{v}^\dagger \mathbf{w} = \sum_{i=1}^n \overline{v_i}w_i. \]}
+
+\ex{Example: Inner Product}{Let $\mathbf{v} = \begin{bmatrix} 1 + i \\ 2 \end{bmatrix}$ and $\mathbf{w} = \begin{bmatrix} 3 \\ i \end{bmatrix}$. Then:
+\[ \langle \mathbf{v}, \mathbf{w} \rangle = (1 - i)(3) + (2)(i) = 3 - 3i + 2i = 3 - i. \]}
+
+\dfn{Outer Product}{The \textbf{outer product} of two vectors $\mathbf{v} \in \mathbb{C}^m$ and $\mathbf{w} \in \mathbb{C}^n$ produces an $m \times n$ matrix:
+\[ \mathbf{v}\mathbf{w}^\dagger = \begin{bmatrix} v_1 \\ v_2 \\ \vdots \\ v_m \end{bmatrix} \begin{bmatrix} \overline{w_1} & \overline{w_2} & \dots & \overline{w_n} \end{bmatrix}. \]}
+
+\dfn{Orthogonality}{Two vectors $\mathbf{v}, \mathbf{w} \in \mathbb{C}^n$ are \textbf{orthogonal} if their inner product is zero:
+\[ \langle \mathbf{v}, \mathbf{w} \rangle = 0. \]}
+
+\ex{Example: Orthogonality}{Let $\mathbf{v} = \begin{bmatrix} 1 \\ i \end{bmatrix}$ and $\mathbf{w} = \begin{bmatrix} i \\ 1 \end{bmatrix}$. Then:
+\[ \langle \mathbf{v}, \mathbf{w} \rangle = (1)(i) + (i)(1) = i - i = 0. \]}
+
+\dfn{Eigenvalues and Eigenvectors}{For a square matrix $A \in \mathbb{C}^{n \times n}$, a vector $\mathbf{v} \neq \mathbf{0}$ is an \textbf{eigenvector} if:
+\[ A\mathbf{v} = \lambda\mathbf{v}, \]
+where $\lambda \in \mathbb{C}$ is the \textbf{eigenvalue}.}

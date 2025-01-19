@@ -1,0 +1,23 @@
+\section{Lecture 3: Quantum Bits and States}
+\dfn{Qubit}{A \textbf{qubit} is the fundamental unit of quantum information. Unlike a classical bit, which is either $0$ or $1$, a qubit can exist in a superposition of states:
+\[ |\psi\rangle = \alpha|0\rangle + \beta|1\rangle, \quad \text{where } \alpha, \beta \in \mathbb{C} \text{ and } |\alpha|^2 + |\beta|^2 = 1. \]}
+
+\dfn{Dirac Notation}{Quantum states are commonly represented in \textbf{Dirac notation} (bra-ket notation). For example:
+\begin{itemize}
+    \item $|0\rangle = \begin{bmatrix} 1 \\ 0 \end{bmatrix}$ and $|1\rangle = \begin{bmatrix} 0 \\ 1 \end{bmatrix}$ form the computational basis.
+    \item Any qubit state can be expressed as $|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$.
+\end{itemize}}
+
+\dfn{Bloch Sphere Representation}{The \textbf{Bloch sphere} visualizes a qubit state $|\psi\rangle = \cos(\theta/2)|0\rangle + e^{i\phi}\sin(\theta/2)|1\rangle$ as a point on a unit sphere, where:
+\begin{itemize}
+    \item $\theta$: Polar angle, $[0,\pi]$.
+    \item $\phi$: Azimuthal angle, $[0,2\pi)$.
+\end{itemize}}
+
+\nt{Note: Measurement collapses a qubit into one of the basis states with probabilities proportional to the square of the amplitudes.}
+
+\ex{Example: Measurement Probabilities}{For $|\psi\rangle = \frac{1}{\sqrt{3}}|0\rangle + \sqrt{\frac{2}{3}}|1\rangle$:
+\begin{itemize}
+    \item Probability of $|0\rangle$: $P(0) = \left|\frac{1}{\sqrt{3}}\right|^2 = \frac{1}{3}$.
+    \item Probability of $|1\rangle$: $P(1) = \left|\sqrt{\frac{2}{3}}\right|^2 = \frac{2}{3}$.
+\end{itemize}}
