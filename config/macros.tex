@@ -1,12 +1,79 @@
+% Description: Custom macros for LaTeX documents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom macros for quantum mechanics
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\bloch}[2]{%
+    \begin{center}
+    \tdplotsetmaincoords{60}{120}
+    \begin{tikzpicture}[tdplot_main_coords, scale=2]
+
+        % Sphere with 3D effect and an outer border
+        \shade[ball color=white!90,opacity=0.2] (0,0,0) circle (1);
+
+        % Equatorial circle
+        \draw[thick] (0,0,0) circle (1);
+
+        % Draw major latitude circles for 3D effect
+        \foreach \angle in {0,30,...,150} {
+            \tdplotsetrotatedcoords{0}{\angle}{0}
+            \draw[tdplot_rotated_coords,black!30] (1,0,0) arc (0:360:1);
+        }
+
+        % Main axes with arrows
+        \draw[-{Stealth[length=3mm]}, thick, blue] (-1.5,0,0) -- (1.5,0,0) node[below] {\large $x$};
+        \draw[-{Stealth[length=3mm]}, thick, blue] (0,-1.5,0) -- (0,1.5,0) node[right] {\large $y$};
+        \draw[-{Stealth[length=3mm]}, thick, blue] (0,0,-1.5) -- (0,0,1.5) node[above] {\large $z$};
+
+        % State vector using parameters
+        % #1 is theta, #2 is phi (in degrees)
+        \draw[red,-{Stealth[length=3mm]}, very thick] (0,0,0) --
+            ({sin(#1)*cos(#2)},{sin(#1)*sin(#2)},{cos(#1)});
+        \node[red] at
+            ({sin(#1)*cos(#2)+0.3},{sin(#1)*sin(#2)+0.2},{cos(#1) + 0.05})
+            {\large $|\psi\rangle$};
+
+        % Labels for poles with better visibility
+        \fill[black] (0,0,1) circle (0.5pt);
+        \node[above=3pt] at (-0.4,0,1.1) {\large $|0\rangle$};
+
+        \fill[black] (0,0,-1) circle (0.5pt);
+        \node[below=3pt] at (-0.4,0,-1.1) {\large $|1\rangle$};
+
+        % Additional circular guides to emphasize perspective
+        \draw[dashed] (1,0,0) arc (0:180:1 and 0.4);
+        \draw (1,0,0) arc (0:-180:1 and 0.4);
+    \end{tikzpicture}%
+    \end{center}
+}
+
+% Math things
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\inner}[2]{\left\langle#1,#2\right\rangle}
+\newcommand{\set}[1]{\left\{#1\right\}}
+
+% Quantum mechanics things
+\newcommand{\zero}{\left|0\right\rangle}
+\newcommand{\one}{\left|1\right\rangle}
+\newcommand{\bra}[1]{\left\langle#1\right|}
+\newcommand{\ket}[1]{\left|#1\right\rangle}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom macros I already had
+%
 % Adapted from:
 %   https://github.com/SeniorMars/dotfiles/blob/main/latex_template/macros.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%From M275 "Topology" at SJSU
+%From M275 ``Topology'' at SJSU
 \newcommand{\id}{\mathrm{id}}
 \newcommand{\taking}[1]{\xrightarrow{#1}}
 \newcommand{\inv}{^{-1}}
 
-%From M170 "Introduction to Graph Theory" at SJSU
+%From M170 ``Introduction to Graph Theory'' at SJSU
 \DeclareMathOperator{\diam}{diam}
 \DeclareMathOperator{\ord}{ord}
 \newcommand{\defeq}{\overset{\mathrm{def}}{=}}
@@ -67,7 +134,6 @@
 \newcommand{\Qed}{\begin{flushright}\qed\end{flushright}}
 \newcommand{\parinn}{\setlength{\parindent}{1cm}}
 \newcommand{\parinf}{\setlength{\parindent}{0cm}}
-% \newcommand{\norm}{\|\cdot\|}
 \newcommand{\inorm}{\norm_{\infty}}
 \newcommand{\opensets}{\{V_{\alpha}\}_{\alpha\in I}}
 \newcommand{\oset}{V_{\alpha}}
