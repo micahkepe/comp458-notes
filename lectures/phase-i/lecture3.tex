@@ -1,86 +1,104 @@
 \section{Lecture 3: Quantum Bits and Quantum States}
 
-\dfn{Qubit}{A \textbf{qubit} is the fundamental unit of quantum information. Unlike a classical bit, which is either $0$ or $1$, a qubit can exist in a \vocab{superposition} of states:
-\[ |\psi\rangle = \alpha|0\rangle + \beta|1\rangle, \quad \text{where } \alpha, \beta \in \mathbb{C} \text{ and } |\alpha|^2 + |\beta|^2 = 1 \]
+\dfn{Qubit}{A \textbf{qubit} is the fundamental unit of quantum information.
+  Unlike a classical bit, which is either $0$ or $1$, a qubit can exist in a
+  \vocab{superposition} of states:
+  \[ |\psi\rangle = \alpha|0\rangle + \beta|1\rangle, \quad \text{where }
+  \alpha, \beta \in \mathbb{C} \text{ and } |\alpha|^2 + |\beta|^2 = 1 \]
 
-Key features of qubits include:
-\begin{itemize}
-    \ii \textbf{Superposition:} A qubit can exist simultaneously in multiple basis states.
-    \ii \textbf{Complex Amplitudes:} Coefficients $\alpha$ and $\beta$ are complex numbers carrying magnitude and phase information.
-    \ii \textbf{Interference:} Quantum states can interfere constructively or destructively.
-    \ii \textbf{Entanglement:} Qubits can be correlated in ways that classical bits cannot.
+  Key features of qubits include:
+  \begin{itemize}
+    \ii \textbf{Superposition:} A qubit can exist simultaneously in multiple
+    basis states.
+    \ii \textbf{Complex Amplitudes:} Coefficients $\alpha$ and $\beta$ are
+    complex numbers carrying magnitude and phase information.
+    \ii \textbf{Interference:} Quantum states can interfere constructively or
+    destructively.
+    \ii \textbf{Entanglement:} Qubits can be correlated in ways that
+    classical bits cannot.
 \end{itemize}}
 
-\dfn{Classical Computing Paradigms}{Quantum computing introduces a fundamentally different computational model:
-\begin{itemize}
-    \ii \textbf{Deterministic Computing:} Uses discrete states (0 or 1) with predictable transitions.
-    \ii \textbf{Analog Computing:} Uses continuous values susceptible to noise accumulation.
-    \ii \textbf{Probabilistic Computing:} Represents probabilistic mixtures of states.
-    \ii \textbf{Quantum Computing:} Allows coherent superposition with complex amplitudes and quantum interference.
+\dfn{Classical Computing Paradigms}{Quantum computing introduces a
+  fundamentally different computational model:
+  \begin{itemize}
+    \ii \textbf{Deterministic Computing:} Uses discrete states (0 or 1) with
+    predictable transitions.
+    \ii \textbf{Analog Computing:} Uses continuous values susceptible to
+    noise accumulation.
+    \ii \textbf{Probabilistic Computing:} Represents probabilistic mixtures
+    of states.
+    \ii \textbf{Quantum Computing:} Allows coherent superposition with
+    complex amplitudes and quantum interference.
 \end{itemize}}
 
-\dfn{Dirac Notation}{Quantum states are represented using \vocab{Dirac notation} (bra-ket notation):
-\begin{itemize}
-    \ii \textbf{Ket:} \( |0\rangle, |1\rangle \) represent computational basis states
+\dfn{Dirac Notation}{Quantum states are represented using \vocab{Dirac
+  notation} (bra-ket notation):
+  \begin{itemize}
+    \ii \textbf{Ket:} \( |0\rangle, |1\rangle \) represent computational
+    basis states
     \ii Computational basis vectors:
     \[
-    |0\rangle = \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \quad
-    |1\rangle = \begin{bmatrix} 0 \\ 1 \end{bmatrix}
+      |0\rangle = \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \quad
+      |1\rangle = \begin{bmatrix} 0 \\ 1 \end{bmatrix}
     \]
     \ii General state: \( |\psi\rangle = \alpha|0\rangle + \beta|1\rangle \)
 \end{itemize}}
 
 \dfn{Basis States}{Common qubit bases include:
-\begin{itemize}
+  \begin{itemize}
     \ii \textbf{Computational Basis:} \( |0\rangle, |1\rangle \)
     \ii \textbf{Hadamard Basis:}
     \[ |+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle), \quad
-       |-\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle) \]
+    |-\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle) \]
     \ii \textbf{Circular Polarization Basis:}
     \[ |L\rangle = \frac{1}{\sqrt{2}}(|0\rangle + i|1\rangle), \quad
-       |R\rangle = \frac{1}{\sqrt{2}}(|0\rangle - i|1\rangle) \]
+    |R\rangle = \frac{1}{\sqrt{2}}(|0\rangle - i|1\rangle) \]
 \end{itemize}}
 
 \dfn{Bloch Sphere}{A geometric representation of a single qubit state:
-\[ |\psi\rangle = \cos\left(\frac{\theta}{2}\right)|0\rangle + e^{i\phi}\sin\left(\frac{\theta}{2}\right)|1\rangle \]
-Where:
-\begin{itemize}
+  \[ |\psi\rangle = \cos\left(\frac{\theta}{2}\right)|0\rangle +
+  e^{i\phi}\sin\left(\frac{\theta}{2}\right)|1\rangle \]
+  Where:
+  \begin{itemize}
     \ii \( \theta \in [0,\pi] \) is the polar angle
     \ii \( \phi \in [0, 2\pi) \) is the azimuthal angle
     \ii Cartesian coordinates:
     \[ x = \sin\theta \cos\phi, \quad
-       y = \sin\theta \sin\phi, \quad
-       z = \cos\theta \]
+      y = \sin\theta \sin\phi, \quad
+    z = \cos\theta \]
 
-     \ex{Example Bloch Sphere Representation}{
-       \text{For the state } \(\theta = \frac{\pi}{2}, \phi = 0\):
-     \bloch{90}{0}
-   }
+    \ex{Example Bloch Sphere Representation}{
+      \text{For the state } \(\theta = \frac{\pi}{2}, \phi = 0\):
+      \bloch{90}{0}
+    }
 
 \end{itemize}}
 
 \dfn{Quantum Measurement}{When a qubit is measured:
-\begin{itemize}
+  \begin{itemize}
     \ii The quantum state \textit{collapses} to an eigenstate
     \ii Measurement probability depends on squared amplitude
     \ii Computational basis measurement probabilities:
     \[ P(0) = |\alpha|^2, \quad P(1) = |\beta|^2 \]
     \ii Post-measurement state:
-    \[ |\psi_{\text{new}}\rangle = \frac{|b\rangle \langle b | \psi \rangle}{\sqrt{P(b)}} \]
+    \[ |\psi_{\text{new}}\rangle = \frac{|b\rangle \langle b | \psi
+    \rangle}{\sqrt{P(b)}} \]
 \end{itemize}}
 
-\ex{Measurement Example}{For the state \( |\psi\rangle = \frac{1}{\sqrt{3}}|0\rangle + \sqrt{\frac{2}{3}}|1\rangle \):
-\begin{itemize}
+\ex{Measurement Example}{For the state \( |\psi\rangle =
+  \frac{1}{\sqrt{3}}|0\rangle + \sqrt{\frac{2}{3}}|1\rangle \):
+  \begin{itemize}
     \ii Probability of measuring \( |0\rangle \): \( P(0) = \frac{1}{3} \)
     \ii Probability of measuring \( |1\rangle \): \( P(1) = \frac{2}{3} \)
 \end{itemize}}
 
 \qs{Orthonormality Check}{Verify the inner products of basis states:
-\begin{align*}
+  \begin{align*}
     \langle 0 | 1 \rangle &= 0 \\
     \langle 0 | 0 \rangle &= 1 \\
     \langle + | + \rangle &= 1 \\
     \langle + | - \rangle &= 0
 \end{align*}}
 
-\sol{These relations hold due to the orthonormal nature of quantum basis states.}
+\sol{These relations hold due to the orthonormal nature of quantum basis
+states.}

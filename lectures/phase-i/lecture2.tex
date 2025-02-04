@@ -1,142 +1,168 @@
 \section{Lecture 2: Review of Linear Algebra Concepts}
 
-Linear algebra provides the foundation for manipulating quantum states, which are represented using vectors and matrices in a complex vector space.
+Linear algebra provides the foundation for manipulating quantum states, which
+are represented using vectors and matrices in a complex vector space.
 
-\dfn{Vectors: Row and Column Vectors}{A \textbf{vector} is an ordered list of numbers, which can be represented as either a row or column vector. The components of vectors in quantum computing belong to the field of complex numbers ($\mathbb{C}$).}
+\dfn{Vectors: Row and Column Vectors}{A \textbf{vector} is an ordered list of
+  numbers, which can be represented as either a row or column vector. The
+  components of vectors in quantum computing belong to the field of complex
+numbers ($\mathbb{C}$).}
 
 \subsection*{Column Vectors}
 A column vector is a vertical arrangement of numbers:
 \[
-\mathbf{v} =
-\begin{bmatrix}
-v_1 \\
-v_2 \\
-\vdots \\
-v_n
-\end{bmatrix}, \quad v_i \in \mathbb{C}.
+  \mathbf{v} =
+  \begin{bmatrix}
+    v_1 \\
+    v_2 \\
+    \vdots \\
+    v_n
+  \end{bmatrix}, \quad v_i \in \mathbb{C}.
 \]
 
 \subsection*{Row Vectors}
 A row vector is the complex conjugate transpose (adjoint) of a column vector:
 \[
-\mathbf{v}^\dagger =
-\begin{bmatrix}
-\overline{v_1} & \overline{v_2} & \dots & \overline{v_n}
-\end{bmatrix}.
+  \mathbf{v}^\dagger =
+  \begin{bmatrix}
+    \overline{v_1} & \overline{v_2} & \dots & \overline{v_n}
+  \end{bmatrix}.
 \]
 
 \subsection*{Dirac Notation}
-In quantum computing, vectors are represented using \textbf{Dirac notation} (bra-ket notation):
+In quantum computing, vectors are represented using \textbf{Dirac notation}
+(bra-ket notation):
 \begin{itemize}
-    \item \textbf{Ket} \( |v\rangle \): Represents a column vector.
-    \item \textbf{Bra} \( \langle v | \): Represents the adjoint (conjugate transpose) of the ket.
-    \item Example: \( |v\rangle = \begin{bmatrix} 1 + i \\ 2 \end{bmatrix}, \quad \langle v | = \begin{bmatrix} 1 - i & 2 \end{bmatrix} \).
+  \item \textbf{Ket} \( |v\rangle \): Represents a column vector.
+  \item \textbf{Bra} \( \langle v | \): Represents the adjoint (conjugate
+    transpose) of the ket.
+  \item Example: \( |v\rangle = \begin{bmatrix} 1 + i \\ 2 \end{bmatrix},
+    \quad \langle v | = \begin{bmatrix} 1 - i & 2 \end{bmatrix} \).
 \end{itemize}
 
-\dfn{Euler's Formula}{Euler's formula relates complex exponentials to trigonometric functions:
-\[
-e^{i\omega} = \cos(\omega) + i\sin(\omega)
-\]
+\dfn{Euler's Formula}{Euler's formula relates complex exponentials to
+  trigonometric functions:
+  \[
+    e^{i\omega} = \cos(\omega) + i\sin(\omega)
+  \]
 This is fundamental in representing quantum states and transformations.}
 
-\dfn{Inner Product}{The \textbf{inner product} of two vectors $\mathbf{v}, \mathbf{w} \in \mathbb{C}^n$ is defined as:
-\[
-\langle \mathbf{v}, \mathbf{w} \rangle = \mathbf{v}^\dagger \mathbf{w} = \sum_{i=1}^n \overline{v_i}w_i
-\]
+\dfn{Inner Product}{The \textbf{inner product} of two vectors $\mathbf{v},
+  \mathbf{w} \in \mathbb{C}^n$ is defined as:
+  \[
+    \langle \mathbf{v}, \mathbf{w} \rangle = \mathbf{v}^\dagger \mathbf{w} =
+    \sum_{i=1}^n \overline{v_i}w_i
+  \]
 which measures the overlap between two quantum states.}
 
-\dfn{Outer Product}{The \textbf{outer product} of two vectors $\mathbf{v} \in \mathbb{C}^m$ and $\mathbf{w} \in \mathbb{C}^n$ produces an $m \times n$ matrix:
-\[
-\mathbf{v}\mathbf{w}^\dagger =
-\begin{bmatrix} v_1 \\ v_2 \\ \vdots \\ v_m \end{bmatrix}
-\begin{bmatrix} \overline{w_1} & \overline{w_2} & \dots & \overline{w_n} \end{bmatrix}
-\]
-This operation is useful for constructing quantum operators.}
+\dfn{Outer Product}{The \textbf{outer product} of two vectors $\mathbf{v} \in
+  \mathbb{C}^m$ and $\mathbf{w} \in \mathbb{C}^n$ produces an $m \times n$
+  matrix:
+  \[
+    \mathbf{v}\mathbf{w}^\dagger =
+    \begin{bmatrix} v_1 \\ v_2 \\ \vdots \\ v_m \end{bmatrix}
+    \begin{bmatrix} \overline{w_1} & \overline{w_2} & \dots & \overline{w_n}
+    \end{bmatrix}
+    \]
+  This operation is useful for constructing quantum operators.}
 
-\dfn{Tensor Product}{The \textbf{tensor product} (or Kronecker product) allows us to describe multi-qubit systems. Given two vectors:
-\[
-\mathbf{v} = \begin{bmatrix} v_1 \\ v_2 \end{bmatrix}, \quad
-\mathbf{w} = \begin{bmatrix} w_1 \\ w_2 \end{bmatrix}
-\]
-Their tensor product is:
-\[
-\mathbf{v} \otimes \mathbf{w} =
-\begin{bmatrix}
-v_1 w_1 \\
-v_1 w_2 \\
-v_2 w_1 \\
-v_2 w_2
-\end{bmatrix}
-\]
-The tensor product expands the state space, allowing representation of entangled states.}
+  \dfn{Tensor Product}{The \textbf{tensor product} (or Kronecker product)
+    allows us to describe multi-qubit systems. Given two vectors:
+    \[
+      \mathbf{v} = \begin{bmatrix} v_1 \\ v_2 \end{bmatrix}, \quad
+      \mathbf{w} = \begin{bmatrix} w_1 \\ w_2 \end{bmatrix}
+    \]
+    Their tensor product is:
+    \[
+      \mathbf{v} \otimes \mathbf{w} =
+      \begin{bmatrix}
+        v_1 w_1 \\
+        v_1 w_2 \\
+        v_2 w_1 \\
+        v_2 w_2
+      \end{bmatrix}
+    \]
+    The tensor product expands the state space, allowing representation of
+  entangled states.}
 
-\dfn{Adjoint of a Matrix}{The \textbf{adjoint} (or Hermitian conjugate) of a matrix $A$ is obtained by taking the transpose and complex conjugate of each entry:
-\[
-A^\dagger = \overline{A^T}
-\]
-If $A$ is:
-\[
-A = \begin{bmatrix}
-1 & i \\
-2 & 3
-\end{bmatrix}
-\]
-Then its adjoint is:
-\[
-A^\dagger =
-\begin{bmatrix}
-1 & 2 \\
-- i & 3
-\end{bmatrix}
-\]}
+  \dfn{Adjoint of a Matrix}{The \textbf{adjoint} (or Hermitian conjugate) of a
+    matrix $A$ is obtained by taking the transpose and complex conjugate of
+    each entry:
+    \[
+      A^\dagger = \overline{A^T}
+    \]
+    If $A$ is:
+    \[
+      A = \begin{bmatrix}
+        1 & i \\
+        2 & 3
+      \end{bmatrix}
+    \]
+    Then its adjoint is:
+    \[
+      A^\dagger =
+      \begin{bmatrix}
+        1 & 2 \\
+        - i & 3
+      \end{bmatrix}
+  \]}
 
-\dfn{Unitary Matrix}{A square matrix $U$ is called \textbf{unitary} if its adjoint is equal to its inverse:
-\[
-U^\dagger U = I
-\]
-where $I$ is the identity matrix. Unitary matrices preserve the norm of quantum states and represent reversible quantum operations. Example:
-\[
-U = \frac{1}{\sqrt{2}}
-\begin{bmatrix}
-1 & 1 \\
-1 & -1
-\end{bmatrix}, \quad U^\dagger U = I
-\]}
+  \dfn{Unitary Matrix}{A square matrix $U$ is called \textbf{unitary} if its
+    adjoint is equal to its inverse:
+    \[
+      U^\dagger U = I
+    \]
+    where $I$ is the identity matrix. Unitary matrices preserve the norm of
+    quantum states and represent reversible quantum operations. Example:
+    \[
+      U = \frac{1}{\sqrt{2}}
+      \begin{bmatrix}
+        1 & 1 \\
+        1 & -1
+      \end{bmatrix}, \quad U^\dagger U = I
+  \]}
 
-\dfn{Hermitian Matrix}{A square matrix $H$ is called \textbf{Hermitian} if it is equal to its adjoint:
-\[
-H = H^\dagger
-\]
-Hermitian matrices represent observable quantities in quantum mechanics and have real eigenvalues. Example:
-\[
-H = \begin{bmatrix}
-2 & i \\
-- i & 2
-\end{bmatrix}
-\]
-Since $H^\dagger = H$, it is Hermitian.}
+  \dfn{Hermitian Matrix}{A square matrix $H$ is called \textbf{Hermitian} if it
+    is equal to its adjoint:
+    \[
+      H = H^\dagger
+    \]
+    Hermitian matrices represent observable quantities in quantum mechanics and
+    have real eigenvalues. Example:
+    \[
+      H = \begin{bmatrix}
+        2 & i \\
+        - i & 2
+      \end{bmatrix}
+    \]
+  Since $H^\dagger = H$, it is Hermitian.}
 
-\dfn{Eigenvalues and Eigenvectors}{For a square matrix $A \in \mathbb{C}^{n \times n}$, a vector $\mathbf{v} \neq \mathbf{0}$ is an \textbf{eigenvector} if:
-\[
-A\mathbf{v} = \lambda\mathbf{v}
-\]
-where $\lambda \in \mathbb{C}$ is the \textbf{eigenvalue}. Eigenvalues provide insight into the structure of linear transformations.}
+  \dfn{Eigenvalues and Eigenvectors}{For a square matrix $A \in \mathbb{C}^{n
+    \times n}$, a vector $\mathbf{v} \neq \mathbf{0}$ is an
+    \textbf{eigenvector} if:
+    \[
+      A\mathbf{v} = \lambda\mathbf{v}
+    \]
+    where $\lambda \in \mathbb{C}$ is the \textbf{eigenvalue}. Eigenvalues
+  provide insight into the structure of linear transformations.}
 
-\ex{Example: Eigenvalues}{For the matrix
-\[
-A = \begin{bmatrix} 1 & i \\ -i & 1 \end{bmatrix}
-\]
-The characteristic equation is:
-\[
-\det(A - \lambda I) = (1 - \lambda)^2 + 1 = 0
-\]
-Solving gives eigenvalues $\lambda = 1 \pm i$.}
+  \ex{Example: Eigenvalues}{For the matrix
+    \[
+      A = \begin{bmatrix} 1 & i \\ -i & 1 \end{bmatrix}
+    \]
+    The characteristic equation is:
+    \[
+      \det(A - \lambda I) = (1 - \lambda)^2 + 1 = 0
+    \]
+  Solving gives eigenvalues $\lambda = 1 \pm i$.}
 
-\qs{}{Show that any unitary matrix preserves the inner product of two vectors.}
+  \qs{}{Show that any unitary matrix preserves the inner product of two
+  vectors.}
 
-\sol{Since a unitary matrix satisfies \( U^\dagger U = I \), we have:
-\[
-\langle U\mathbf{v}, U\mathbf{w} \rangle = \mathbf{v}^\dagger (U^\dagger U) \mathbf{w} = \mathbf{v}^\dagger \mathbf{w}
-\]
-Thus, inner products are preserved.}
+  \sol{Since a unitary matrix satisfies \( U^\dagger U = I \), we have:
+    \[
+      \langle U\mathbf{v}, U\mathbf{w} \rangle = \mathbf{v}^\dagger (U^\dagger U)
+      \mathbf{w} = \mathbf{v}^\dagger \mathbf{w}
+    \]
+  Thus, inner products are preserved.}
 

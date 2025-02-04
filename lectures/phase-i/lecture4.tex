@@ -1,199 +1,234 @@
 \section{Lecture 4: Quantum Gates and Transformations}
 
-Quantum gates manipulate qubits through unitary transformations, preserving quantum information and enabling quantum computation. This section explores key quantum operations, their mathematical properties, and circuit representations.
+Quantum gates manipulate qubits through unitary transformations, preserving
+quantum information and enabling quantum computation. This section explores
+key quantum operations, their mathematical properties, and circuit
+representations.
 
-\dfn{Qubit Superposition and Hilbert Space}{A \textbf{qubit} exists in a complex vector space called a \textbf{Hilbert space}. The state of a qubit is given by:
-\[
-|\psi\rangle = \alpha |0\rangle + \beta |1\rangle, \quad \text{where } \alpha, \beta \in \mathbb{C} \text{ and } |\alpha|^2 + |\beta|^2 = 1.
-\]
-The computational basis states are represented as:
-\[
-|0\rangle = \begin{pmatrix} 1 \\ 0 \end{pmatrix}, \quad |1\rangle = \begin{pmatrix} 0 \\ 1 \end{pmatrix}
-\]
+\dfn{Qubit Superposition and Hilbert Space}{A \textbf{qubit} exists in a
+  complex vector space called a \textbf{Hilbert space}. The state of a qubit
+  is given by:
+  \[
+    |\psi\rangle = \alpha |0\rangle + \beta |1\rangle, \quad \text{where }
+    \alpha, \beta \in \mathbb{C} \text{ and } |\alpha|^2 + |\beta|^2 = 1.
+  \]
+  The computational basis states are represented as:
+  \[
+    |0\rangle = \begin{pmatrix} 1 \\ 0 \end{pmatrix}, \quad |1\rangle =
+    \begin{pmatrix} 0 \\ 1 \end{pmatrix}
+  \]
 }
 
-\dfn{Measurement and Superposition Collapse}{When a qubit is measured in the computational basis $\{|0\rangle, |1\rangle\}$, it collapses to one of the basis states with probability:
-\[
-P(0) = |\alpha|^2, \quad P(1) = |\beta|^2.
-\]
-The post-measurement state is:
-\[
-|\psi_{\text{new}}\rangle = \frac{|b\rangle \langle b | \psi \rangle}{\sqrt{P(b)}}
-\]
-where $b \in \{0,1\}$. This formula captures the quantum measurement postulate and ensures proper normalization of the post-measurement state.}
+\dfn{Measurement and Superposition Collapse}{When a qubit is measured in the
+  computational basis $\{|0\rangle, |1\rangle\}$, it collapses to one of the
+  basis states with probability:
+  \[
+    P(0) = |\alpha|^2, \quad P(1) = |\beta|^2.
+  \]
+  The post-measurement state is:
+  \[
+    |\psi_{\text{new}}\rangle = \frac{|b\rangle \langle b | \psi \rangle}{\sqrt{P(b)}}
+  \]
+  where $b \in \{0,1\}$. This formula captures the quantum measurement
+postulate and ensures proper normalization of the post-measurement state.}
 
-\dfn{Important Quantum States}{Several quantum states are particularly important in quantum computing:
-\begin{itemize}
+\dfn{Important Quantum States}{Several quantum states are particularly
+  important in quantum computing:
+  \begin{itemize}
     \item \textbf{Computational Basis States:} $|0\rangle$ and $|1\rangle$
     \item \textbf{Plus/Minus States:}
-    \[
-    |+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle), \quad |-\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle)
-    \]
+      \[
+        |+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle), \quad |-\rangle =
+        \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle)
+      \]
     \item \textbf{Complex Superposition States:}
-    \[
-    |i\rangle = \frac{1}{\sqrt{2}}(|0\rangle + i|1\rangle), \quad |-i\rangle = \frac{1}{\sqrt{2}}(|0\rangle - i|1\rangle)
-    \]
+      \[
+        |i\rangle = \frac{1}{\sqrt{2}}(|0\rangle + i|1\rangle), \quad |-i\rangle
+        = \frac{1}{\sqrt{2}}(|0\rangle - i|1\rangle)
+      \]
 \end{itemize}}
 
 \ex{Example: Equal Superposition State}{
-A qubit initially in state $|0\rangle$ is transformed into an equal superposition using the Hadamard gate:
-\[
-H |0\rangle = \frac{1}{\sqrt{2}} (|0\rangle + |1\rangle).
-\]
-Measuring this state results in either $|0\rangle$ or $|1\rangle$ with equal probability $P(0) = P(1) = \frac{1}{2}$.
+  A qubit initially in state $|0\rangle$ is transformed into an equal
+  superposition using the Hadamard gate:
+  \[
+    H |0\rangle = \frac{1}{\sqrt{2}} (|0\rangle + |1\rangle).
+  \]
+  Measuring this state results in either $|0\rangle$ or $|1\rangle$ with equal
+  probability $P(0) = P(1) = \frac{1}{2}$.
 
-Similarly, applying Hadamard to $|1\rangle$:
-\[
-H |1\rangle = \frac{1}{\sqrt{2}} (|0\rangle - |1\rangle) = |-\rangle
-\]
+  Similarly, applying Hadamard to $|1\rangle$:
+  \[
+    H |1\rangle = \frac{1}{\sqrt{2}} (|0\rangle - |1\rangle) = |-\rangle
+  \]
 }
 
-\dfn{Quantum Gates and Operations}{Quantum gates are unitary matrices that transform qubits. A general qubit transformation is given by:
-\[
-|\psi_{\text{final}}\rangle = U |\psi_{\text{initial}}\rangle
-\]
-where $U$ is a unitary matrix satisfying $U^\dagger U = I$. Key properties of quantum gates include:
-\begin{itemize}
-    \item \textbf{Reversibility:} All quantum operations are reversible due to unitarity
-    \item \textbf{Preservation of Norm:} The normalization condition $|\alpha|^2 + |\beta|^2 = 1$ is preserved
+\dfn{Quantum Gates and Operations}{Quantum gates are unitary matrices that
+  transform qubits. A general qubit transformation is given by:
+  \[
+    |\psi_{\text{final}}\rangle = U |\psi_{\text{initial}}\rangle
+  \]
+  where $U$ is a unitary matrix satisfying $U^\dagger U = I$. Key properties of
+  quantum gates include:
+  \begin{itemize}
+    \item \textbf{Reversibility:} All quantum operations are reversible due
+      to unitarity
+    \item \textbf{Preservation of Norm:} The normalization condition
+      $|\alpha|^2 + |\beta|^2 = 1$ is preserved
     \item \textbf{Linearity:} Gates act linearly on superposition states
 \end{itemize}}
 
-\dfn{Rotation Gates}{Rotation gates rotate a qubit state around the Bloch sphere:
-\begin{itemize}
+\dfn{Rotation Gates}{Rotation gates rotate a qubit state around the Bloch
+  sphere:
+  \begin{itemize}
     \item \textbf{Rotation about X-axis:}
-    \[
-    R_X(\omega) =
-    \begin{bmatrix}
-    \cos\frac{\omega}{2} & -i\sin\frac{\omega}{2} \\
-    -i\sin\frac{\omega}{2} & \cos\frac{\omega}{2}
-    \end{bmatrix}
-    \]
-    Effect: Rotates state by angle $\omega$ around X-axis
-    
+      \[
+        R_X(\omega) =
+        \begin{bmatrix}
+          \cos\frac{\omega}{2} & -i\sin\frac{\omega}{2} \\
+          -i\sin\frac{\omega}{2} & \cos\frac{\omega}{2}
+        \end{bmatrix}
+      \]
+      Effect: Rotates state by angle $\omega$ around X-axis
+
     \item \textbf{Rotation about Y-axis:}
-    \[
-    R_Y(\omega) =
-    \begin{bmatrix}
-    \cos\frac{\omega}{2} & -\sin\frac{\omega}{2} \\
-    \sin\frac{\omega}{2} & \cos\frac{\omega}{2}
-    \end{bmatrix}
-    \]
-    Effect: Rotates state by angle $\omega$ around Y-axis
-    
+      \[
+        R_Y(\omega) =
+        \begin{bmatrix}
+          \cos\frac{\omega}{2} & -\sin\frac{\omega}{2} \\
+          \sin\frac{\omega}{2} & \cos\frac{\omega}{2}
+        \end{bmatrix}
+      \]
+      Effect: Rotates state by angle $\omega$ around Y-axis
+
     \item \textbf{Rotation about Z-axis:}
-    \[
-    R_Z(\omega) =
-    \begin{bmatrix}
-    e^{-i\omega/2} & 0 \\
-    0 & e^{i\omega/2}
-    \end{bmatrix}
-    \]
-    Effect: Adds a relative phase between $|0\rangle$ and $|1\rangle$ components
-\end{itemize}
-Special cases:
-\begin{itemize}
+      \[
+        R_Z(\omega) =
+        \begin{bmatrix}
+          e^{-i\omega/2} & 0 \\
+          0 & e^{i\omega/2}
+        \end{bmatrix}
+      \]
+      Effect: Adds a relative phase between $|0\rangle$ and $|1\rangle$ components
+  \end{itemize}
+  Special cases:
+  \begin{itemize}
     \item $R_X(\pi) = iX$
     \item $R_Y(\pi) = iY$
     \item $R_Z(\pi) = iZ$
 \end{itemize}}
 
-\dfn{Pauli Matrices and Gates}{The \textbf{Pauli matrices} define fundamental quantum operations:
-\begin{itemize}
+\dfn{Pauli Matrices and Gates}{The \textbf{Pauli matrices} define fundamental
+  quantum operations:
+  \begin{itemize}
     \item \textbf{Pauli-X (NOT Gate, Bit-Flip):}
-    \[
-    X = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}
-    \]
-    Effect: $X|0\rangle = |1\rangle$, $X|1\rangle = |0\rangle$
-    
-    \item \textbf{Pauli-Y (Combination of X and Z with phase):}
-    \[
-    Y = \begin{bmatrix} 0 & -i \\ i & 0 \end{bmatrix}
-    \]
-    Effect: $Y|0\rangle = i|1\rangle$, $Y|1\rangle = -i|0\rangle$
-    
-    \item \textbf{Pauli-Z (Phase-Flip Gate):}
-    \[
-    Z = \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix}
-    \]
-    Effect: $Z|0\rangle = |0\rangle$, $Z|1\rangle = -|1\rangle$
-\end{itemize}
-Each of these matrices is both \textbf{Hermitian} ($A = A^\dagger$) and \textbf{unitary} ($A^\dagger A = I$).
+      \[
+        X = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}
+      \]
+      Effect: $X|0\rangle = |1\rangle$, $X|1\rangle = |0\rangle$
 
-Important relationships:
-\begin{itemize}
+    \item \textbf{Pauli-Y (Combination of X and Z with phase):}
+      \[
+        Y = \begin{bmatrix} 0 & -i \\ i & 0 \end{bmatrix}
+      \]
+      Effect: $Y|0\rangle = i|1\rangle$, $Y|1\rangle = -i|0\rangle$
+
+    \item \textbf{Pauli-Z (Phase-Flip Gate):}
+      \[
+        Z = \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix}
+      \]
+      Effect: $Z|0\rangle = |0\rangle$, $Z|1\rangle = -|1\rangle$
+  \end{itemize}
+  Each of these matrices is both \textbf{Hermitian} ($A = A^\dagger$) and
+  \textbf{unitary} ($A^\dagger A = I$).
+
+  Important relationships:
+  \begin{itemize}
     \item $X^2 = Y^2 = Z^2 = I$
     \item $XY = iZ$, $YZ = iX$, $ZX = iY$
     \item $YX = -iZ$, $ZY = -iX$, $XZ = -iY$
 \end{itemize}}
 
 \dfn{Additional Important Gates}{
-\begin{itemize}
+  \begin{itemize}
     \item \textbf{Hadamard Gate (H):}
-    \[
-    H = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}
-    \]
-    Creates superposition states: $H|0\rangle = |+\rangle$, $H|1\rangle = |-\rangle$
-    
+      \[
+        H = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}
+      \]
+      Creates superposition states: $H|0\rangle = |+\rangle$, $H|1\rangle = |-\rangle$
+
     \item \textbf{Phase Gate (S):}
-    \[
-    S = \begin{bmatrix} 1 & 0 \\ 0 & i \end{bmatrix}
-    \]
-    Adds a $\pi/2$ phase to $|1\rangle$
-    
+      \[
+        S = \begin{bmatrix} 1 & 0 \\ 0 & i \end{bmatrix}
+      \]
+      Adds a $\pi/2$ phase to $|1\rangle$
+
     \item \textbf{T Gate:}
-    \[
-    T = \begin{bmatrix} 1 & 0 \\ 0 & e^{i\pi/4} \end{bmatrix}
-    \]
-    Adds a $\pi/4$ phase to $|1\rangle$
+      \[
+        T = \begin{bmatrix} 1 & 0 \\ 0 & e^{i\pi/4} \end{bmatrix}
+      \]
+      Adds a $\pi/4$ phase to $|1\rangle$
 \end{itemize}}
 
-\dfn{Circuit Notation}{Quantum circuits visually represent quantum operations. Each qubit is represented as a horizontal line, and gates are applied sequentially from left to right. Important circuit elements include:
-\begin{itemize}
+\dfn{Circuit Notation}{Quantum circuits visually represent quantum
+  operations. Each qubit is represented as a horizontal line, and gates are
+  applied sequentially from left to right. Important circuit elements include:
+  \begin{itemize}
     \item \textbf{Single-qubit gates:} Represented as boxes with gate symbols
     \item \textbf{Measurements:} Depicted with a meter symbol
-    \item \textbf{Time flow:} Left to right in circuits (opposite of matrix multiplication order)
-    \item \textbf{Initial states:} Usually started in $|0\rangle$ unless specified otherwise
+    \item \textbf{Time flow:} Left to right in circuits (opposite of matrix
+      multiplication order)
+    \item \textbf{Initial states:} Usually started in $|0\rangle$ unless
+      specified otherwise
 \end{itemize}}
 
-\ex{Example: Complex Circuit Analysis}{Consider the circuit applying the sequence $HZH$ to $|0\rangle$:
-\[
-\begin{aligned}
-|\psi_1\rangle &= H|0\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle) \\
-|\psi_2\rangle &= Z|\psi_1\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle) \\
-|\psi_3\rangle &= H|\psi_2\rangle = |1\rangle
-\end{aligned}
-\]
-This sequence performs a NOT operation on $|0\rangle$ using only Hadamard and Phase-flip gates.}
+\ex{Example: Complex Circuit Analysis}{Consider the circuit applying the
+  sequence $HZH$ to $|0\rangle$:
+  \[
+    \begin{aligned}
+      |\psi_1\rangle &= H|0\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle) \\
+      |\psi_2\rangle &= Z|\psi_1\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle) \\
+      |\psi_3\rangle &= H|\psi_2\rangle = |1\rangle
+    \end{aligned}
+  \]
+  This sequence performs a NOT operation on $|0\rangle$ using only Hadamard and
+Phase-flip gates.}
 
-\dfn{Measurement in Quantum Circuits}{Measurement collapses a quantum state to a basis state with probabilities determined by the squared magnitudes of its coefficients. For a state $|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$:
-\begin{itemize}
+\dfn{Measurement in Quantum Circuits}{Measurement collapses a quantum state
+  to a basis state with probabilities determined by the squared magnitudes of
+  its coefficients. For a state $|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$:
+  \begin{itemize}
     \item Probability of measuring $|0\rangle$: $P(0) = |\alpha|^2$
     \item Probability of measuring $|1\rangle$: $P(1) = |\beta|^2$
     \item Post-measurement state is the measured basis state
-    \item Multiple measurements of identically prepared states give statistical distributions
+    \item Multiple measurements of identically prepared states give
+      statistical distributions
 \end{itemize}}
 
 \qs{Exercise 1}{Apply the sequence $SXH$ to $|0\rangle$ and calculate:
-\begin{itemize}
+  \begin{itemize}
     \item The final state vector
     \item The probabilities of measuring $|0\rangle$ and $|1\rangle$
     \item The possible post-measurement states
 \end{itemize}}
 
-\qs{Exercise 2}{Show that the Hadamard gate is its own inverse by calculating $H^2$.}
+\qs{Exercise 2}{Show that the Hadamard gate is its own inverse by calculating
+$H^2$.}
 
-\qs{Exercise 3}{Calculate the effect of applying $R_Z(\pi/2)$ to the state $|+\rangle$.}
+\qs{Exercise 3}{Calculate the effect of applying $R_Z(\pi/2)$ to the state
+$|+\rangle$.}
 
 \sol{Exercise 1 Solution:
-\begin{align*}
-H|0\rangle &= \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle) \\
-XH|0\rangle &= \frac{1}{\sqrt{2}}(|1\rangle + |0\rangle) = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle) \\
-SXH|0\rangle &= \frac{1}{\sqrt{2}}(|0\rangle + i|1\rangle)
-\end{align*}
-Therefore:
-\begin{itemize}
+  \begin{align*}
+    H|0\rangle &= \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle) \\
+    XH|0\rangle &= \frac{1}{\sqrt{2}}(|1\rangle + |0\rangle) =
+    \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle) \\
+    SXH|0\rangle &= \frac{1}{\sqrt{2}}(|0\rangle + i|1\rangle)
+  \end{align*}
+  Therefore:
+  \begin{itemize}
     \item Final state: $|\psi\rangle = \frac{1}{\sqrt{2}}(|0\rangle + i|1\rangle)$
     \item Measurement probabilities: $P(0) = P(1) = \frac{1}{2}$
-    \item Post-measurement states: Either $|0\rangle$ or $|1\rangle$ with equal probability
+    \item Post-measurement states: Either $|0\rangle$ or $|1\rangle$ with
+      equal probability
 \end{itemize}}
