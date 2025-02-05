@@ -1,1 +1,178 @@
-\section{Lecture 5: TBD}
+\section{Lecture 5: Other Quantum Gates, Measurement, Multi-Qubit Systems}
+
+\dfn{Single-Qubit Gates}{Quantum gates manipulate individual qubits. Key
+single-qubit gates include:}
+\begin{itemize}
+    \item \textbf{Hadamard Gate (H):}
+    \[
+        H = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}
+    \]
+    Creates superposition: \boxed{H\zero = \ket{+}, H\one = \ket{-}}
+
+    Properties:
+    \begin{itemize}
+        \item Self-inverse: $H^2 = I$
+        \item Maps computational basis to $\ket{\pm}$ basis:
+        \begin{align*}
+            \ket{+} &= \frac{1}{\sqrt{2}}(\zero + \one) \\
+            \ket{-} &= \frac{1}{\sqrt{2}}(\zero - \one)
+        \end{align*}
+    \end{itemize}
+
+    \item \textbf{Phase Gate (S):}
+    \[
+        S = \begin{pmatrix} 1 & 0 \\ 0 & i \end{pmatrix}
+    \]
+    Adds a $\pi/2$ phase to $\one$. Properties:
+    \begin{itemize}
+        \item Unitary but not Hermitian
+        \item $S^2 = Z$
+        \item Effect on $\ket{+}$ : \boxed{S\ket{+} =
+          \frac{1}{\sqrt{2}}(\zero + i\one)}
+    \end{itemize}
+
+    \item \textbf{T Gate:}
+    \[
+        T = \begin{pmatrix} 1 & 0 \\ 0 & e^{i\pi/4} \end{pmatrix}
+    \]
+    Adds a $\pi/4$ phase to $\one$. Properties:
+    \begin{itemize}
+        \item $T^2 = S$
+        \item $T^4 = Z$
+        \item Often used in quantum error correction
+    \end{itemize}
+
+    \item \textbf{General Phase Gate } $P(\theta)$:
+    \[
+        P(\theta) = \begin{pmatrix} 1 & 0 \\ 0 & e^{i\theta} \end{pmatrix}
+    \]
+    Generalizes S and T gates: \boxed{S = P(\pi/2), T = P(\pi/4)}
+\end{itemize}
+
+\dfn{Important Relations}{
+\begin{align*}
+    Z &= H X H \\
+    X &= H Z H
+\end{align*}
+
+Demonstrates duality between X and Z gates via Hadamard transformation.
+
+Proof:
+\[
+HXH = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}
+\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}
+\frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} =
+\begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} = Z
+\]
+}
+
+\dfn{Measurement}{Measurement collapses quantum states to basis states with
+probabilities determined by amplitudes.}
+\begin{itemize}
+    \item \textbf{Z-basis:} Standard computational basis ($\zero$, $\one$)
+        \begin{itemize}
+            \item For state $\ket{\psi} = \alpha\zero + \beta\one$:
+            \begin{align*}
+                P(0) &= |\alpha|^2 \\
+                P(1) &= |\beta|^2
+            \end{align*}
+        \end{itemize}
+    \item \textbf{X-basis:} Hadamard basis ($\ket{+}$, $\ket{-}$)
+      \begin{itemize}[label={*}]
+            \item Measure in Z-basis after applying H gate
+            \item $P(+) = |\bra{+}\psi\rangle|^2$
+            \item $P(-) = |\bra{-}\psi\rangle|^2$
+        \end{itemize}
+    \item \textbf{Y-basis:} Eigenstates of Y
+        \begin{itemize}
+            \item $\ket{+i} = \frac{1}{\sqrt{2}}(\zero + i\one)$
+            \item $\ket{-i} = \frac{1}{\sqrt{2}}(\zero - i\one)$
+        \end{itemize}
+\end{itemize}
+
+\dfn{Multi-Qubit Systems}{States for multiple qubits are represented as
+tensor products:}
+\[
+    \ket{\psi} = \sum_{x=0}^{2^n-1} \alpha_x \ket{x}, \quad \sum
+    |\alpha_x|^2 = 1
+\]
+
+Properties of tensor products:
+\begin{itemize}
+    \item Not commutative: \( \ket{0} \otimes \ket{1} \neq \ket{1} \otimes
+      \ket{0} \)
+    \item Associative: \( (\ket{a} \otimes \ket{b}) \otimes \ket{c} = \ket{a}
+      \otimes (\ket{b} \otimes \ket{c}) \)
+    \item Distributive: \((\alpha\ket{a} + \beta\ket{b}) \otimes \ket{c} =
+      \alpha(\ket{a} \otimes \ket{c}) + \beta(\ket{b} \otimes \ket{c})\)
+\end{itemize}
+
+\ex{Example: Two-Qubit System}{
+\[
+    \ket{\psi} = \alpha_{00}\ket{00} + \alpha_{01}\ket{01} +
+    \alpha_{10}\ket{10} + \alpha_{11}\ket{11}
+\]
+Bell state example:
+\[
+    \ket{\Phi^+} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})
+\]
+This is a maximally entangled state.
+}
+
+\dfn{Circuit Diagrams}{Visual representation of quantum operations, with time
+flowing left to right.}
+\begin{itemize}
+    \item Qubits arranged vertically (MSB at top)
+    \item Single-qubit gates affect individual lines
+    \item Measurement shown with meter symbol
+    \item Classical bits shown with double lines
+\end{itemize}
+
+\subsection*{Exercises}
+\qs{Exercise 1}{Prove that the Hadamard gate is unitary and Hermitian.}
+
+\qs{Exercise 2}{For $\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$,
+find measurement probabilities for $\ket{00}$ and $\ket{11}$.}
+
+\qs{Exercise 3}{Determine if $U = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & i \\
+i & 1 \end{pmatrix}$ is unitary.}
+
+\qs{Exercise 4}{If we apply H $\otimes$ H to $\ket{00}$, what state do we get?}
+
+\sol{Exercise 1 Solution:
+To prove H is unitary and Hermitian:
+\begin{align*}
+    H^\dagger &= \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} = H \\
+    HH &= \frac{1}{2}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = I
+\end{align*}
+Thus, H is both unitary ($HH^\dagger = I$) and Hermitian ($H = H^\dagger$).}
+
+\vspace{0.3cm}
+
+\sol{Exercise 2 Solution:
+For $\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$:
+\begin{align*}
+    P(00) &= |\bra{00}\psi\rangle|^2 = \left|\frac{1}{\sqrt{2}}\right|^2 = \frac{1}{2} \\
+    P(11) &= |\bra{11}\psi\rangle|^2 = \left|\frac{1}{\sqrt{2}}\right|^2 = \frac{1}{2}
+\end{align*}
+}
+
+\vspace{0.3cm}
+
+\sol{Exercise 3 Solution:
+To verify unitarity, compute $UU^\dagger$:
+\begin{align*}
+    U^\dagger &= \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & -i \\ -i & 1 \end{pmatrix} \\
+    UU^\dagger &= \frac{1}{2}\begin{pmatrix} 1 & i \\ i & 1 \end{pmatrix}\begin{pmatrix} 1 & -i \\ -i & 1 \end{pmatrix} = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}
+\end{align*}
+Therefore, U is unitary.}
+
+\vspace{0.3cm}
+
+\sol{Exercise 4 Solution:
+\begin{align*}
+    (H \otimes H)\ket{00} &= (H\ket{0}) \otimes (H\ket{0}) \\
+    &= \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) \otimes \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) \\
+    &= \frac{1}{2}(\ket{00} + \ket{01} + \ket{10} + \ket{11})
+\end{align*}
+This creates an equal superposition of all two-qubit basis states.}
