@@ -99,13 +99,15 @@ tensor products:}
 
 Properties of tensor products:
 \begin{itemize}
-    \item Not commutative: \( \ket{0} \otimes \ket{1} \neq \ket{1} \otimes
-      \ket{0} \)
-    \item Associative: \( (\ket{a} \otimes \ket{b}) \otimes \ket{c} = \ket{a}
-      \otimes (\ket{b} \otimes \ket{c}) \)
-    \item Distributive: \((\alpha\ket{a} + \beta\ket{b}) \otimes \ket{c} =
-      \alpha(\ket{a} \otimes \ket{c}) + \beta(\ket{b} \otimes \ket{c})\)
+    \item Not commutative: $(\ket{0} \otimes \ket{1} \neq \ket{1} \otimes
+      \ket{0})$
+    \item Associative: $((\ket{a} \otimes \ket{b}) \otimes \ket{c} = \ket{a}
+      \otimes (\ket{b} \otimes \ket{c}))$
+    \item Distributive: $((\alpha\ket{a} + \beta\ket{b}) \otimes \ket{c} =
+      \alpha(\ket{a} \otimes \ket{c}) + \beta(\ket{b} \otimes \ket{c}))$
 \end{itemize}
+
+\vspace{0.3cm}
 
 \ex{Example: Two-Qubit System}{
 \[
@@ -119,14 +121,63 @@ Bell state example:
 This is a maximally entangled state.
 }
 
-\dfn{Circuit Diagrams}{Visual representation of quantum operations, with time
-flowing left to right.}
+\dfn{Circuit Diagrams}{Quantum circuits visually represent quantum operations
+on qubits. They help to understand the sequence of quantum gates applied to
+quantum states. The conventions are:}
 \begin{itemize}
-    \item Qubits arranged vertically (MSB at top)
-    \item Single-qubit gates affect individual lines
-    \item Measurement shown with meter symbol
-    \item Classical bits shown with double lines
+    \item Qubits are represented as horizontal lines (wires).
+    \item Gates are shown as boxes or symbols on the wires.
+    \item Time flows from left to right (the order of gate application).
+    \item Measurement is depicted using a meter symbol.
+    \item Classical information (post-measurement) is shown with double lines.
 \end{itemize}
+
+\subsubsection*{Single-Qubit Gate Example: Hadamard Gate}
+\[
+\begin{quantikz}
+    \lstick{\ket{0}} & \gate{H} & \meter{}
+\end{quantikz}
+\]
+This circuit applies the Hadamard gate $H$ to the state $\ket{0}$, creating
+the superposition state $\frac{1}{\sqrt{2}}(\ket{0} + \ket{1})$, followed by
+measurement.
+
+\subsubsection*{Multi-Qubit System Example: CNOT Gate}
+\[
+\begin{quantikz}
+    \lstick{\ket{0}} & \ctrl{1} & \qw \\
+    \lstick{\ket{1}} & \targ{}  & \qw
+\end{quantikz}
+\]
+This represents a controlled-NOT (CNOT) gate where the first qubit is the
+control and the second is the target. If the control qubit is $\ket{1}$, the
+target qubit flips; otherwise, it remains unchanged.
+
+\subsubsection*{Bell State Preparation Circuit}
+\[
+\begin{quantikz}
+    \lstick{\ket{0}} & \gate{H} & \ctrl{1} & \qw \\
+    \lstick{\ket{0}} & \qw      & \targ{}  & \qw
+\end{quantikz}
+\]
+This circuit prepares the Bell state $\ket{\Phi^+} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$. The first qubit undergoes a Hadamard gate, creating a superposition, followed by a CNOT gate that entangles the qubits.
+
+\subsubsection*{Measurement in Different Bases}
+\[
+\begin{quantikz}
+    \lstick{\ket{\psi}} & \gate{H} & \meter{} & \cw \\
+    \lstick{\ket{\phi}} & \gate{S} & \meter{} & \cw
+\end{quantikz}
+\]
+
+\begin{itemize}
+  \item The first qubit is measured in the X-basis by applying a Hadamard
+    gate before measurement.
+  \item The second qubit undergoes a phase shift with the $S$ gate and is
+    measured in the computational (Z) basis.
+\end{itemize}
+
+\vspace{0.3cm}
 
 \subsection*{Exercises}
 \qs{Exercise 1}{Prove that the Hadamard gate is unitary and Hermitian.}
@@ -135,7 +186,7 @@ flowing left to right.}
 find measurement probabilities for $\ket{00}$ and $\ket{11}$.}
 
 \qs{Exercise 3}{Determine if $U = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & i \\
-i & 1 \end{pmatrix}$ is unitary.}
+ i & 1 \end{pmatrix}$ is unitary.}
 
 \qs{Exercise 4}{If we apply H $\otimes$ H to $\ket{00}$, what state do we get?}
 
