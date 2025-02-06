@@ -64,7 +64,8 @@ which measures the overlap between two quantum states.
     \]
     The inner product is:
     \[
-      \langle \mathbf{v}, \mathbf{w} \rangle = \begin{bmatrix} 1 & -i \end{bmatrix}
+      \langle \mathbf{v}, \mathbf{w} \rangle = \begin{bmatrix} 1 & -i
+      \end{bmatrix}
       \begin{bmatrix} 2 \\ 1 \end{bmatrix} = 2 - i
     \]
   }
@@ -240,7 +241,8 @@ which measures the overlap between two quantum states.
     where:
 
     \[
-      \alpha_1, \alpha_2 \in \mathbb{C} \quad \text{and} \quad |\alpha_1|^2 + |\alpha_2|^2 = 1
+      \alpha_1, \alpha_2 \in \mathbb{C} \quad \text{and} \quad |\alpha_1|^2 +
+      |\alpha_2|^2 = 1
     \]
   }
 
@@ -257,8 +259,8 @@ which measures the overlap between two quantum states.
     \quad \text{One state} = \one = \bmatrix 0 \\ 1 \endbmatrix
   \]
 
-  A quantum state vector $\ket{\psi}$ can be expressed as a linear combination of
-  the basis states:
+  A quantum state vector $\ket{\psi}$ can be expressed as a linear
+  combination of the basis states:
 
   \[
     \ket{\psi} = \alpha_1\zero + \alpha_2\one
@@ -269,11 +271,14 @@ which measures the overlap between two quantum states.
   \begin{itemize}
     \item The computational basis states are orthogonal:
     \[
-      \langle 0 | 1 \rangle = \zero^\dagger \one = \bmatrix 1 & 0 \endbmatrix \bmatrix 0 \\ 1 \endbmatrix = 0
+      \langle 0 | 1 \rangle = \zero^\dagger \one = \bmatrix 1 & 0 \endbmatrix
+      \bmatrix 0 \\ 1 \endbmatrix = 0
     \]
+
     \item The computational basis states are normalized:
     \[
-      \langle 0 | 0 \rangle = \zero^\dagger \zero = \bmatrix 1 & 0 \endbmatrix \bmatrix 1 \\ 0 \endbmatrix = 1
+      \langle 0 | 0 \rangle = \zero^\dagger \zero = \bmatrix 1 & 0
+      \endbmatrix \bmatrix 1 \\ 0 \endbmatrix = 1
     \]
   \end{itemize}
   }
@@ -285,8 +290,8 @@ which measures the overlap between two quantum states.
 
   \sol{Since a unitary matrix satisfies \( U^\dagger U = I \), we have:
     \[
-      \langle U\mathbf{v}, U\mathbf{w} \rangle = \mathbf{v}^\dagger (U^\dagger U)
-      \mathbf{w} = \mathbf{v}^\dagger \mathbf{w}
+      \langle U\mathbf{v}, U\mathbf{w} \rangle = \mathbf{v}^\dagger
+      (U^\dagger U) \mathbf{w} = \mathbf{v}^\dagger \mathbf{w}
     \]
   Thus, inner products are preserved.}
 
