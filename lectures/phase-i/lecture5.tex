@@ -160,7 +160,10 @@ target qubit flips; otherwise, it remains unchanged.
     \lstick{\ket{0}} & \qw      & \targ{}  & \qw
 \end{quantikz}
 \]
-This circuit prepares the Bell state $\ket{\Phi^+} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$. The first qubit undergoes a Hadamard gate, creating a superposition, followed by a CNOT gate that entangles the qubits.
+This circuit prepares the Bell state $\ket{\Phi^+} =
+\frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$. The first qubit undergoes a
+Hadamard gate, creating a superposition, followed by a CNOT gate that
+entangles the qubits.
 
 \subsubsection*{Measurement in Different Bases}
 \[
@@ -193,8 +196,11 @@ find measurement probabilities for $\ket{00}$ and $\ket{11}$.}
 \sol{Exercise 1 Solution:
 To prove H is unitary and Hermitian:
 \begin{align*}
-    H^\dagger &= \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} = H \\
-    HH &= \frac{1}{2}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = I
+    H^\dagger &= \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ 1 & -1
+    \end{pmatrix} = H \\
+    HH &= \frac{1}{2}\begin{pmatrix} 1 & 1 \\ 1 & -1
+      \end{pmatrix}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} =
+      \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = I
 \end{align*}
 Thus, H is both unitary ($HH^\dagger = I$) and Hermitian ($H = H^\dagger$).}
 
@@ -203,8 +209,10 @@ Thus, H is both unitary ($HH^\dagger = I$) and Hermitian ($H = H^\dagger$).}
 \sol{Exercise 2 Solution:
 For $\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$:
 \begin{align*}
-    P(00) &= |\bra{00}\psi\rangle|^2 = \left|\frac{1}{\sqrt{2}}\right|^2 = \frac{1}{2} \\
-    P(11) &= |\bra{11}\psi\rangle|^2 = \left|\frac{1}{\sqrt{2}}\right|^2 = \frac{1}{2}
+    P(00) &= |\bra{00}\psi\rangle|^2 = \left|\frac{1}{\sqrt{2}}\right|^2 =
+    \frac{1}{2} \\
+    P(11) &= |\bra{11}\psi\rangle|^2 = \left|\frac{1}{\sqrt{2}}\right|^2 =
+    \frac{1}{2}
 \end{align*}
 }
 
@@ -213,8 +221,11 @@ For $\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$:
 \sol{Exercise 3 Solution:
 To verify unitarity, compute $UU^\dagger$:
 \begin{align*}
-    U^\dagger &= \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & -i \\ -i & 1 \end{pmatrix} \\
-    UU^\dagger &= \frac{1}{2}\begin{pmatrix} 1 & i \\ i & 1 \end{pmatrix}\begin{pmatrix} 1 & -i \\ -i & 1 \end{pmatrix} = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}
+    U^\dagger &= \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & -i \\ -i & 1
+    \end{pmatrix} \\
+    UU^\dagger &= \frac{1}{2}\begin{pmatrix} 1 & i \\ i & 1
+      \end{pmatrix}\begin{pmatrix} 1 & -i \\ -i & 1 \end{pmatrix} =
+      \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}
 \end{align*}
 Therefore, U is unitary.}
 
@@ -223,7 +234,8 @@ Therefore, U is unitary.}
 \sol{Exercise 4 Solution:
 \begin{align*}
     (H \otimes H)\ket{00} &= (H\ket{0}) \otimes (H\ket{0}) \\
-    &= \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) \otimes \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) \\
+    &= \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) \otimes
+    \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) \\
     &= \frac{1}{2}(\ket{00} + \ket{01} + \ket{10} + \ket{11})
 \end{align*}
 This creates an equal superposition of all two-qubit basis states.}

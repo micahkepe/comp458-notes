@@ -1,4 +1,4 @@
-\section{Lecture 3: Quantum Bits and Quantum States}
+\section{Lecture 3: Quantum Bits and Quantum States} \label{sec:lecture3}
 
 \dfn{Qubit}{A \textbf{qubit} is the fundamental unit of quantum information.
   Unlike a classical bit, which is either $0$ or $1$, a qubit can exist in a
@@ -48,28 +48,59 @@
   \begin{itemize}
     \ii \textbf{Computational Basis:} \( |0\rangle, |1\rangle \)
     \ii \textbf{Hadamard Basis:}
-    \[ |+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle), \quad
-    |-\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle) \]
-    \ii \textbf{Circular Polarization Basis:}
-    \[ |L\rangle = \frac{1}{\sqrt{2}}(|0\rangle + i|1\rangle), \quad
-    |R\rangle = \frac{1}{\sqrt{2}}(|0\rangle - i|1\rangle) \]
-\end{itemize}}
+    \[
+      |+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle) = \begin{bmatrix} 1/\sqrt{2} \\ 1/\sqrt{2} \end{bmatrix}
+    \]
+
+    \[
+      |-\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle) = \begin{bmatrix} 1/\sqrt{2} \\ -1/\sqrt{2} \end{bmatrix}
+    \]
+
+  \ii \textbf{Phase/ Circular Polarization Basis:}
+  \[ |L\rangle = \ket{+i} = \frac{1}{\sqrt{2}}(|0\rangle + i|1\rangle) \]
+  \[|R\rangle = \ket{-i} = \frac{1}{\sqrt{2}}(|0\rangle - i|1\rangle) \]
+  \end{itemize}}
 
 \dfn{Bloch Sphere}{A geometric representation of a single qubit state:
-  \[ |\psi\rangle = \cos\left(\frac{\theta}{2}\right)|0\rangle +
-  e^{i\phi}\sin\left(\frac{\theta}{2}\right)|1\rangle \]
+  \[ |\psi\rangle = \lt[\cos\left(\frac{\theta}{2}\right)|0\rangle +
+  e^{i\phi}\sin\left(\frac{\theta}{2}\right)|1\rangle\rt]e^{i\gamma} \]
   Where:
   \begin{itemize}
     \ii \( \theta \in [0,\pi] \) is the polar angle
     \ii \( \phi \in [0, 2\pi) \) is the azimuthal angle
-    \ii Cartesian coordinates:
-    \[ x = \sin\theta \cos\phi, \quad
-      y = \sin\theta \sin\phi, \quad
-    z = \cos\theta \]
+    \ii \( \gamma \) is a global phase, often omitted since it cannot be
+    represented on the Bloch sphere directly
+
+    \aside{Cartesian coordinates:
+      \[ x = \sin\theta \cos\phi, \quad
+        y = \sin\theta \sin\phi, \quad
+        z = \cos\theta
+      \]
+    }
+
+    \aside{
+      Rearranging the Bloch sphere formula, we obtain that $\theta$ and $\phi$ can be expressed as:
+
+      \[
+        \theta = 2\arccos(\alpha_1), \quad \phi = -i \ln\left(\frac{\alpha_2}{\sin\left(\frac{\theta}{2}\right)}\right)
+      \]
+    }
 
     \ex{Example Bloch Sphere Representation}{
       \text{For the state } \(\theta = \frac{\pi}{2}, \phi = 0\):
       \bloch{90}{0}
+    }
+
+    \ex{Factoring Out the Global Phase}{
+      Let's say that we have the following quantum state vector $\ket{\psi}$:
+
+      \[
+        \begin{aligned}
+          \ket{\psi} & = \frac{1}{\sqrt{2}}\lt(i \zero + \one\rt) \\
+          & = \frac{i}{\sqrt{2}}\zero + \frac{1}{\sqrt{2}}\one \\
+          & = \underbrace{i}_{\text{global phase}} \lt(\frac{1}{\sqrt{2}}\zero + \frac{1}{\sqrt{2}}\one\rt) \\
+        \end{aligned}
+      \]
     }
 
 \end{itemize}}
@@ -102,3 +133,16 @@
 
 \sol{These relations hold due to the orthonormal nature of quantum basis
 states.}
+
+\nt{Quantum Bases and Their $\theta$ and $\phi$ Values:
+  \begin{itemize}
+    \item \textbf{Computational Basis:} \( \zero \rightarrow \theta = 0, \phi
+      = 0, \quad \one \rightarrow \theta = \pi, \phi = 0 \)
+    \item \textbf{Hadamard Basis:} \( \ket{+} \rightarrow \theta =
+      \frac{\pi}{2}, \phi = 0, \quad \ket{-} \rightarrow \theta =
+      \frac{\pi}{2}, \phi = \pi \)
+    \item \textbf{Phase Basis:} \( \left|L\right\rangle = \ket{+i} \rightarrow
+      \theta = \frac{\pi}{2}, \phi = \frac{\pi}{2}, \quad \left|R\right\rangle
+      = \ket{-i} \rightarrow \theta = \frac{\pi}{2}, \phi = -\frac{\pi}{2} \)
+  \end{itemize}
+}

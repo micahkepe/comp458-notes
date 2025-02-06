@@ -21,7 +21,8 @@ A column vector is a vertical arrangement of numbers:
 \]
 
 \subsection*{Row Vectors}
-A row vector is the complex conjugate transpose (adjoint) of a column vector:
+A row vector is the complex conjugate transpose (\textbf{adjoint}) of a
+column vector:
 \[
   \mathbf{v}^\dagger =
   \begin{bmatrix}
@@ -53,7 +54,28 @@ This is fundamental in representing quantum states and transformations.}
     \langle \mathbf{v}, \mathbf{w} \rangle = \mathbf{v}^\dagger \mathbf{w} =
     \sum_{i=1}^n \overline{v_i}w_i
   \]
-which measures the overlap between two quantum states.}
+which measures the overlap between two quantum states.
+
+  \ex{Inner Product Example}{
+    Given two vectors:
+    \[
+      \mathbf{v} = \begin{bmatrix} 1 \\ i \end{bmatrix}, \quad
+      \mathbf{w} = \begin{bmatrix} 2 \\ 1 \end{bmatrix}
+    \]
+    The inner product is:
+    \[
+      \langle \mathbf{v}, \mathbf{w} \rangle = \begin{bmatrix} 1 & -i \end{bmatrix}
+      \begin{bmatrix} 2 \\ 1 \end{bmatrix} = 2 - i
+    \]
+  }
+
+  We also have the following property that the inner product is equivalent to
+  the square of the Euclidean norm of a vector:
+
+  \[
+    \langle \mathbf{v}, \mathbf{v} \rangle = \|\mathbf{v}\|^2
+  \]
+}
 
 \dfn{Outer Product}{The \textbf{outer product} of two vectors $\mathbf{v} \in
   \mathbb{C}^m$ and $\mathbf{w} \in \mathbb{C}^n$ produces an $m \times n$
@@ -84,6 +106,23 @@ which measures the overlap between two quantum states.}
     \]
     The tensor product expands the state space, allowing representation of
   entangled states.}
+
+  \subsection*{Orthagonality}
+  Two vectors $v, w \in \mathbb{C}^n$ are \textbf{orthogonal} if their
+  inner product is zero:
+
+  \[
+    \langle \mathbf{v}, \mathbf{w} \rangle = 0
+  \]
+
+  Orthogonal vectors are linearly independent and span a subspace of the vector
+  space. As you might remember from linear algebra, a set of orthogonal vectors
+  can be used to construct an orthonormal basis, and any vector can be expressed
+  as a linear combination of the basis vectors.
+
+  This will be useful when we cover the quantum bases in \autoref{sec:lecture3}.
+
+  \vspace{0.3cm}
 
   \dfn{Adjoint of a Matrix}{The \textbf{adjoint} (or Hermitian conjugate) of a
     matrix $A$ is obtained by taking the transpose and complex conjugate of
@@ -135,7 +174,35 @@ which measures the overlap between two quantum states.}
         - i & 2
       \end{bmatrix}
     \]
-  Since $H^\dagger = H$, it is Hermitian.}
+  Since $H^\dagger = H$, it is Hermitian.
+
+  \nt{Hermitian matrices \textbf{can't} have complex numbers in their diagonal
+  General case illustration:
+
+  \[
+    H = \begin{bmatrix} a & b + ic \\ b - ic & d \end{bmatrix}
+    \quad \Rightarrow \quad
+    H^\dagger = \begin{bmatrix} a & b - ic \\ b + ic & d \end{bmatrix}
+    \quad \Rightarrow \quad H \neq H^\dagger
+  \]
+
+  \vspace{0.3cm}
+
+  $\therefore$ Hermitian matrices have real diagonal elements.
+  }
+
+  \nt{Hermitian matrices are unitary, but unitary matrices are not necessarily
+  Hermitian:
+
+    \[
+      H \rightarrow U
+    \]
+
+    \[
+      U \not\rightarrow H
+    \]
+  }
+}
 
   \dfn{Eigenvalues and Eigenvectors}{For a square matrix $A \in \mathbb{C}^{n
     \times n}$, a vector $\mathbf{v} \neq \mathbf{0}$ is an
@@ -144,7 +211,14 @@ which measures the overlap between two quantum states.}
       A\mathbf{v} = \lambda\mathbf{v}
     \]
     where $\lambda \in \mathbb{C}$ is the \textbf{eigenvalue}. Eigenvalues
-  provide insight into the structure of linear transformations.}
+  provide insight into the structure of linear transformations.
+
+  In Braket notation, the eigenvalue equation is:
+
+  \[
+    A|\mathbf{v}\rangle = \lambda|\mathbf{v}\rangle
+  \]
+}
 
   \ex{Example: Eigenvalues}{For the matrix
     \[
@@ -155,6 +229,56 @@ which measures the overlap between two quantum states.}
       \det(A - \lambda I) = (1 - \lambda)^2 + 1 = 0
     \]
   Solving gives eigenvalues $\lambda = 1 \pm i$.}
+
+  \dfn{Quantum Bits/ Qubits}{
+    A qubit can be defined mathematically as follows:
+
+    \[
+      \ket{\psi} = \bmatrix \alpha_1 \\ \alpha_2 \endbmatrix \in \mathbb{C}^2
+    \]
+
+    where:
+
+    \[
+      \alpha_1, \alpha_2 \in \mathbb{C} \quad \text{and} \quad |\alpha_1|^2 + |\alpha_2|^2 = 1
+    \]
+  }
+
+  The first property ensures that the qubit is normalized, while the second
+  property ensures that the qubit is in a superposition of the basis states.
+
+  \vspace{0.3cm}
+
+  The first universal basis that we will look at is the computational basis,
+  which consists of the states \(\zero\) and \(\one\):
+
+  \[
+    \text{Zero state} = \zero = \bmatrix 1 \\ 0 \endbmatrix
+    \quad \text{One state} = \one = \bmatrix 0 \\ 1 \endbmatrix
+  \]
+
+  A quantum state vector $\ket{\psi}$ can be expressed as a linear combination of
+  the basis states:
+
+  \[
+    \ket{\psi} = \alpha_1\zero + \alpha_2\one
+  \]
+
+  \nt{Properties of the computational basis:
+
+  \begin{itemize}
+    \item The computational basis states are orthogonal:
+    \[
+      \langle 0 | 1 \rangle = \zero^\dagger \one = \bmatrix 1 & 0 \endbmatrix \bmatrix 0 \\ 1 \endbmatrix = 0
+    \]
+    \item The computational basis states are normalized:
+    \[
+      \langle 0 | 0 \rangle = \zero^\dagger \zero = \bmatrix 1 & 0 \endbmatrix \bmatrix 1 \\ 0 \endbmatrix = 1
+    \]
+  \end{itemize}
+  }
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 
   \qs{}{Show that any unitary matrix preserves the inner product of two
   vectors.}
