@@ -164,32 +164,42 @@ which measures the overlap between two quantum states.
 
   \dfn{Hermitian Matrix}{A square matrix $H$ is called \textbf{Hermitian} if it
     is equal to its adjoint:
+
     \[
       H = H^\dagger
     \]
+
     Hermitian matrices represent observable quantities in quantum mechanics and
     have real eigenvalues. Example:
+
     \[
       H = \begin{bmatrix}
         2 & i \\
         - i & 2
       \end{bmatrix}
     \]
-  Since $H^\dagger = H$, it is Hermitian.
 
-  \nt{Hermitian matrices \textbf{can't} have complex numbers in their diagonal
-  General case illustration:
+    Since $H^\dagger = H$, it is Hermitian.
 
-  \[
-    H = \begin{bmatrix} a & b + ic \\ b - ic & d \end{bmatrix}
-    \quad \Rightarrow \quad
-    H^\dagger = \begin{bmatrix} a & b - ic \\ b + ic & d \end{bmatrix}
-    \quad \Rightarrow \quad H \neq H^\dagger
-  \]
+    \nt{Hermitian matrices \textbf{can't} have complex numbers in their diagonal
+    General case illustration:
 
-  \vspace{0.3cm}
+    \[
+      M = \begin{bmatrix} a + ib & c + id \\ e + if & g  + ih \end{bmatrix}
+      \quad \Rightarrow \quad
+      M^\dagger = \begin{bmatrix} a - ib & e - if \\ c - id & g - ih
+      \end{bmatrix}
+      \quad \Rightarrow \quad M \neq M^\dagger
+    \]
 
-  $\therefore$ Hermitian matrices have real diagonal elements.
+    \vspace{0.3cm}
+
+    $\therefore$ Hermitian matrices have real diagonal elements.
+
+    \vspace{0.3cm}
+
+    Additionally, the general matrix $M$ shown above is Hermitian iff. $c =
+    e, d = -f$
   }
 
   \nt{Hermitian matrices are unitary, but unitary matrices are not necessarily
