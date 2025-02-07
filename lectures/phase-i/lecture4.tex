@@ -223,14 +223,7 @@ Quantum circuits visually represent quantum
     \item The probabilities of measuring $|0\rangle$ and $|1\rangle$
     \item The possible post-measurement states
 \end{itemize}}
-
-\qs{Exercise 2}{Show that the Hadamard gate is its own inverse by calculating
-$H^2$.}
-
-\qs{Exercise 3}{Calculate the effect of applying $R_Z(\pi/2)$ to the state
-$|+\rangle$.}
-
-\sol{Exercise 1 Solution:
+\sol{
   \begin{align*}
     H|0\rangle &= \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle) \\
     XH|0\rangle &= \frac{1}{\sqrt{2}}(|1\rangle + |0\rangle) =
@@ -245,3 +238,47 @@ $|+\rangle$.}
     \item Post-measurement states: Either $|0\rangle$ or $|1\rangle$ with
       equal probability
 \end{itemize}}
+
+\vspace{0.3cm}
+
+\qs{Exercise 2}{Show that the Hadamard gate is its own inverse by calculating
+$H^2$.}
+
+\sol{
+  \[
+    H^2 = \begin{bmatrix}
+      \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
+      \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}
+    \end{bmatrix}
+    \begin{bmatrix}
+      \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
+      \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}}
+    \end{bmatrix}
+    = \begin{bmatrix}
+      1 & 0 \\
+      0 & 1
+    \end{bmatrix} = I
+  \]
+}
+
+\qs{Exercise 3}{Calculate the effect of applying $R_Z(\pi/2)$ to the state
+$|+\rangle$.}
+
+\sol{
+  \[
+    R_Z(\pi/2)|+\rangle = \begin{bmatrix}
+      e^{-i\pi/4} & 0 \\
+      0 & e^{i\pi/4}
+    \end{bmatrix}
+    \begin{bmatrix}
+      \frac{1}{\sqrt{2}} \\
+      \frac{1}{\sqrt{2}}
+    \end{bmatrix}
+    = \begin{bmatrix}
+      \frac{1}{\sqrt{2}} \\
+      \frac{i}{\sqrt{2}}
+    \end{bmatrix}
+    = |+i\rangle
+  \]
+}
+

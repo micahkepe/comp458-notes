@@ -153,9 +153,9 @@ single-qubit gates include:}
 
   \[
     \boxed{
-    \ket{\psi} = \sum_{k=0}^{k = 2^n-1} \alpha_k \ket{k}, \quad \sum
-    ||\alpha_k||^2 = 1
-  }
+      \ket{\psi} = \sum_{k=0}^{k = 2^n-1} \alpha_k \ket{k}, \quad \sum
+      ||\alpha_k||^2 = 1
+    }
   \]
 
   \noindent
@@ -176,18 +176,9 @@ single-qubit gates include:}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  \subsection*{Exercises}
   \qs{Exercise 1}{Prove that the Hadamard gate is unitary and Hermitian.}
 
-  \qs{Exercise 2}{For $\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$,
-  find measurement probabilities for $\ket{00}$ and $\ket{11}$.}
-
-  \qs{Exercise 3}{Determine if $U = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & i \\
-  i & 1 \end{pmatrix}$ is unitary.}
-
-  \qs{Exercise 4}{If we apply H $\otimes$ H to $\ket{00}$, what state do we get?}
-
-  \sol{Exercise 1 Solution:
+  \sol{
     To prove H is unitary and Hermitian:
     \begin{align*}
       H^\dagger &= \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ 1 & -1
@@ -201,8 +192,10 @@ single-qubit gates include:}
 
     \vspace{0.3cm}
 
-    \sol{Exercise 2 Solution:
+    \qs{Exercise 2}{For $\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$,
+    find measurement probabilities for $\ket{00}$ and $\ket{11}$.}
 
+    \sol{
       For $\ket{\psi} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$:
 
       \begin{align*}
@@ -215,8 +208,10 @@ single-qubit gates include:}
 
     \vspace{0.3cm}
 
-    \sol{Exercise 3 Solution:
+    \qs{Exercise 3}{Determine if $U = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & i \\
+    i & 1 \end{pmatrix}$ is unitary.}
 
+    \sol{
       To verify unitarity, compute $UU^\dagger$:
 
       \begin{align*}
@@ -227,12 +222,13 @@ single-qubit gates include:}
           \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}
         \end{align*}
 
-        Therefore, U is unitary.
+        $\therefore$ U is unitary.
       }
 
       \vspace{0.3cm}
 
-      \sol{Exercise 4 Solution:
+      \qs{Exercise 4}{If we apply H $\otimes$ H to $\ket{00}$, what state do we get?}
+      \sol{
 
         \begin{align*}
           (H \otimes H)\ket{00} &= (H\ket{0}) \otimes (H\ket{0}) \\
