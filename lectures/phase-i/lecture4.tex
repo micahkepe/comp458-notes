@@ -12,72 +12,72 @@ representations.
     |\psi\rangle = \alpha |0\rangle + \beta |1\rangle, \quad \text{where }
     \alpha, \beta \in \mathbb{C} \text{ and } |\alpha|^2 + |\beta|^2 = 1.
   \]
-
-  Again, the computational basis states are represented as:
-  \[
-    |0\rangle = \begin{pmatrix} 1 \\ 0 \end{pmatrix}, \quad |1\rangle =
-    \begin{pmatrix} 0 \\ 1 \end{pmatrix}
-  \]
 }
 
-\dfn{Measurement and Superposition Collapse}{When a qubit is measured in the
-  computational basis $\{|0\rangle, |1\rangle\}$, it collapses to one of the
-  basis states with probability:
+\subsection*{Measurement and Superposition Collapse}
 
-  \[
-    \boxed{
-      P(0) = \norm{\alpha_1}^2, \quad P(1) = \norm{\alpha_2}^2.
-    }
-  \]
+When a qubit is measured in the computational basis $\{|0\rangle,
+|1\rangle\}$, it collapses to one of the basis states with probability:
 
-  The post-measurement state is:
-
-  \[
-    \boxed{
-      |\psi_{\text{measurement}}\rangle = \frac{|b\rangle \langle b | \psi
-      \rangle}{\sqrt{P(b)}}
-    }
-  \]
-
-  where $b \in \{0,1\}$. This formula captures the quantum measurement
-  postulate and ensures proper normalization of the post-measurement state.
-
-  \vspace{0.3cm}
-
-  In the computational basis, the probability of measuring $|b\rangle$ is:
-
-  \[
-    \boxed{
-      P(b) = \norm{\langle b | \psi \rangle}^2
-    }
-  \]
-
-  \nt{Probability Properties of Measurement:
-    \[
-      \begin{aligned}
-        P(0) &= 1 - P(1) \\
-        P(+) &= 1 - P(-) \\
-        P(+i) &= 1 - P(-i)
-      \end{aligned}
-    \]
+\[
+  \boxed{
+    P(0) = \norm{\alpha_1}^2, \quad P(1) = \norm{\alpha_2}^2.
   }
+\]
+
+The post-measurement state is:
+
+\[
+  \boxed{
+    |\psi_{\text{measurement}}\rangle = \frac{|b\rangle \langle b | \psi
+    \rangle}{\sqrt{P(b)}}
+  }
+\]
+
+\noindent
+where $b \in \{0,1\}$. This formula captures the quantum measurement
+postulate and ensures proper normalization of the post-measurement state.
+
+\vspace{0.3cm}
+
+In the computational basis, the probability of measuring $|b\rangle$ is:
+
+\[
+  \boxed{
+    P(b) = \norm{\langle b | \psi \rangle}^2
+  }
+\]
+
+\nt{Probability Properties of Measurement:
+  \[
+    \begin{aligned}
+      P(0) &= 1 - P(1) \\
+      P(+) &= 1 - P(-) \\
+      P(+i) &= 1 - P(-i)
+    \end{aligned}
+  \]
 }
 
+\subsection*{Quantum Gates and Operations}
 
-\dfn{Quantum Gates and Operations}{Quantum gates are unitary matrices that
-  transform qubits. A general qubit transformation is given by:
-  \[
-    |\psi_{\text{final}}\rangle = U |\psi_{\text{initial}}\rangle
-  \]
-  where $U$ is a unitary matrix satisfying $U^\dagger U = I$. Key properties of
-  quantum gates include:
-  \begin{itemize}
-    \item \textbf{Reversibility:} All quantum operations are reversible due
-      to unitarity
-    \item \textbf{Preservation of Norm:} The normalization condition
-      $|\alpha|^2 + |\beta|^2 = 1$ is preserved
-    \item \textbf{Linearity:} Gates act linearly on superposition states
-\end{itemize}}
+Quantum gates are unitary matrices that transform qubits. A general qubit
+transformation is given by:
+
+\[
+  |\psi_{\text{final}}\rangle = U |\psi_{\text{initial}}\rangle
+\]
+
+\noindent
+where $U$ is a unitary matrix satisfying $U^\dagger U = I$. Key properties of
+quantum gates include:
+
+\begin{itemize}
+  \item \textbf{Reversibility:} All quantum operations are reversible due
+    to unitarity
+  \item \textbf{Preservation of Norm:} The normalization condition
+    $|\alpha|^2 + |\beta|^2 = 1$ is preserved
+  \item \textbf{Linearity:} Gates act linearly on superposition states
+\end{itemize}
 
 \dfn{Rotation Gates}{Rotation gates rotate a qubit state around the Bloch
   sphere:
@@ -121,13 +121,6 @@ representations.
 
       Effect: Adds a relative phase between $|0\rangle$ and $|1\rangle$
       components
-
-    \item \textbf{Special cases:}
-      \begin{align*}
-        R_X(\pi) &= iX \\
-        R_Y(\pi) &= iY \\
-        R_Z(\pi) &= iZ
-      \end{align*}
   \end{itemize}
 }
 
@@ -137,7 +130,7 @@ representations.
     \item \textbf{Pauli-X (NOT Gate, Bit-Flip):}
       \[
         \boxed{
-        X = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}
+          X = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}
         }
       \]
 
@@ -146,7 +139,7 @@ representations.
     \item \textbf{Pauli-Y (Combination of X and Z with phase):}
       \[
         \boxed{
-        Y = \begin{bmatrix} 0 & -i \\ i & 0 \end{bmatrix}
+          Y = \begin{bmatrix} 0 & -i \\ i & 0 \end{bmatrix}
         }
       \]
 
@@ -155,7 +148,7 @@ representations.
     \item \textbf{Pauli-Z (Phase-Flip Gate):}
       \[
         \boxed{
-        Z = \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix}
+          Z = \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix}
         }
       \]
 
@@ -173,7 +166,8 @@ representations.
     \item $YX = -iZ$, $ZY = -iX$, $XZ = -iY$
 \end{itemize}}
 
-\dfn{Circuit Notation}{Quantum circuits visually represent quantum
+\subsection*{Circuit Notation}
+Quantum circuits visually represent quantum
   operations. Each qubit is represented as a horizontal line, and gates are
   applied sequentially from left to right. Important circuit elements include:
   \begin{itemize}
@@ -181,7 +175,7 @@ representations.
     \item \textbf{Measurements:} Depicted with a meter symbol
     \item \textbf{Time flow:} Left to right in circuits (\textbf{opposite of
       matrix multiplication order})
-\end{itemize}}
+\end{itemize}
 
 \ex{Example: Complex Circuit Analysis}{Consider the circuit applying the
   sequence $HZH$ to $|0\rangle$:
@@ -199,9 +193,9 @@ representations.
   Phase-flip gates.
 
   \[
-  \begin{quantikz}
-    \lstick{$|0\rangle$} & \gate{H} & \gate{Z} & \gate{H} & \one \\
-  \end{quantikz}
+    \begin{quantikz}
+      \lstick{$|0\rangle$} & \gate{H} & \gate{Z} & \gate{H} & \one \\
+    \end{quantikz}
   \]
 }
 
@@ -215,9 +209,9 @@ representations.
   \]
 
   \[
-  \begin{quantikz}
-    \lstick{$\zero$} & \gate{Y} & \gate{X} & i \zero \\
-  \end{quantikz}
+    \begin{quantikz}
+      \lstick{$\zero$} & \gate{Y} & \gate{X} & i \zero \\
+    \end{quantikz}
   \]
 }
 
