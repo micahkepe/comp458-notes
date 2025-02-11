@@ -7,6 +7,11 @@ This repository is meant as an educational resource and collaboration space
 for reinforcing the concepts learned in the course. The notes are written fully
 in LaTeX.
 
+> [!IMPORTANT]
+> These notes are a work-in-progress and are being updated as I progress through
+> the course. If you find any errors or have any suggestions for improvement,
+> feel free to open an issue or a pull request.
+
 > [!NOTE]
 > Personally, I compile the `*.tex` using the VimTeX plugin for Vim/Neovim, but
 > you can use any LaTeX editor of your choice. The notes are written in a way that
@@ -20,19 +25,31 @@ in LaTeX.
 
 |                    Section                    | Topics                                                |
 | :-------------------------------------------: | ----------------------------------------------------- |
-|           <strong>Phase i</strong>            | <em>Introduction and Background</em>                  |
+|           <strong>Phase I</strong>            | <em>Introduction and Background</em>                  |
 | [Lecture 1](./lectures/phase-i/lecture1.tex)  | Overview of Quantum Computing Concepts                |
 | [Lecture 2](./lectures/phase-i/lecture2.tex)  | Review of Linear Algebra Concepts                     |
 | [Lecture 3](./lectures/phase-i/lecture3.tex)  | Quantum Bits and Quantum States                       |
 | [Lecture 4](./lectures/phase-i/lecture4.tex)  | Quantum Gates and Transformations                     |
 | [Lecture 5](./lectures/phase-i/lecture5.tex)  | Other Quantum Gates, Measurement, Multi-Qubit Systems |
 | [Lecture 6](./lectures/phase-i/lecture6.tex)  | Multi-Qubit Gates and Circuit Construction            |
-|          <strong>Phase ii </strong>           | <em>Fundamentals of Quantum Algorithms</em>           |
+|          <strong>Phase II </strong>           | <em>Fundamentals of Quantum Algorithms</em>           |
 | [Lecture 7](./lectures/phase-ii/lecture7.tex) | Basic Quantum Algorithms and Computing Using `Circ`   |
 
 </div>
 
 ---
+
+## Contributing
+
+If you find any errors or have any suggestions for improvement, feel free to
+open an issue or a pull request. I would be happy to review and merge any
+contributions.
+
+---
+
+## License
+
+This repository is licensed under the MIT License. See the [LICENSE](./LICENSE)
 
 ## Compilation
 
@@ -69,5 +86,8 @@ nvim main.tex
    ```
    :VimTexView
    ```
+
+If you have any issues with the compilation, feel free to open an issue or
+reach out to me directly.
 
 </details>
