@@ -1,14 +1,40 @@
-# COMP 458 Spring 2025 Notes
+# COMP 458: Quantum Computing Algorithms Notes 🧬
 
-My personal notes for COMP 458: Quantum Computing Algorithms (Spring 25).
-
-🚨 Under **NO CIRCUMSTANCES** may you distribute the contents of the repository
-without the explicit permission of the repository owner(s).
+Personal course notes for COMP 458: Quantum Computing Algorithms (Spring 25).
 
 This repository is meant as an educational resource and collaboration space
-for working through and verifying the correctness of the algorithms with real code.
+for reinforcing the concepts learned in the course. The notes are written fully
+in LaTeX.
 
-## Compiling the LaTeX with VimTex
+> [!NOTE]
+> Personally, I compile the `*.tex` using the VimTeX plugin for Vim/Neovim, but
+> you can use any LaTeX editor of your choice. The notes are written in a way that
+> they can be easily compiled using any LaTeX editor and viewer. See the section
+> [below](#compiling-the-latex-with-vimtex) for instructions on how to compile the
+> LaTeX files using VimTeX.
+
+## Table of Contents
+
+| Section                                                                                 | Topics                                                |
+| --------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| <div align="center"><strong>Phase i: Introduction and Background</strong></div>         |                                                       |
+| [Lecture 1](./lectures/phase-i/lecture1.tex)                                            | Overview of Quantum Computing Concepts                |
+| [Lecture 2](./lectures/phase-i/lecture2.tex)                                            | Review of Linear Algebra Concepts                     |
+| [Lecture 3](./lectures/phase-i/lecture3.tex)                                            | Quantum Bits and Quantum States                       |
+| [Lecture 4](./lectures/phase-i/lecture4.tex)                                            | Quantum Gates and Transformations                     |
+| [Lecture 5](./lectures/phase-i/lecture5.tex)                                            | Other Quantum Gates, Measurement, Multi-Qubit Systems |
+| [Lecture 6](./lectures/phase-i/lecture6.tex)                                            | Multi-Qubit Gates and Circuit Construction            |
+| <div align="center"><strong>Phase ii: Fundamentals of Quantum Algorithms</strong></div> |                                                       |
+| [Lecture 7](./lectures/phase-ii/lecture7.tex)                                           | Basic Quantum Algorithms and Computing Using `Circ`   |
+
+---
+
+## Compilation
+
+### Compiling the LaTeX with VimTex
+
+<details>
+<summary>Instructions</summary>
 
 1. Clone the repository:
 
@@ -38,3 +64,5 @@ nvim main.tex
    ```
    :VimTexView
    ```
+
+</details>
