@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>COMP 458 Quantum Computing Handbook</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+      rel="stylesheet"
+    />
     <style>
       html,
       body {
@@ -11,11 +17,12 @@
         padding: 0;
         height: 100%;
         background-color: #f5f5f5;
-        font-family: Arial, sans-serif;
+        font-family: "JetBrains Mono", "Courier New", Courier, monospace;
       }
 
       body {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
       }
@@ -28,6 +35,7 @@
         background: #fff;
         border-radius: 8px;
         overflow: hidden;
+        padding: 10px;
       }
 
       .pdf-container iframe {
@@ -36,19 +44,45 @@
         border: none;
       }
 
+      #direct-pdf {
+        margin-top: 20px;
+        font-size: 16px;
+        font-weight: 500;
+        width: 50%;
+      }
+
       @media (max-width: 768px) {
         .pdf-container {
           width: 95%;
+          height: 80%;
+          padding: 5px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .pdf-container {
+          width: 100%;
           height: 90%;
         }
       }
     </style>
   </head>
+
   <body>
-    <main class="pdf-container">
-      <iframe src="main.pdf" title="COMP 458 Quantum Computing Handbook">
-        Your browser does not support iframes.
-      </iframe>
-    </main>
+    <body>
+      <main class="pdf-container">
+        <iframe
+          id="pdf-frame"
+          src="main.pdf"
+          title="COMP 458 Quantum Computing Handbook"
+        >
+        </iframe>
+      </main>
+      <p id="direct-pdf" style="text-align: center">
+        Trouble viewing the file?
+        <a href="main.pdf" target="_blank">Click here</a>.
+      </p>
+    </body>
   </body>
 </html>
+
