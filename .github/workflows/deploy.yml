@@ -27,7 +27,7 @@ jobs:
       - name: Prepare Output Directory
         run: |
           mkdir -p output
-          cp main.pdf output/
+          mv main.pdf output/
           cp index.html output/
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
