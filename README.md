@@ -1,8 +1,8 @@
-# COMP 458: Quantum Computing Algorithms 🧬
+# [COMP 458: Quantum Computing Algorithms 🧬](https://micahkepe.com/comp458-notes/)
 
 Personal course notes from COMP 458: Quantum Computing Algorithms (Spring 25).
 
-The latest compiled PDF can be found [here](https://micahkepe.com/comp458-notes/main.pdf).
+The latest version of the notes can be found [here](https://micahkepe.com/comp458-notes/).
 
 This repository is meant as an educational resource and collaboration space
 for reinforcing the concepts learned in the course. The notes are written fully
