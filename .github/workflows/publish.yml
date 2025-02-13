@@ -16,6 +16,7 @@ jobs:
         uses: xu-cheng/latex-action@v3
         with:
           root_file: main.tex
+          pre_compile: "tlmgr update --self"
       - name: Move PDF to Output Directory
         run: |
           mkdir -p output
