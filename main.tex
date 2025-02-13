@@ -13,10 +13,16 @@
 \author{\huge{Micah Kepe}}
 \date{}
 
+% ==============================
+
+\makeindex[title=Appendix, intoc]
+
+% ==============================
+
 \begin{document}
 
 \maketitle
-\newpage% or \cleardoublepage
+\newpage  % or `\cleardoublepage` if using two-sided layout
 \pdfbookmark[<level>]{<title>}{<dest>}
 \pdfbookmark[section]{\contentsname}{toc}
 \tableofcontents
@@ -54,45 +60,60 @@
 % ● Quantum circuits, systems, and properties
 % ● Multi-qubit systems and entanglement
 \input{lectures/phase-i/lecture4.tex}
+\input{lectures/phase-i/lecture5.tex}
+\input{lectures/phase-i/lecture6.tex}
 
 %%%%
 
 % ● Reversibility property and no-cloning theorem
 % ● Bell-state and GHZ state generation circuits
-\input{lectures/phase-i/lecture5.tex}
-\input{lectures/phase-i/lecture6.tex}
+% \input{lectures/phase-i/lecture7.tex}
 
 % ==============================
 % PHASE II: FUNDAMENTALS
 % ==============================
-\chapter{Phase II: Fundamentals of Quantum Algorithms}
+% \chapter{Phase II: Fundamentals of Quantum Algorithms}
 
 % ● Basic quantum algorithms
 % ● Quantum computing using Cirq
-\input{lectures/phase-ii/lecture7.tex}
+% LECTURES TBD
 
 % ● Grover's search algorithm and coding
-% \input{lectures/phase-ii/lecture8.tex}
-% \input{lectures/phase-ii/lecture9.tex}
+% LECTURES TBD
 
 % ● Introduction to variational quantum algorithms
 % ● Training and optimization of variational algorithms
-% \input{lectures/phase-ii/lecture10.tex}
-% \input{lectures/phase-ii/lecture11.tex}
+% LECTURES TBD
 
 % ==============================
 % PHASE III: ADVANCED
 % ==============================
-\chapter{Phase III: Advanced Quantum Algorithms}
+% \chapter{Phase III: Advanced Quantum Algorithms}
+% LECTURES TBD
+
 
 % ==============================
 % PHASE IV: SPECIAL TOPICS
 % ==============================
-\chapter{Phase IV: Special Topics in Quantum Computing}
+% \chapter{Phase IV: Special Topics in Quantum Computing}
+% LECTURES TBD
+
 
 % ==============================
 % PHASE V: CONCLUDING LECTURES
 % ==============================
-\chapter{Phase V: Concluding Lectures}
+% \chapter{Phase V: Concluding Lectures}
+% LECTURES TBD
+
+
+% ==============================
+% Appendix
+% ==============================
+
+\begin{appendices}\label{sec:Appendix}
+  \printindex
+\end{appendices}
+
+% ==============================
 
 \end{document}

@@ -1,66 +1,86 @@
 \section{Lecture 3: Quantum Bits and Quantum States} \label{sec:lecture3}
 
-\dfn{Qubit}{A \textbf{qubit} is the fundamental unit of quantum information.
-  Unlike a classical bit, which is either $0$ or $1$, a qubit can exist in a
-  \vocab{superposition} of states:
-  \[ |\psi\rangle = \alpha|0\rangle + \beta|1\rangle, \quad \text{where }
-  \alpha, \beta \in \mathbb{C} \text{ and } ||\alpha||^2 + ||\beta||^2 = 1 \]
-}
+\dfn{Qubit}{A \textbf{qubit} \index{qubit} is the fundamental unit of quantum
+  information. Unlike a classical bit, which is either $0$ or $1$, a qubit
+  can exist in a \vocab{superposition} \index{superposition} of states:
 
+  \[
+    |\psi\rangle = \alpha|0\rangle + \beta|1\rangle, \quad \text{where }
+    \alpha, \beta \in \mathbb{C} \text{ and } ||\alpha||^2 + ||\beta||^2 = 1
+  \]
+}
 
 \vspace{0.3cm}
 
 \noindent
-Key features of qubits include:
-  \begin{itemize}
-    \ii \textbf{Superposition:} A qubit can exist simultaneously in multiple
-    basis states.
 
-    \ii \textbf{Complex Amplitudes:} Coefficients $\alpha$ and $\beta$ are
-    complex numbers carrying magnitude and phase information.
+Key features of qubits include: \index{qubit!properties@\textit{properties}}
 
-    \ii \textbf{Interference:} Quantum states can interfere constructively or
-    destructively.
+\begin{itemize}
+  \ii \textbf{Superposition:} A qubit can exist simultaneously in multiple
+  basis states.
 
-    \ii \textbf{Entanglement:} Qubits can be correlated in ways that
-    classical bits cannot.
+  \ii \textbf{Complex Amplitudes:} Coefficients $\alpha$ and $\beta$ are
+  complex numbers carrying magnitude and phase information.
+
+  \ii \textbf{Interference:} Quantum states can interfere constructively or
+  destructively.
+
+  \ii \textbf{Entanglement:} Qubits can be correlated in ways that
+  classical bits cannot.
 
 \end{itemize}
 
-\subsection*{Classical Computing Paradigms}
+\subsection*{Classical Computing Paradigms} \index{classical computing}
 
-Quantum computing introduces a fundamentally different computational model:
-  \begin{itemize}
-    \ii \textbf{Deterministic Computing:} Uses discrete states (0 or 1) with
-    predictable transitions.
+Quantum computing introduces a fundamentally different computational model.
+Here are some key paradigms in classical computing that quantum computing
+challenges:
 
-    \ii \textbf{Analog Computing:} Uses continuous values susceptible to
-    noise accumulation.
+\begin{itemize}
+  \ii \textbf{Deterministic Computing:} Uses discrete states (0 or 1) with
+  predictable transitions.
 
-    \ii \textbf{Probabilistic Computing:} Represents probabilistic mixtures
-    of states.
+  \ii \textbf{Analog Computing:} Uses continuous values susceptible to
+  noise accumulation.
 
-    \ii \textbf{Quantum Computing:} Allows coherent superposition with
+  \ii \textbf{Probabilistic Computing:} Represents probabilistic mixtures
+  of states.
+
+\end{itemize}
+
+In contrast, for quantum computing:
+
+\begin{itemize}
+  \item \textbf{Quantum Computing:} Allows coherent superposition with
     complex amplitudes and quantum interference.
 \end{itemize}
 
 \dfn{Dirac Notation}{Quantum states are represented using \vocab{Dirac
-  notation} (bra-ket notation):
+  notation} (bra-ket notation): \index{vector!Dirac notation}
   \begin{itemize}
     \ii \textbf{Ket:} \( |0\rangle, |1\rangle \) represent computational
     basis states
+
     \ii Computational basis vectors:
+
     \[
       |0\rangle = \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \quad
       |1\rangle = \begin{bmatrix} 0 \\ 1 \end{bmatrix}
     \]
+
     \ii General state: \( |\psi\rangle = \alpha|0\rangle + \beta|1\rangle \)
+
 \end{itemize}}
 
 \dfn{Basis States}{Common qubit bases include:
   \begin{itemize}
     \ii \textbf{Computational Basis:} \( |0\rangle, |1\rangle \)
+    \index{universal bases!computational}
+
     \ii \textbf{Hadamard Basis:}
+    \index{universal bases!Hadamard basis}
+
     \[
       |+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle) = \begin{bmatrix}
       1/\sqrt{2} \\ 1/\sqrt{2} \end{bmatrix}
@@ -72,36 +92,47 @@ Quantum computing introduces a fundamentally different computational model:
     \]
 
     \ii \textbf{Phase/ Circular Polarization Basis:}
+    \index{universal bases!phase basis}
+
     \[ |L\rangle = \ket{+i} = \frac{1}{\sqrt{2}}(|0\rangle + i|1\rangle) \]
+
     \[|R\rangle = \ket{-i} = \frac{1}{\sqrt{2}}(|0\rangle - i|1\rangle) \]
+
 \end{itemize}}
+
+%%%%%%%%%%%
 
 \subsection*{Bloch Sphere Representation}
 
+\index{Bloch sphere}
 \dfn{Bloch Sphere}{A geometric representation of a single qubit state:
   \[ |\psi\rangle = \lt[\cos\left(\frac{\theta}{2}\right)|0\rangle +
   e^{i\phi}\sin\left(\frac{\theta}{2}\right)|1\rangle\rt]e^{i\gamma} \]
   Where:
   \begin{itemize}
-    \ii \( \theta \in [0,\pi] \) is the polar angle
-    \ii \( \phi \in [0, 2\pi) \) is the azimuthal angle
+    \ii \( \theta \in [0,\pi] \) is the polar angle \index{Bloch sphere!polar angle}
+
+    \ii \( \phi \in [0, 2\pi) \) is the azimuthal angle \index{Bloch sphere!azimuthal angle}
+
     \ii \( \gamma \) is a global phase, often omitted since it cannot be
-  represented on the Bloch sphere directly
+    represented on the Bloch sphere directly \index{Bloch sphere!global phase}
 \end{itemize}}
-  \aside{Bloch Sphere Conversion to Cartesian Coordinates:
-    \[ x = \sin\theta \cos\phi, \quad
-      y = \sin\theta \sin\phi, \quad
-      z = \cos\theta
-    \]
-  }
 
-  Rearranging the Bloch sphere formula, we obtain that $\theta$ and
-  $\phi$ can be expressed as:
-
-  \[
-    \theta = 2\arccos(\alpha_1), \quad \phi = -i
-    \ln\left(\frac{\alpha_2}{\sin\left(\frac{\theta}{2}\right)}\right)
+\index{Bloch sphere!Cartesian coordinates conversion}
+\aside{Bloch Sphere Conversion to Cartesian Coordinates:
+  \[ x = \sin\theta \cos\phi, \quad
+    y = \sin\theta \sin\phi, \quad
+    z = \cos\theta
   \]
+}
+
+Rearranging the Bloch sphere formula, we obtain that $\theta$ and
+$\phi$ can be expressed as:
+
+\[
+  \theta = 2\arccos(\alpha_1), \quad \phi = -i
+  \ln\left(\frac{\alpha_2}{\sin\left(\frac{\theta}{2}\right)}\right)
+\]
 
 \ex{Example Bloch Sphere Representation}{
   \text{For the state } \(\theta = \frac{\pi}{2}, \phi = 0\):
@@ -122,22 +153,24 @@ Quantum computing introduces a fundamentally different computational model:
 }
 
 
-\subsection*{Quantum Measurement}
+\subsection*{Quantum Measurement} \index{quantum measurement}
+
 When a qubit is measured:
-  \begin{itemize}
-    \ii The quantum state \textit{collapses} to an eigenstate
 
-    \ii Measurement probability depends on squared amplitude
+\begin{itemize}
+  \ii The quantum state \textit{collapses} to an eigenstate
 
-    \ii Computational basis measurement probabilities:
-    \[ P(0) = |\alpha|^2, \quad P(1) = |\beta|^2 \]
+  \ii Measurement probability depends on squared amplitude
 
-    \ii Post-measurement state:
-    \[
-      \boxed{|\psi_{\text{new}}\rangle = \frac{|b\rangle \langle b | \psi
-        \rangle}{\sqrt{P(b)}}
-      }
-    \]
+  \ii Computational basis measurement probabilities:
+  \[ P(0) = |\alpha|^2, \quad P(1) = |\beta|^2 \]
+
+  \ii Post-measurement state:
+  \[
+    \boxed{|\psi_{\text{new}}\rangle = \frac{|b\rangle \langle b | \psi
+      \rangle}{\sqrt{P(b)}}
+    }
+  \]
 
 \end{itemize}
 
@@ -160,14 +193,21 @@ When a qubit is measured:
 states.}
 
 \nt{Quantum Bases and Their $\theta$ and $\phi$ Values:
+
   \begin{itemize}
     \item \textbf{Computational Basis:} \( \zero \rightarrow \theta = 0, \phi
       = 0, \quad \one \rightarrow \theta = \pi, \phi = 0 \)
+      \index{universal bases!computational!angles@\textit{angles}}
+
     \item \textbf{Hadamard Basis:} \( \ket{+} \rightarrow \theta =
       \frac{\pi}{2}, \phi = 0, \quad \ket{-} \rightarrow \theta =
       \frac{\pi}{2}, \phi = \pi \)
+      \index{universal bases!Hadamard basis!angles@\textit{angles}}
+
   \item \textbf{Phase Basis:} \( \left|L\right\rangle = \ket{+i} \rightarrow
   \theta = \frac{\pi}{2}, \phi = \frac{\pi}{2}, \quad \left|R\right\rangle
   = \ket{-i} \rightarrow \theta = \frac{\pi}{2}, \phi = -\frac{\pi}{2} \)
+  \index{universal bases!phase basis!angles@\textit{angles}}
+
 \end{itemize}
 }

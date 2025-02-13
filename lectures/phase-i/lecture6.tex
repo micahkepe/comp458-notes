@@ -1,11 +1,14 @@
 \section{Lecture 6: Multi-Qubit Gates and Circuit Construction}
+\label{sec:lecture6}
 
 $n$-qubit gates are unitary transformations that operate on $n$ qubits. This
 section explores key multi-qubit gates, their properties, and how to
 construct quantum circuits using these gates.
 
+\index{quantum gates!multi-qubit gates}
 \subsection*{Controlled Gates}
 
+\index{quantum gates!multi-qubit gates!controlled gates}
 \dfn{Controlled X Gate}{(CNOT) is a two-qubit gate that flips the target qubit
   if the control qubit is in state $\ket{1}$, and does nothing if the control
   qubit is in state $\ket{0}$. The matrix representation of CNOT is given by:
@@ -104,6 +107,9 @@ This transformation can be visualized in a circuit diagram:
   \end{quantikz}
 \end{align*}
 
+
+% TODO: move this to lecture 7
+\index{quantum gates!multi-qubit gates!SWAP gate}
 \subsection*{SWAP Gate}
 
 \dfn{SWAP Gate}{exchanges the states of two qubits. Its matrix representation
@@ -125,6 +131,7 @@ This transformation can be visualized in a circuit diagram:
   \]
 }
 
+\index{quantum gates!multi-qubit gates!Controlled-Z gate}
 \subsection*{Controlled-Z Gate}
 
 \dfn{Controlled-Z Gate}{(CZ) applies a phase flip if both qubits are in state
@@ -140,6 +147,8 @@ This transformation can be visualized in a circuit diagram:
   \]
 }
 
+% TODO: move this to lecture 7
+\index{quantum gates!multi-qubit gates!Toffoli gate}
 \subsection*{Toffoli Gate}
 
 \dfn{Toffoli Gate}{(CCX) is a three-qubit gate with two control qubits and
@@ -162,6 +171,7 @@ This transformation can be visualized in a circuit diagram:
   qubits are in state $\ket{1}$.
 }
 
+\index{Circuit notation!multi-qubit gates}
 \subsection*{Circuit Representations}
 
 The standard circuit representations for these multi-qubit gates are:
@@ -207,6 +217,7 @@ representations of the same quantum circuit.
 }
 
 \noindent
+
 For example, consider a circuit with two Hadamard gates applied to different
 qubits:
 

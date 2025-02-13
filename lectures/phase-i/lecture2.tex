@@ -1,15 +1,17 @@
-\section{Lecture 2: Review of Linear Algebra Concepts}
+\section{Lecture 2: Review of Linear Algebra Concepts}\label{sec:lecture2}
 
 Linear algebra provides the foundation for manipulating quantum states, which
 are represented using vectors and matrices in a complex vector space.
 
-\dfn{Vectors: Row and Column Vectors}{A \textbf{vector} is an ordered list of
-  numbers, which can be represented as either a row or column vector. The
-  components of vectors in quantum computing belong to the field of complex
-numbers ($\mathbb{C}$).}
+\dfn{Vectors: Row and Column Vectors}{A \textbf{vector} \index{vector} is an
+  ordered list of numbers, which can be represented as either a row or column
+  vector. The components of vectors in quantum computing belong to the field of
+complex numbers ($\mathbb{C}$).}
 
-\subsection*{Column Vectors}
+\subsection*{Column Vectors} \index{vector!column| see{ ket }}
+
 A column vector is a vertical arrangement of numbers:
+
 \[
   \mathbf{v} =
   \begin{bmatrix}
@@ -21,8 +23,10 @@ A column vector is a vertical arrangement of numbers:
 \]
 
 \subsection*{Row Vectors}
-A row vector is the complex conjugate transpose (\textbf{adjoint}) of a
-column vector:
+
+A row vector is the complex conjugate transpose \textbf{vector}
+\index{vector!adjoint} of a column vector:
+
 \[
   \mathbf{v}^\dagger =
   \begin{bmatrix}
@@ -30,39 +34,56 @@ column vector:
   \end{bmatrix}.
 \]
 
-\subsection*{Dirac Notation}
+The adjoint of a column vector is a row vector, and vice versa. We represent
+the adjoint of a vector using the dagger symbol ($\dagger$).
+\index{vector!dagger@\textsl{dagger}| see{ adjoint }}
+
+\subsection*{Dirac Notation \index{vector!Dirac notation}}
+
 In quantum computing, vectors are represented using \textbf{Dirac notation}
 (bra-ket notation):
+
 \begin{itemize}
-  \item \textbf{Ket} \( |v\rangle \): Represents a column vector.
-  \item \textbf{Bra} \( \langle v | \): Represents the adjoint (conjugate
-    transpose) of the ket.
+  \item \textbf{Ket} \index{vector!Dirac notation!ket@\textsl{ket}} \(
+    |v\rangle \): Represents a column vector.
+
+  \item \textbf{Bra} \index{vector!Dirac notation!bra@\textsl{bra}} \(
+    \langle v | \): Represents the adjoint (conjugate transpose) of the ket.
+
   \item Example: \( |v\rangle = \begin{bmatrix} 1 + i \\ 2 \end{bmatrix},
     \quad \langle v | = \begin{bmatrix} 1 - i & 2 \end{bmatrix} \).
 \end{itemize}
 
-\dfn{Euler's Formula}{Euler's formula relates complex exponentials to
-  trigonometric functions:
+\dfn{Euler's Formula}{Euler's formula \index{Euler's formula@\textbf{Euler's
+  formula}} relates complex exponentials to trigonometric functions:
+
   \[
     e^{i\omega} = \cos(\omega) + i\sin(\omega)
   \]
+
 This is fundamental in representing quantum states and transformations.}
 
-\dfn{Inner Product}{The \textbf{inner product} of two vectors $\mathbf{v},
-  \mathbf{w} \in \mathbb{C}^n$ is defined as:
+\dfn{Inner Product}{The \textbf{inner product} \index{vector!inner product}
+  of two vectors $\mathbf{v}, \mathbf{w} \in \mathbb{C}^n$ is defined as:
+
   \[
     \langle \mathbf{v}, \mathbf{w} \rangle = \mathbf{v}^\dagger \mathbf{w} =
     \sum_{i=1}^n \overline{v_i}w_i
   \]
-which measures the overlap between two quantum states.
+
+  which measures the overlap between two quantum states.
 
   \ex{Inner Product Example}{
+
     Given two vectors:
+
     \[
       \mathbf{v} = \begin{bmatrix} 1 \\ i \end{bmatrix}, \quad
       \mathbf{w} = \begin{bmatrix} 2 \\ 1 \end{bmatrix}
     \]
+
     The inner product is:
+
     \[
       \langle \mathbf{v}, \mathbf{w} \rangle = \begin{bmatrix} 1 & -i
       \end{bmatrix}
@@ -72,118 +93,130 @@ which measures the overlap between two quantum states.
 
   We also have the following property that the inner product is equivalent to
   the square of the Euclidean norm of a vector:
+  \index{vector!Euclidean norm}
 
   \[
     \langle \mathbf{v}, \mathbf{v} \rangle = \|\mathbf{v}\|^2
   \]
 }
 
-\dfn{Outer Product}{The \textbf{outer product} of two vectors $\mathbf{v} \in
-  \mathbb{C}^m$ and $\mathbf{w} \in \mathbb{C}^n$ produces an $m \times n$
-  matrix:
+\dfn{Outer Product}{The \textbf{outer product} \index{vector!outer product}
+  of two vectors $\mathbf{v} \in \mathbb{C}^m$ and $\mathbf{w} \in
+  \mathbb{C}^n$ produces an $m \times n$ matrix:
+
   \[
     \mathbf{v}\mathbf{w}^\dagger =
     \begin{bmatrix} v_1 \\ v_2 \\ \vdots \\ v_m \end{bmatrix}
     \begin{bmatrix} \overline{w_1} & \overline{w_2} & \dots & \overline{w_n}
     \end{bmatrix}
-    \]
-  This operation is useful for constructing quantum operators.}
-
-  \dfn{Tensor Product}{The \textbf{tensor product} (or Kronecker product)
-    allows us to describe multi-qubit systems. Given two vectors:
-    \[
-      \mathbf{v} = \begin{bmatrix} v_1 \\ v_2 \end{bmatrix}, \quad
-      \mathbf{w} = \begin{bmatrix} w_1 \\ w_2 \end{bmatrix}
-    \]
-    Their tensor product is:
-    \[
-      \mathbf{v} \otimes \mathbf{w} =
-      \begin{bmatrix}
-        v_1 w_1 \\
-        v_1 w_2 \\
-        v_2 w_1 \\
-        v_2 w_2
-      \end{bmatrix}
-    \]
-    The tensor product expands the state space, allowing representation of
-  entangled states.}
-
-  \subsection*{Orthagonality}
-  Two vectors $v, w \in \mathbb{C}^n$ are \textbf{orthogonal} if their
-  inner product is zero:
-
-  \[
-    \langle \mathbf{v}, \mathbf{w} \rangle = 0
   \]
 
-  Orthogonal vectors are linearly independent and span a subspace of the vector
-  space. As you might remember from linear algebra, a set of orthogonal vectors
-  can be used to construct an orthonormal basis, and any vector can be expressed
-  as a linear combination of the basis vectors.
+This operation is useful for constructing quantum operators.}
 
-  \vspace{0.3cm}
+\dfn{Tensor Product}{The \textbf{tensor product} (or Kronecker product)
+  allows us to describe multi-qubit systems. Given two vectors:
+  \index{vector!tensor product}
 
-  This will be useful when we cover the quantum bases in \autoref{sec:lecture3}.
+  \[
+    \mathbf{v} = \begin{bmatrix} v_1 \\ v_2 \end{bmatrix}, \quad
+    \mathbf{w} = \begin{bmatrix} w_1 \\ w_2 \end{bmatrix}
+  \]
 
-  \vspace{0.3cm}
+  Their tensor product is:
 
-  \dfn{Adjoint of a Matrix}{The \textbf{adjoint} (or Hermitian conjugate) of a
-    matrix $A$ is obtained by taking the transpose and complex conjugate of
-    each entry:
-    \[
-      A^\dagger = \overline{A^T}
-    \]
-    If $A$ is:
-    \[
-      A = \begin{bmatrix}
-        1 & i \\
-        2 & 3
-      \end{bmatrix}
-    \]
-    Then its adjoint is:
-    \[
-      A^\dagger =
-      \begin{bmatrix}
-        1 & 2 \\
-        - i & 3
-      \end{bmatrix}
-  \]}
+  \[
+    \mathbf{v} \otimes \mathbf{w} =
+    \begin{bmatrix}
+      v_1 w_1 \\
+      v_1 w_2 \\
+      v_2 w_1 \\
+      v_2 w_2
+    \end{bmatrix}
+  \]
 
-  \dfn{Unitary Matrix}{A square matrix $U$ is called \textbf{unitary} if its
-    adjoint is equal to its inverse:
-    \[
-      U^\dagger U = I
-    \]
-    where $I$ is the identity matrix. Unitary matrices preserve the norm of
-    quantum states and represent reversible quantum operations. Example:
-    \[
-      U = \frac{1}{\sqrt{2}}
-      \begin{bmatrix}
-        1 & 1 \\
-        1 & -1
-      \end{bmatrix}, \quad U^\dagger U = I
-  \]}
+  The tensor product expands the state space, allowing representation of
+entangled states.}
 
-  \dfn{Hermitian Matrix}{A square matrix $H$ is called \textbf{Hermitian} if it
-    is equal to its adjoint:
+\subsection*{Orthagonality} \index{vector!orthogonality}
+Two vectors $v, w \in \mathbb{C}^n$ are \textbf{orthogonal} if their
+inner product is zero:
 
-    \[
-      H = H^\dagger
-    \]
+\[
+  \langle \mathbf{v}, \mathbf{w} \rangle = 0
+\]
 
-    Hermitian matrices represent observable quantities in quantum mechanics and
-    have real eigenvalues. Example:
+Orthogonal vectors are linearly independent and span a subspace of the vector
+space. As you might remember from linear algebra, a set of orthogonal vectors
+can be used to construct an orthonormal basis, and any vector can be expressed
+as a linear combination of the basis vectors.
 
-    \[
-      H = \begin{bmatrix}
-        2 & i \\
-        - i & 2
-      \end{bmatrix}
-    \]
+\vspace{0.3cm}
 
-    Since $H^\dagger = H$, it is Hermitian.
+This will be useful when we cover the quantum bases in \autoref{sec:lecture3}.
 
-    \nt{Hermitian matrices \textbf{can't} have complex numbers in their diagonal
+\vspace{0.3cm}
+
+\dfn{Adjoint of a Matrix}{The \textbf{adjoint} (or Hermitian conjugate) of a
+  matrix $A$ is obtained by taking the transpose and complex conjugate of
+  each entry:
+  \[
+    A^\dagger = \overline{A^T}
+  \]
+  If $A$ is:
+  \[
+    A = \begin{bmatrix}
+      1 & i \\
+      2 & 3
+    \end{bmatrix}
+  \]
+  Then its adjoint is:
+  \[
+    A^\dagger =
+    \begin{bmatrix}
+      1 & 2 \\
+      - i & 3
+    \end{bmatrix}
+\]}
+
+\dfn{Unitary Matrix}{A square matrix $U$ is called \textbf{unitary}
+  \index{matrix!unitary@\textbf{unitary}} if its adjoint is equal to its
+  inverse:
+
+  \[
+    U^\dagger U = I
+  \]
+
+  where $I$ is the identity matrix. Unitary matrices preserve the norm of
+  quantum states and represent reversible quantum operations. Example:
+
+  \[
+    U = \frac{1}{\sqrt{2}}
+    \begin{bmatrix}
+      1 & 1 \\
+      1 & -1
+    \end{bmatrix}, \quad U^\dagger U = I
+\]}
+
+\dfn{Hermitian Matrix}{A square matrix $H$ is called \textbf{Hermitian}
+  \index{matrix!Hermitian@\textbf{Hermitian}} if it is equal to its adjoint:
+
+  \[
+    H = H^\dagger
+  \]
+
+  Hermitian matrices represent observable quantities in quantum mechanics and
+  have real eigenvalues. Example:
+
+  \[
+    H = \begin{bmatrix}
+      2 & i \\
+      - i & 2
+    \end{bmatrix}
+  \]
+
+  Since $H^\dagger = H$, it is Hermitian.
+
+  \nt{Hermitian matrices \textbf{can't} have complex numbers in their diagonal
     General case illustration:
 
     \[
@@ -207,98 +240,110 @@ which measures the overlap between two quantum states.
   Hermitian matrices are unitary, but unitary matrices are not necessarily
   Hermitian:
 
-    \[
-      H \rightarrow U, \quad U \not\rightarrow H
-    \]
+  \[
+    H \rightarrow U, \quad U \not\rightarrow H
+  \]
 }
 
-  \dfn{Eigenvalues and Eigenvectors}{For a square matrix $A \in \mathbb{C}^{n
-    \times n}$, a vector $\mathbf{v} \neq \mathbf{0}$ is an
-    \textbf{eigenvector} if:
-    \[
-      A\mathbf{v} = \lambda\mathbf{v}
-    \]
-    where $\lambda \in \mathbb{C}$ is the \textbf{eigenvalue}. Eigenvalues
-  provide insight into the structure of linear transformations.
+\dfn{Eigenvalues and Eigenvectors}{
+  For a square matrix $A \in \mathbb{C}^{n\times n}$, a vector
+  $\mathbf{v} \neq \mathbf{0}$ is an \textbf{eigenvector} if:
+  \index{vector!eigenvector}
 
-  In Braket notation, the eigenvalue equation is:
+  \[
+    A\mathbf{v} = \lambda\mathbf{v}
+  \]
+
+  where $\lambda \in \mathbb{C}$ is the \textbf{eigenvalue}. Eigenvalues
+  provide insight into the structure of linear transformations.
+  \index{matrix!eigenvalue}
+
+  In Braket notation, the eigenvalue equation is: \index{matrix!eigenvalue equation}
 
   \[
     A|\mathbf{v}\rangle = \lambda|\mathbf{v}\rangle
   \]
 }
 
-  \ex{Example: Eigenvalues}{For the matrix
-    \[
-      A = \begin{bmatrix} 1 & i \\ -i & 1 \end{bmatrix}
-    \]
-    The characteristic equation is:
-    \[
-      \det(A - \lambda I) = (1 - \lambda)^2 + 1 = 0
-    \]
-  Solving gives eigenvalues $\lambda = 1 \pm i$.}
-
-  \dfn{Quantum Bits/ Qubits}{
-    A qubit can be defined mathematically as follows:
-
-    \[
-      \ket{\psi} = \bmatrix \alpha_1 \\ \alpha_2 \endbmatrix \in \mathbb{C}^2
-    \]
-
-    where:
-
-    \[
-      \alpha_1, \alpha_2 \in \mathbb{C} \quad \text{and} \quad |\alpha_1|^2 +
-      |\alpha_2|^2 = 1
-    \]
-  }
-
-  The first property ensures that the qubit is normalized, while the second
-  property ensures that the qubit is in a superposition of the basis states.
-
-  \vspace{0.3cm}
-
-  The first universal basis that we will look at is the computational basis,
-  which consists of the states \(\zero\) and \(\one\):
+\ex{Example: Eigenvalues}{For the matrix
 
   \[
-    \text{Zero state} = \zero = \bmatrix 1 \\ 0 \endbmatrix
-    \quad \text{One state} = \one = \bmatrix 0 \\ 1 \endbmatrix
+    A = \begin{bmatrix} 1 & i \\ -i & 1 \end{bmatrix}
   \]
 
-  A quantum state vector $\ket{\psi}$ can be expressed as a linear
-  combination of the basis states:
+  The characteristic equation is:
 
   \[
-    \ket{\psi} = \alpha_1\zero + \alpha_2\one
+    \det(A - \lambda I) = (1 - \lambda)^2 + 1 = 0
   \]
 
-  \nt{Properties of the computational basis:
+Solving gives eigenvalues $\lambda = 1 \pm i$.}
+
+\dfn{Quantum Bits/ Qubits}{
+  A \textbf{qubit} \index{qubit} can be defined mathematically as follows:
+
+  \[
+    \ket{\psi} = \bmatrix \alpha_1 \\ \alpha_2 \endbmatrix \in \mathbb{C}^2
+  \]
+
+  where:
+
+  \[
+    \alpha_1, \alpha_2 \in \mathbb{C} \quad \text{and} \quad |\alpha_1|^2 +
+    |\alpha_2|^2 = 1
+  \]
+}
+
+The first property ensures that the qubit is normalized, while the second
+property ensures that the qubit is in a superposition of the basis states.
+
+\vspace{0.3cm}
+
+The first universal basis that we will look at is the computational basis,
+which consists of the states \(\zero\) and \(\one\):
+\index{universal bases!computational}
+
+\[
+  \text{Zero state} = \zero = \bmatrix 1 \\ 0 \endbmatrix
+  \quad \text{One state} = \one = \bmatrix 0 \\ 1 \endbmatrix
+\]
+
+A quantum state vector $\ket{\psi}$ can be expressed as a linear
+combination of the basis states:
+
+\[
+  \ket{\psi} = \alpha_1\zero + \alpha_2\one
+\]
+
+\nt{Properties of the computational basis:
+  \index{universal bases!computational!properties@\textit{properties}}
 
   \begin{itemize}
-    \item The computational basis states are orthogonal:
-    \[
-      \langle 0 | 1 \rangle = \zero^\dagger \one = \bmatrix 1 & 0 \endbmatrix
-      \bmatrix 0 \\ 1 \endbmatrix = 0
-    \]
+    \item \textbf{The computational basis states are orthogonal:}
 
-    \item The computational basis states are normalized:
-    \[
-      \langle 0 | 0 \rangle = \zero^\dagger \zero = \bmatrix 1 & 0
-      \endbmatrix \bmatrix 1 \\ 0 \endbmatrix = 1
-    \]
+      \[
+        \langle 0 | 1 \rangle = \zero^\dagger \one = \bmatrix 1 & 0 \endbmatrix
+        \bmatrix 0 \\ 1 \endbmatrix = 0
+      \]
+
+    \item \textbf{The computational basis states are normalized:}
+
+      \[
+        \langle 0 | 0 \rangle = \zero^\dagger \zero = \bmatrix 1 & 0
+        \endbmatrix \bmatrix 1 \\ 0 \endbmatrix = 1
+      \]
   \end{itemize}
-  }
+}
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 
-  \qs{}{Show that any unitary matrix preserves the inner product of two
-  vectors.}
+\qs{}{Show that any unitary matrix preserves the inner product of two
+vectors.}
 
-  \sol{Since a unitary matrix satisfies \( U^\dagger U = I \), we have:
-    \[
-      \langle U\mathbf{v}, U\mathbf{w} \rangle = \mathbf{v}^\dagger
-      (U^\dagger U) \mathbf{w} = \mathbf{v}^\dagger \mathbf{w}
-    \]
-  Thus, inner products are preserved.}
+\sol{Since a unitary matrix satisfies \( U^\dagger U = I \), we have:
+  \[
+    \langle U\mathbf{v}, U\mathbf{w} \rangle = \mathbf{v}^\dagger
+    (U^\dagger U) \mathbf{w} = \mathbf{v}^\dagger \mathbf{w}
+  \]
+Thus, inner products are preserved.}
 

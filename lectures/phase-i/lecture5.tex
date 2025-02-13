@@ -1,8 +1,15 @@
 \section{Lecture 5: Other Quantum Gates, Measurement, Multi-Qubit Systems}
+\label{sec:lecture5}
 
-\dfn{Single-Qubit Gates}{Quantum gates manipulate individual qubits. Key
-single-qubit gates include:}
+\index{quantum gates!single-qubit gates}
+\dfn{Single-Qubit Gates}{Quantum gates manipulate individual qubits.
+  Single-qubit gates are represented by unitary matrices that operate on a
+single qubit.}
+
+The following are common single-qubit gates:
+
 \begin{itemize}
+  \index{quantum gates!single-qubit gates!Hadamard gate}
   \item \textbf{Hadamard Gate (H):}
     \[
       \boxed{
@@ -27,10 +34,12 @@ single-qubit gates include:}
 
     \nt{
       \[
-        H \zero = \ket{+}, \quad H \one = \ket{-}, \quad H \ket{+} = \zero, \quad H \ket{-} = \one
+        H \zero = \ket{+}, \quad H \one = \ket{-}, \quad H \ket{+} = \zero,
+        \quad H \ket{-} = \one
       \]
     }
 
+    \index{quantum gates!single-qubit gates!Phase gate}
   \item \textbf{Phase Gate (S):}
 
     \[
@@ -39,8 +48,8 @@ single-qubit gates include:}
       }
     \]
 
-    Adds a $\pi/2$ phase to $\one$, so it is also referred to as the "$\pi$/4 gate"
-    due to $\theta/2$ term in the Bloch sphere equation.
+    Adds a $\pi/2$ phase to $\one$, so it is also referred to as the "$\pi$/4
+    gate" due to $\theta/2$ term in the Bloch sphere equation.
 
     \vspace{0.3cm}
 
@@ -53,6 +62,7 @@ single-qubit gates include:}
         \frac{1}{\sqrt{2}}(\zero + i\one)}
     \end{itemize}
 
+    \index{quantum gates!single-qubit gates!T gate}
   \item \textbf{T Gate:}
 
     \[
@@ -73,6 +83,7 @@ single-qubit gates include:}
       \item Often used in quantum error correction
     \end{itemize}
 
+    \index{quantum gates!single-qubit gates!General Phase gate}
   \item \textbf{General Phase Gate } $P(\theta)$:
 
     \[
@@ -110,11 +121,13 @@ single-qubit gates include:}
 
   }
 
+  \index{quantum measurement}
   \subsection*{Back to Measurement}
 
   Measurement collapses quantum states to basis states with
   probabilities determined by amplitudes.
 
+  \index{quantum measurement!measurement bases}
   \begin{itemize}
     \item \textbf{Z-basis:} Standard computational basis ($\zero$, $\one$)
 
@@ -146,6 +159,8 @@ single-qubit gates include:}
 
   \end{itemize}
 
+
+  \index{multi-qubit systems}
   \subsection*{Multi-Qubit Systems}
 
   States for multiple qubits are represented as
@@ -160,10 +175,11 @@ single-qubit gates include:}
 
   \noindent
   \textbf{Properties of tensor products:}
+  \index{vector!tensor product!properties@\textit{properties}}
 
   \begin{itemize}
-    \item \textbf{Not commutative:} $(\ket{0} \otimes \ket{1} \neq \ket{1} \otimes
-      \ket{0})$
+    \item \textbf{Not commutative:} $(\ket{0} \otimes \ket{1} \neq \ket{1}
+      \otimes \ket{0})$
 
     \item Associative: $((\ket{a} \otimes \ket{b}) \otimes \ket{c} = \ket{a}
       \otimes (\ket{b} \otimes \ket{c}))$
@@ -180,6 +196,7 @@ single-qubit gates include:}
 
   \sol{
     To prove H is unitary and Hermitian:
+
     \begin{align*}
       H^\dagger &= \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ 1 & -1
       \end{pmatrix} = H \\
@@ -187,6 +204,7 @@ single-qubit gates include:}
         \end{pmatrix}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} =
         \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = I
       \end{align*}
+
       Thus, H is both unitary ($HH^\dagger = I$) and Hermitian ($H = H^\dagger$).
     }
 
@@ -227,7 +245,8 @@ single-qubit gates include:}
 
       \vspace{0.3cm}
 
-      \qs{Exercise 4}{If we apply H $\otimes$ H to $\ket{00}$, what state do we get?}
+      \qs{Exercise 4}{If we apply H $\otimes$ H to $\ket{00}$, what state do we
+      get?}
       \sol{
 
         \begin{align*}
