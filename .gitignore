@@ -314,5 +314,4 @@ TSWLatexianTemp*
 # End of https://www.toptal.com/developers/gitignore/api/latex
 
 ### Auto-generatd LaTeX files ###
-output/
 main.pdf
