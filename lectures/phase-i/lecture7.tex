@@ -1,7 +1,536 @@
 \section{Lecture 7:  More Multi-Qubit Gates, Reversibility Property,
 No-Cloning Theorem}\label{sec:Lecture 7}
 
-% TODO: fill me in
-% NOTE: need to move some of the material from lecture 6 because it was actually
-% covered in this lecture (Toffoli, SWAP, etc.)
+\subsection*{Review Questions}
+
+\qs{Number of Measurement Bases}{
+  How many different bases can we measure a $n$-qubit system in?
+}
+
+\sol{\boxed{\textbf{Infinite}}
+
+  \[
+    P(b) = \norm{\langle b | \psi \rangle}^2
+  \]
+
+  In quantum mechanics, a measurement basis for an $n$-qubit system is a set of
+  orthonormal basis states in a $2^n$-dimensional Hilbert space. The most
+  common measurement basis is the \textbf{computational basis}, given by
+  $\{|0\rangle, |1\rangle\}^{\otimes n}$. However, we can measure in
+  \textbf{any} orthonormal basis.
+
+  The space of all possible measurement bases corresponds to the space of all
+  possible orthonormal bases, which is parameterized by the unitary group
+  $U(2^n)$. The set of all $2^n$-dimensional orthonormal bases is described
+  by the unitary group $U(2^n)$, modulo the global phase $U(1)$. Since this
+  space is continuous and has infinitely many parameters, there exist an
+  \textbf{infinite} number of measurement bases.
+}
+
+\qs{Output of Quantum Circuit}{
+
+  What is the output quantum state of the following quantum circuit:
+
+  \[
+    \begin{quantikz}
+      q_2 \quad \lstick{$\zero$} & \gate{X} & \gate{X} & \meter{} \\
+      q_1 \quad \lstick{$\zero$} & \gate{S} & \gate{X} & \meter{} \\
+      q_0 \quad \lstick{$\zero$} & \gate{X} & & \meter{} \\
+    \end{quantikz}
+  \]
+}
+
+\sol{
+  \boxed{011}
+
+  \begin{itemize}
+    \item For $q_2$, the two $X$ gates essentially cancel each other out as
+      the gate is Hermitian ($XX = I$).
+    \item For $q_1$, the $S$ gate does not affect the starting state $\zero$,
+      and then the $X$ gate flips the signal to $\one$.
+    \item For $q_0$, the $X$ gate simply flips the signal from $\zero$ to
+      $\one$.
+  \end{itemize}
+
+  Remembering that we read the diagram top-down as the most significant bit
+  to the least significant bit, respectively, the output is 001.
+}
+
+\subsection*{More Multi-Qubit Gates}
+
+\subsubsection*{More 2-Qubit Gates}
+
+\index{quantum gates!multi-qubit gates!CNOT_{\text{target,control}}}
+\dfn{$CX(q_0 \rightarrow q_1)$ Gate}{
+
+  The control and target qubits of a CNOT gate can be swapped using Hadamard
+  gates:
+
+  \[
+    (H \otimes H) \cdot CNOT_{\text{control,target}} \cdot (H \otimes H) =
+    CNOT_{\text{target,control}}
+  \]
+
+  This transformation can be visualized in a circuit diagram:
+
+  \begin{align*}
+    \begin{quantikz}
+      \lstick{$\ket{c}$} & \gate{H} & \ctrl{1} & \gate{H} & \qw \\
+      \lstick{$\ket{t}$} & \gate{H} & \gate{X} & \gate{H} & \qw \\
+    \end{quantikz}
+  \end{align*}
+
+  The $CX(q_0 \rightarrow q_1)$ gate, also known as $CNOT_{target,control}$,
+  is a variant of the CNOT gate where the control and target qubits are
+  swapped. Its matrix representation is:
+
+  \[
+    CNOT_{target,control} = \begin{pmatrix}
+      1 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 1 \\
+      0 & 0 & 1 & 0 \\
+      0 & 1 & 0 & 0
+    \end{pmatrix}
+  \]
+
+  This gate flips the target qubit ($q_1$) if the control qubit ($q_0$) is in
+  state $\ket{1}$.
+}
+
+\subsubsection*{Derivation of the $CX(q_0 \rightarrow q_1)$ Gate}
+
+The control and target qubits of a CNOT gate can be swapped using Hadamard
+($H$) gates applied to both qubits. Mathematically, this operation is
+represented as:
+
+\[
+  (H \otimes H) \cdot \text{CNOT}_{\text{control,target}} \cdot (H \otimes H)
+  = \text{CNOT}_{\text{target,control}}
+\]
+
+
+The transformed CNOT gate is:
+
+\[
+  (H \otimes H) \cdot \text{CNOT} \cdot (H \otimes H).
+\]
+
+\vspace{0.3cm}
+
+\textbf{Step 1: Compute $\text{CNOT} \cdot (H \otimes H)$}
+
+First, multiply the CNOT matrix with $H \otimes H$:
+
+\[
+  \text{CNOT} \cdot (H \otimes H) = \begin{pmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 1 & 0
+    \end{pmatrix} \cdot \frac{1}{2} \begin{pmatrix}
+    1 & 1 & 1 & 1 \\
+    1 & -1 & 1 & -1 \\
+    1 & 1 & -1 & -1 \\
+    1 & -1 & -1 & 1
+  \end{pmatrix}
+\]
+
+This results in:
+
+\[
+  \text{CNOT} \cdot (H \otimes H) = \frac{1}{2} \begin{pmatrix}
+    1 & 1 & 1 & 1 \\
+    1 & -1 & 1 & -1 \\
+    1 & -1 & -1 & 1 \\
+    1 & 1 & -1 & -1
+  \end{pmatrix}
+\]
+
+Notice that the third and fourth rows of the matrix switch places due to the
+CNOT gate's effect.
+
+\vspace{0.3cm}
+
+\textbf{Step 2: Multiply $(H \otimes H)$ to the Above Result}
+
+Now, multiply $H \otimes H$ from the left:
+
+\[
+  (H \otimes H) \cdot \frac{1}{2} \begin{pmatrix}
+    1 & 1 & 1 & 1 \\
+    1 & -1 & 1 & -1 \\
+    1 & -1 & -1 & 1 \\
+    1 & 1 & -1 & -1
+  \end{pmatrix}
+\]
+
+Expanding this:
+
+\[
+  \frac{1}{2} \begin{pmatrix}
+    1 & 1 & 1 & 1 \\
+    1 & -1 & 1 & -1 \\
+    1 & 1 & -1 & -1 \\
+    1 & -1 & -1 & 1
+    \end{pmatrix} \cdot \frac{1}{2} \begin{pmatrix}
+    1 & 1 & 1 & 1 \\
+    1 & -1 & 1 & -1 \\
+    1 & -1 & -1 & 1 \\
+    1 & 1 & -1 & -1
+  \end{pmatrix}
+\]
+
+After computation, the resulting matrix is:
+
+\[
+  \text{CNOT}_{\text{target,control}} = \begin{pmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 1 & 0 \\
+    0 & 1 & 0 & 0
+  \end{pmatrix}
+\]
+
+This matrix corresponds to the CNOT gate with the control and target qubits
+swapped.
+
+
+\index{quantum gates!multi-qubit gates!SWAP gate}
+\subsection*{SWAP Gate}
+
+\dfn{SWAP Gate}{
+  The SWAP gate exchanges the states of two qubits. Its matrix representation
+  is:
+
+  \[
+    SWAP = \begin{pmatrix}
+      1 & 0 & 0 & 0 \\
+      0 & 0 & 1 & 0 \\
+      0 & 1 & 0 & 0 \\
+      0 & 0 & 0 & 1
+    \end{pmatrix}
+  \]
+
+  The action of SWAP on basis states is given by:
+
+  \[
+    SWAP\ket{ab} = \ket{ba}, \quad a,b \in \{0,1\}
+  \]
+}
+
+
+\paragraph{Effects of SWAP Gate}\label{par:Effects of SWAP Gate}
+The SWAP gate interchanges the states of two qubits. For any 2-qubit
+computational basis state, its action is:
+
+\nt{
+  \[
+    \begin{aligned}
+      SWAP\,\ket{00} &= \ket{00}, \\
+      SWAP\,\ket{01} &= \ket{10}, \\
+      SWAP\,\ket{10} &= \ket{01}, \\
+      SWAP\,\ket{11} &= \ket{11}.
+    \end{aligned}
+  \]
+}
+
+Thus, for any superposition of 2-qubit states, the SWAP gate exchanges the
+amplitudes corresponding to each qubit's position.
+
+
+\index{quantum gates!$n$-qubit gates}
+\subsection*{$n$-Qubit Gates}
+
+Before we just looked at the 2-qubit version of the Controlled X gate, but
+it extends to $n$-qubits.
+
+\index{quantum gates!multi-qubit gates!Toffoli gate}
+\subsection*{Toffoli Gate}
+
+\dfn{Toffoli Gate}{(CCX) is a three-qubit gate with two control qubits and
+  one target qubit. Its matrix representation is:
+
+  \[
+    \textsc{Toffoli} = \begin{pmatrix}
+      1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 1 & 0
+    \end{pmatrix}
+  \]
+
+  The Toffoli gate is Hermitian and only flips the target qubit if both control
+  qubits are in state $\ket{1}$.
+}
+
+\paragraph{Effects of Toffoli Gate}\label{par:Effects of Toffoli Gate}
+
+The Toffoli (CCX) gate acts on a 3-qubit system, where the first two qubits
+serve as control qubits and the third is the target. Its effect on the
+computational basis states is:
+
+\nt{
+  \[
+    \begin{aligned}
+      \text{Toffoli}\,\ket{000} &= \ket{000}, \\
+      \text{Toffoli}\,\ket{001} &= \ket{001}, \\
+      \text{Toffoli}\,\ket{010} &= \ket{010}, \\
+      \text{Toffoli}\,\ket{011} &= \ket{011}, \\
+      \text{Toffoli}\,\ket{100} &= \ket{100}, \\
+      \text{Toffoli}\,\ket{101} &= \ket{101}, \\
+      \text{Toffoli}\,\ket{110} &= \ket{111}, \\
+      \text{Toffoli}\,\ket{111} &= \ket{110}.
+    \end{aligned}
+  \]
+}
+
+In essence, the target qubit is flipped only when both control qubits are in
+the \(\ket{1}\) state; otherwise, the state remains unchanged.
+
+As you would expect, multi-controlled $X$ gates are Hermitian.
+
+\ex{Quantum Circuit Showing Hermitian Property}{
+  A quantum circuit composed of Hermitian gates (e.g., $X$, $Z$, $H$) will
+  cancel out when the circuit is reversed, resulting in the identity operation.
+
+  \begin{center}
+    \begin{quantikz}
+      \lstick{\ket{\psi}} & \gate{H} & \gate{Z} & \gate{X} & \gate{X} &
+      \gate{Z} & \gate{H} & \qw & \rstick{\ket{\psi}}
+    \end{quantikz}
+  \end{center}
+
+  In this example, the quantum circuit consists of a sequence of Hermitian
+  gates: the Hadamard ($H$), Pauli-Z ($Z$), and Pauli-X ($X$) gates. These
+  gates satisfy the property:
+
+  \[
+    H = H^\dagger, \quad X = X^\dagger, \quad Z = Z^\dagger
+  \]
+
+  Since these gates are their own inverses (\textit{i.e.,} $H H = I$, $X X =
+  I$, and $Z Z = I$), if we apply the same sequence of gates in reverse
+  order, they cancel out, leaving the identity operation.
+
+  The circuit above first applies $H$, then $Z$, then $X$ twice (which
+  cancels itself out), then $Z$ again, and finally $H$ again. This results in:
+
+  \[
+    H Z X X Z H = I
+  \]
+
+  Hence, the overall operation on the qubit is the identity transformation,
+  meaning the final state remains the same as the initial state $\ket{\psi}$.
+}
+
+\vspace{0.3cm}
+
+\noindent\rule{\linewidth}{0.2pt}
+
+\vspace{0.3cm}
+
+\index{Reversibility Property of Quantum Computing}
+\dfn{Reversibility Property of Quantum Computing}{
+  Quantum operations are inherently reversible due to the \textbf{unitary}
+  nature of quantum gates. This means that any quantum circuit can be
+  reversed by applying the inverse of each gate in the reverse order.
+  Mathematically, if a quantum circuit is represented by a unitary matrix
+  $U$, its reverse is represented by $U^{\dagger}$, and since quantum gates
+  are unitary, they satisfy the property:
+
+  \[
+    U^{\dagger} U = U U^{\dagger} = I
+  \]
+
+  This reversibility is a fundamental difference between quantum and classical
+  computing and is directly tied to the \textbf{no information loss}
+  principle in quantum mechanics.
+}
+
+\paragraph{Why Reversibility is Important:}
+In classical computing, operations such as the AND gate lose information.
+For example, given the output of an AND gate, we cannot uniquely determine
+the original input:
+
+\[
+  (0,0) \mapsto 0, \quad (0,1) \mapsto 0, \quad (1,0) \mapsto 0, \quad
+  (1,1) \mapsto 1
+\]
+
+Since multiple inputs can produce the same output, information is lost,
+making the operation \textbf{irreversible}.
+
+\paragraph{Classical AND Gate (Irreversible)}
+\begin{center}
+  \begin{tabular}{cc}
+    % Circuit diagram
+    \begin{circuitikz} \draw
+      % Input nodes and AND gate
+      (0,1) node[left] {$A$} -- ++(1,0)
+      (0,0) node[left] {$B$} -- ++(1,0)
+      (2,0.5) node[and port] (myand) {}
+      % Connect everything
+      (1,1) -- (myand.in 1)
+      (1,0) -- (myand.in 2)
+      (myand.out) -- ++(1,0) node[right] {$A \land B$};
+    \end{circuitikz}
+    &
+    % Truth table
+    \begin{tabular}{|c|c|c|}
+      \hline
+      $A$ & $B$ & $A \land B$ \\
+      \hline
+      0 & 0 & 0 \\
+      0 & 1 & 0 \\
+      1 & 0 & 0 \\
+      1 & 1 & 1 \\
+      \hline
+    \end{tabular}
+  \end{tabular}
+\end{center}
+
+\noindent This classical AND gate demonstrates information loss
+(irreversibility) because multiple distinct input states map to the same
+output state. As shown in the truth table, three different input
+combinations (0,0), (0,1), and (1,0) all produce the same output 0. Given
+only the output 0, it is impossible to determine which of these three input
+states generated it—this loss of information about the system's initial
+state makes the operation irreversible.
+
+\paragraph{Quantum Reversibility:}
+In contrast, \textbf{quantum gates are always unitary}, meaning they
+preserve the total amount of information. Given the final state of a
+quantum system, we can always determine its previous state by applying the
+inverse transformation. This is why quantum circuits must be composed of
+reversible operations.
+
+\ex{Example of a Reversible Quantum Circuit:}{
+  \begin{center}
+    \begin{quantikz}
+      \lstick{\ket{\psi}} & \gate{H} & \gate{X} & \gate{X} & \gate{H} & \qw &
+      \rstick{\ket{\psi}}
+    \end{quantikz}
+  \end{center}
+
+  In this example, the quantum circuit consists of a sequence of unitary
+  gates: the Hadamard ($H$) and the Pauli-X ($X$) gates. These gates satisfy:
+
+  \[
+    H = H^\dagger, \quad X = X^\dagger
+  \]
+
+  Since these gates are their own inverses (\textit{i.e.,} $H H = I$ and $X X
+  = I$), if we apply the same sequence of gates in reverse order, they cancel
+  out, leaving the identity operation:
+
+  \[
+    H X X H = I
+  \]
+}
+
+\paragraph{Key Properties of Reversible Quantum Gates:}
+\begin{enumerate}
+  \item Every quantum gate \( U \) has an inverse \( U^\dagger \), ensuring
+    that no information is lost.
+  \item The composition of unitary gates remains unitary, preserving
+    reversibility.
+  \item Classical \textbf{Toffoli and Fredkin gates} are reversible and can
+    be used to construct reversible classical circuits, which is why they
+    are also fundamental in quantum computing.
+  \item Measurement is \textbf{not} reversible, as it collapses the quantum
+    state and introduces information loss.
+\end{enumerate}
+
+The reversibility of quantum computing is crucial for error correction,
+fault-tolerant quantum computation, and simulating physical systems where
+information is conserved.
+
+
+\ex{Example of Reversing a Quantum Circuit}{
+  Consider a circuit composed of gates $A$, $B$, and $C$:
+
+  \[
+    |\psi_{\text{final}}\rangle = CBA|\psi_{\text{initial}}\rangle.
+  \]
+
+  The reverse circuit applies $C^{\dagger}$, $B^{\dagger}$, and $A^{\dagger}$
+  in reverse order:
+
+  \[
+    |\psi_{\text{reversed}}\rangle =
+    A^{\dagger}B^{\dagger}C^{\dagger}|\psi_{\text{final}}\rangle =
+    A^{\dagger}B^{\dagger}C^{\dagger}CBA|\psi_{\text{initial}}\rangle =
+    |\psi_{\text{initial}}\rangle.
+  \]
+}
+
+
+\index{Quantum No-Cloning Theorem}
+\dfn{Quantum No-Cloning Theorem}{
+  The no-cloning theorem states that it is impossible to create an identical
+  copy of an arbitrary unknown quantum state. This result follows directly
+  from the linearity of quantum mechanics.
+}
+
+\ex{Simple 2-Qubit Example}{
+
+  Consider two qubits in states $\ket{\psi}$ and $\ket{0}$. The no-cloning
+  theorem implies that there is no unitary operation $U$ such that:
+
+  \[
+    U(\ket{\psi} \otimes \ket{0}) = \ket{\psi} \otimes \ket{\psi}.
+  \]
+}
+
+\index{Quantum No-Cloning Theorem!proof@\textit{proof}}
+\begin{proof}
+  \textbf{Proof of the Quantum No-Cloning Theorem}
+
+  Assume a unitary operator $U$ exists that can clone an arbitrary quantum
+  state $\ket{\psi}$. Then, for two different states $\ket{\psi}$ and
+  $\ket{\phi}$, we would have:
+
+  \[
+    U(\ket{\psi} \otimes \ket{0}) = \ket{\psi} \otimes \ket{\psi},
+  \]
+
+  \[
+    U(\ket{\phi} \otimes \ket{0}) = \ket{\phi} \otimes \ket{\phi}.
+  \]
+
+  Now, consider the superposition state $\ket{\xi} = a\ket{\psi} +
+  b\ket{\phi}$. Applying $U$ to $\ket{\xi} \otimes \ket{0}$ should produce:
+
+  \[
+    U(\ket{\xi} \otimes \ket{0}) = aU(\ket{\psi} \otimes \ket{0}) +
+    bU(\ket{\phi} \otimes \ket{0}) = a(\ket{\psi} \otimes \ket{\psi}) +
+    b(\ket{\phi} \otimes \ket{\phi}).
+  \]
+
+  However, if $U$ could clone $\ket{\xi}$, the result should be:
+
+  \[
+    U(\ket{\xi} \otimes \ket{0}) = \ket{\xi} \otimes \ket{\xi} = (a\ket{\psi}
+    + b\ket{\phi}) \otimes (a\ket{\psi} + b\ket{\phi}).
+  \]
+
+  Expanding this, we get:
+
+  \[
+    \ket{\xi} \otimes \ket{\xi} = a^2(\ket{\psi} \otimes \ket{\psi}) +
+    ab(\ket{\psi} \otimes \ket{\phi}) + ab(\ket{\phi} \otimes \ket{\psi}) +
+    b^2(\ket{\phi} \otimes \ket{\phi}).
+  \]
+
+  Comparing the two expressions, we see that the terms $\ket{\psi} \otimes
+  \ket{\phi}$ and $\ket{\phi} \otimes \ket{\psi}$ appear in the expanded
+  $\ket{\xi} \otimes \ket{\xi}$, but they do not appear in $a(\ket{\psi}
+  \otimes \ket{\psi}) + b(\ket{\phi} \otimes \ket{\phi})$. This inconsistency
+  demonstrates that a unitary operator $U$ cannot clone an arbitrary quantum
+  state, proving the no-cloning theorem.
+\end{proof}
 

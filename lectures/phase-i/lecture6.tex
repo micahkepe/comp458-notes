@@ -88,50 +88,7 @@ Applying the CNOT gate to a two-qubit state $\ket{\psi} = \alpha\ket{00} +
   \end{aligned}
 \end{equation}
 
-\subsection*{Swapping Control and Target}
-
-The control and target qubits of a CNOT gate can be swapped using Hadamard
-gates:
-
-\[
-  (H \otimes H) \cdot CNOT_{\text{control,target}} \cdot (H \otimes H) =
-  CNOT_{\text{target,control}}
-\]
-
-This transformation can be visualized in a circuit diagram:
-
-\begin{align*}
-  \begin{quantikz}
-    \lstick{$\ket{c}$} & \gate{H} & \ctrl{1} & \gate{H} & \qw \\
-    \lstick{$\ket{t}$} & \gate{H} & \gate{X} & \gate{H} & \qw \\
-  \end{quantikz}
-\end{align*}
-
-
-% TODO: move this to lecture 7
-\index{quantum gates!multi-qubit gates!SWAP gate}
-\subsection*{SWAP Gate}
-
-\dfn{SWAP Gate}{exchanges the states of two qubits. Its matrix representation
-  is:
-
-  \[
-    SWAP = \begin{pmatrix}
-      1 & 0 & 0 & 0 \\
-      0 & 0 & 1 & 0 \\
-      0 & 1 & 0 & 0 \\
-      0 & 0 & 0 & 1
-    \end{pmatrix}
-  \]
-
-  The action of SWAP on basis states is given by:
-
-  \[
-    SWAP\ket{ab} = \ket{ba}, \quad a,b \in \{0,1\}
-  \]
-}
-
-\index{quantum gates!multi-qubit gates!Controlled-Z gate}
+\index{quantum gates!multi-qubit gates!controlled-Z gate}
 \subsection*{Controlled-Z Gate}
 
 \dfn{Controlled-Z Gate}{(CZ) applies a phase flip if both qubits are in state
@@ -147,30 +104,6 @@ This transformation can be visualized in a circuit diagram:
   \]
 }
 
-% TODO: move this to lecture 7
-\index{quantum gates!multi-qubit gates!Toffoli gate}
-\subsection*{Toffoli Gate}
-
-\dfn{Toffoli Gate}{(CCX) is a three-qubit gate with two control qubits and
-  one target qubit. Its matrix representation is:
-
-  \[
-    Toffoli = \begin{pmatrix}
-      1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-      0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
-      0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
-      0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
-      0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
-      0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
-      0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
-      0 & 0 & 0 & 0 & 0 & 0 & 1 & 0
-    \end{pmatrix}
-  \]
-
-  The Toffoli gate is Hermitian and only flips the target qubit if both control
-  qubits are in state $\ket{1}$.
-}
-
 \index{Circuit notation!multi-qubit gates}
 \subsection*{Circuit Representations}
 
@@ -181,16 +114,9 @@ The standard circuit representations for these multi-qubit gates are:
     % CNOT
     \lstick{CNOT:} & \ctrl{1} & \qw \\
     & \targ{} & \qw \\[0.5cm]
-    % SWAP
-    \lstick{SWAP:} & \swap{1} & \qw \\
-    & \targX{} & \qw \\[0.5cm]
     % CZ
     \lstick{CZ:} & \ctrl{1} & \qw \\
     & \gate{Z} & \qw \\[0.5cm]
-    % Toffoli
-    \lstick{Toffoli:} & \ctrl{1} & \qw \\
-    & \ctrl{1} & \qw \\
-    & \targ{} & \qw
   \end{quantikz}
 \end{align*}
 
