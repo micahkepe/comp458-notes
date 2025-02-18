@@ -372,11 +372,11 @@ making the operation \textbf{irreversible}.
       % Input nodes and AND gate
       (0,1) node[left] {$A$} -- ++(1,0)
       (0,0) node[left] {$B$} -- ++(1,0)
-      (2,0.5) node[and port] (myand) {}
+      (2,0.5) node[and port] (and) {}
       % Connect everything
-      (1,1) -- (myand.in 1)
-      (1,0) -- (myand.in 2)
-      (myand.out) -- ++(1,0) node[right] {$A \land B$};
+      (1,1) -- (and.in 1)
+      (1,0) -- (and.in 2)
+      (and.out) -- ++(1,0) node[right] {$A \land B$};
     \end{circuitikz}
     &
     % Truth table
@@ -438,9 +438,10 @@ reversible operations.
     that no information is lost.
   \item The composition of unitary gates remains unitary, preserving
     reversibility.
-  \item Classical \textbf{Toffoli and Fredkin gates} are reversible and can
-    be used to construct reversible classical circuits, which is why they
-    are also fundamental in quantum computing.
+  \item Classical Toffoli and Fredkin
+    \footnote{More on Fredkin gates: \url{https://en.wikipedia.org/wiki/Fredkin_gate}}
+    are reversible and can be used to construct reversible classical circuits,
+    which is why they are also fundamental in quantum computing.
   \item Measurement is \textbf{not} reversible, as it collapses the quantum
     state and introduces information loss.
 \end{enumerate}
