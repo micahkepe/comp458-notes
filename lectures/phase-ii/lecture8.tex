@@ -28,6 +28,14 @@ In this section, we introduce quantum entanglement—a phenomenon where the
 states of two or more qubits become inseparably linked, leading to
 correlations between measurement outcomes that cannot be explained classically.
 
+\dfn{Entanglement}{
+  \textit{"\textbf{Quantum entanglement} is the phenomenon of a group of
+    particles being generated, interacting, or sharing spatial proximity in a
+    manner such that the quantum state of each particle of the group cannot be
+    described independently of the state of the others, including when the
+  particles are separated by a large distance."}\footnote{\url{https://en.wikipedia.org/wiki/Quantum_entanglement}}
+}
+
 \subsubsection*{What is Entanglement?}
 
 To understand quantum entanglement, let's compare classical and quantum
@@ -112,26 +120,22 @@ state (a Bell state).
   Thus, the final state after the CNOT is:
 
   \[
-    \ket{\psi_{\text{Bell}}} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11}).
+    \boxed{
+      \ket{\psi_{\text{Bell}}} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11}).
+    }
   \]
 
   This state is fully entangled since it cannot be factored as a tensor
   product of individual qubit states.
 
-  \[
-    \begin{quantikz}[column sep=0.5cm]
-    & \gate{H} &
-    \ctrl{1}\gategroup[2,steps=3,style={dashed,rounded
-    corners,fill=blue!20, inner xsep=2pt},background,label style={label
-    position=below,anchor=north,yshift=-0.2cm}]{{\sc Bell-Pair Creation}}
-    & \qw & \qw \\
-    & \qw & \gate{X} & \qw & \qw
-    \end{quantikz}
-  \]
-
 \end{proof}
 
-As a consequence of being fully entangled:
+\vspace{0.3cm}
+
+\noindent
+\textbf{
+  As a consequence of being fully entangled:
+}
 
 \begin{enumerate}
   \item Entangled circuits cannot be expressed as a product state. For
@@ -169,8 +173,12 @@ form of a Greenberger–Horne–Zeilinger (GHZ) state:
   \end{quantikz}
 \]
 
+\vspace{0.3cm}
 
-The $n$-qubit Bell circuit follows a clear pattern:
+\noindent
+\textbf{
+  The $n$-qubit Bell circuit follows a clear pattern:
+}
 
 \begin{enumerate}
   \item Initial Hadamard gate on the topmost qubit creates superposition
@@ -195,10 +203,11 @@ match the measured value.
 
 \vspace{0.3cm}
 
-It is important to note that there are equivalent diagrams that can be drawn for
-the $n$-qubit Bell state circuit, and that you should not be fooled by diagrams
-that do not match the general diagram shown above.
-
+\nt{
+  It is important to note that there are equivalent diagrams that can be
+  drawn for the $n$-qubit Bell state circuit, and that you should not be
+  fooled by diagrams that do not match the general diagram shown above.
+}
 
 \ex{Alternative $n$-Qubit Bell Circuit}{
 
@@ -219,7 +228,8 @@ that do not match the general diagram shown above.
 }
 
 
-\aside{Shorthand Notation Used for Final Quantum States\\
+\aside{\textbf{Shorthand Notation Used for Final Quantum States}\\
+
   Common notational shortcuts can be confusing for beginners. Here are some
   important distinctions:
 
@@ -292,10 +302,11 @@ simulating quantum computations.
 \index{Cirq!introduction}
 \subsubsection*{Overview and Installation}
 Cirq allows you to work with qubits, gates, and operations to build circuits.
-To begin, install \texttt{Cirq} in your Python environment:
+To begin, install \texttt{Cirq} in your Python environment (a Google Colab
+workbook is my personal recommendation):
 
 \begin{minted}{python}
-  !pip install --quiet cirq
+  pip install --quiet cirq
 \end{minted}
 
 Then import the library:
@@ -307,24 +318,32 @@ Then import the library:
 \subsubsection*{Defining Qubits}
 Cirq supports different types of qubits:
 \begin{itemize}
+
   \item \textbf{NamedQubit}: Qubits with custom names.
+
   \item \textbf{LineQubit}: Qubits arranged in a linear array.
+
   \item \textbf{GridQubit}: Qubits arranged in a 2D grid.
 \end{itemize}
+
 For example, to create line qubits:
+
 \begin{minted}{python}
   q0, q1, q2 = cirq.LineQubit.range(3)
 \end{minted}
 
 \subsubsection*{Gates and Operations}
+
 In Cirq, a \emph{Gate} represents an abstract quantum operation, while an
 \emph{Operation} is a gate applied to specific qubits.
 
 \begin{itemize}
   \item Single-qubit gates: \texttt{cirq.X}, \texttt{cirq.H},
     \texttt{cirq.S}, etc.
+
   \item Two-qubit gates: \texttt{cirq.CNOT}, \texttt{cirq.CZ},
     \texttt{cirq.SWAP}, etc.
+
 \end{itemize}
 
 Example: Applying a Hadamard gate to qubit \(q0\) and a CNOT with \(q0\) as
@@ -348,6 +367,7 @@ measurement outcomes.
 
 \begin{itemize}
   \item \texttt{simulate()}: Returns the final state vector.
+
   \item \texttt{run()}: Samples measurement outcomes.
 \end{itemize}
 
