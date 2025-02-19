@@ -1,0 +1,432 @@
+\section{Lecture 8: Entanglement, Bell State, and Intro to \texttt{Cirq}}
+\label{sec:lecture8}
+
+\subsection*{Review from Previous Lecture}
+
+\qs{Quantum Circuit Final State}{
+  Given this circuit diagram and assuming an initial state $\ket{\psi_i}
+  =\ket{00}$, what will the final state $\ket{\psi_f}$ measure?
+
+  \[
+    \begin{quantikz}
+      q_1 \quad \lstick{$\zero$} & \ctrl{0} & \gate{X} & \ctrl{1} & \swap{1}
+                                 & \gate{H} & \meter{} \\
+      q_0 \quad \lstick{$\zero$} & \ctrl{0} & \qw & \gate{X} & \swap{-1} &
+      \gate{H} & \meter{} \\
+    \end{quantikz}
+  \]
+}
+
+\sol{\boxed{\ket{\psi_f} = \ket{--}}}
+
+%%%%%%%%%%%%%%%
+
+\index{entanglement}
+\subsection*{Entanglement}
+
+In this section, we introduce quantum entanglement—a phenomenon where the
+states of two or more qubits become inseparably linked, leading to
+correlations between measurement outcomes that cannot be explained classically.
+
+\subsubsection*{What is Entanglement?}
+
+To understand quantum entanglement, let's compare classical and quantum
+communication systems:
+
+\vspace{0.3cm}
+
+\noindent
+Consider two \textbf{classical} email clients, Alice and
+Bob:
+
+\begin{itemize}
+  \item When Alice sends an email, she knows exactly what she sent
+  \item Bob knows exactly what he received
+  \item The message state is definite and independent
+  \item Multiple copies can exist
+\end{itemize}
+
+\vspace{0.3cm}
+
+\noindent
+Now consider two \textbf{quantum} "email clients" with entangled qubits:
+
+\begin{itemize}
+  \item Neither Alice nor Bob knows their qubit's state before measurement
+  \item When Alice measures her qubit, Bob's qubit instantly becomes correlated
+  \item The qubits share a single quantum state
+  \item No copies can be made (no-cloning theorem)
+  \item The correlation exists regardless of distance
+\end{itemize}
+
+\vspace{0.3cm}
+
+This "spooky action at a distance"\footnote{\href{https://en.wikipedia.org/wiki/Action\_at\_a\_distance\#\%22Spooky\_action\_at\_a\_distance\%22}{"Spooky action at a distance": \texttt{https://en.wikipedia.org/wiki/Action\_at\_a\_distance}}},
+as Einstein called it, has no classical analog and is a fundamental feature
+of quantum mechanics.
+
+\index{entanglement!Bell state}
+\subsubsection*{Bell-Pair Circuit}
+
+The Bell-Pair circuit is the most analogous thing to quantum computing's
+\texttt{Hello, world!} program. It prepares a maximally entangled two-qubit
+state (a Bell state).
+
+
+\[
+  \begin{quantikz}
+    q_1 \quad \lstick{$\zero$} & \gate{H} & \ctrl{1} & \meter{} \\
+    q_0 \quad \lstick{$\zero$} & \qw & \gate{X} & \qw \\
+  \end{quantikz}
+\]
+
+
+\index{entanglement!proof@\textit{proof}}
+\begin{proof}{Showing Full Entanglement Mathematically}
+  Starting with the initial state:
+
+  \[
+    \ket{\psi_0} = \ket{0}_1 \otimes \ket{0}_0 = \ket{00},
+  \]
+
+  we first apply a Hadamard gate on qubit \(q_1\):
+
+  \[
+    H\ket{0} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}).
+  \]
+
+  Thus, the state after the Hadamard becomes:
+
+  \[
+    (H \otimes I)\ket{00} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) \otimes
+    \ket{0} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{10}).
+  \]
+
+  Next, we apply the CNOT gate with qubit \(q_1\) as the control and qubit
+  \(q_0\) as the target. The CNOT gate acts as follows:
+
+  \[
+    \text{CNOT}\,\ket{00} = \ket{00}, \quad \text{CNOT}\,\ket{10} = \ket{11}.
+  \]
+
+  Thus, the final state after the CNOT is:
+
+  \[
+    \ket{\psi_{\text{Bell}}} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11}).
+  \]
+
+  This state is fully entangled since it cannot be factored as a tensor
+  product of individual qubit states.
+
+  \[
+    \begin{quantikz}[column sep=0.5cm]
+    & \gate{H} &
+    \ctrl{1}\gategroup[2,steps=3,style={dashed,rounded
+    corners,fill=blue!20, inner xsep=2pt},background,label style={label
+    position=below,anchor=north,yshift=-0.2cm}]{{\sc Bell-Pair Creation}}
+    & \qw & \qw \\
+    & \qw & \gate{X} & \qw & \qw
+    \end{quantikz}
+  \]
+
+\end{proof}
+
+As a consequence of being fully entangled:
+
+\begin{enumerate}
+  \item Entangled circuits cannot be expressed as a product state. For
+    example, the Bell state
+
+    \[
+      \ket{\psi_{\text{Bell}}} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})
+    \]
+
+    cannot be decomposed into \(\ket{\phi}_1 \otimes \ket{\chi}_0\).
+
+  \item Measurement outcomes are correlated. For instance, if qubit \(q_1\)
+    is measured as \(\ket{0}\), then qubit \(q_0\) will also be found in the
+    state \(\ket{0}\); similarly, if \(q_1\) is measured as \(\ket{1}\), then
+    \(q_0\) will be \(\ket{1}\).
+
+\end{enumerate}
+
+
+\index{entanglement!n-qubit Bell state}
+\subsubsection*{Extending the Bell-Pair Circuit to a $n$-Qubit System}
+
+The Bell state can be generalized to an \(n\)-qubit system, often taking the
+form of a Greenberger–Horne–Zeilinger (GHZ) state:
+
+\index{entanglement!GHZ state}
+
+\[
+  \begin{quantikz}
+    q_{n - 1}\quad \lstick{$\zero$} & \gate{H} & \ctrl{1} & \qw & \qw & \qw \\
+    q_{n -2} \quad \lstick{$\zero$} & \qw & \gate{X} & \ctrl{0} & \qw & \qw \\
+    \vdots \\
+    q_{1} \quad \lstick{$\zero$} & \qw & \qw & \qw & \gate{X} & \ctrl{1} \\
+    q_{0} \quad \lstick{$\zero$} & \qw & \qw & \qw & \qw & \gate{X} \\
+  \end{quantikz}
+\]
+
+
+The $n$-qubit Bell circuit follows a clear pattern:
+
+\begin{enumerate}
+  \item Initial Hadamard gate on the topmost qubit creates superposition
+  \item Cascade of CNOT gates propagates the entanglement down
+  \item Each CNOT uses the previous qubit as control and current qubit as
+    target
+  \item Final state has all qubits entangled together
+\end{enumerate}
+
+The resulting state:
+
+\[
+  \boxed{
+    \ket{\psi_f} = \frac{1}{\sqrt{2}}\lt(\ket{00\cdots 00} +
+    \ket{11\cdots11}\rt)
+  }
+\]
+
+represents a superposition where all qubits are either all 0 or all 1.
+Measuring any qubit collapses the entire state, forcing all other qubits to
+match the measured value.
+
+\vspace{0.3cm}
+
+It is important to note that there are equivalent diagrams that can be drawn for
+the $n$-qubit Bell state circuit, and that you should not be fooled by diagrams
+that do not match the general diagram shown above.
+
+
+\ex{Alternative $n$-Qubit Bell Circuit}{
+
+  \[
+    \begin{quantikz}
+      q_{n-1} \quad \lstick{$\zero$} & \gate{H} & \ctrl{1} & \ctrl{2} &
+      \ctrl{3} & \qw \\
+      q_{n-2} \quad \lstick{$\zero$} & \qw & \gate{X} & \qw & \qw & \qw \\
+      q_{1} \quad \lstick{$\zero$} & \qw & \qw & \gate{X} & \qw & \qw \\
+      q_{0} \quad \lstick{$\zero$} & \qw & \qw & \qw & \gate{X} & \qw
+    \end{quantikz}
+  \]
+
+  This alternative representation achieves the same final state by having the
+  first qubit control all CNOT operations directly. While functionally
+  equivalent, this requires longer-range interactions which may be harder to
+  implement on real quantum hardware.
+}
+
+
+\aside{Shorthand Notation Used for Final Quantum States\\
+  Common notational shortcuts can be confusing for beginners. Here are some
+  important distinctions:
+
+  \begin{itemize}
+    \item $\ket{+1}$ typically means $\frac{1}{\sqrt{2}}(\ket{01} +
+      \ket{11})$, not $\ket{+} \otimes \ket{1}$
+
+    \item $\ket{-1}$ represents $\frac{1}{\sqrt{2}}(\ket{01} - \ket{11})$,
+      not to be confused with $-\ket{1}$ or $Z\ket{1}$
+
+    \item In general, $\ket{\pm x}$ represents $\frac{1}{\sqrt{2}}(\ket{0x}
+      \pm \ket{1x})$ where $x$ is a bit string
+
+    \item The notation $\ket{\psi^+}$ and $\ket{\psi^-}$ is often used for
+      Bell states $\frac{1}{\sqrt{2}}(\ket{01} \pm \ket{10})$
+  \end{itemize}
+
+  Always check the context and definitions when encountering shorthand
+  notation, as conventions may vary between sources.
+}
+
+\index{entanglement!partial entanglement}
+\paragraph{Partial Entanglement}
+
+There also exists the middle ground of partially-entangled systems where only
+some of the qubits are entangled while others have independent states.
+
+\[
+  \begin{quantikz}
+    q_2 \quad \lstick{$\zero$} & \gate{H} & \qw & \qw \\
+    q_1 \quad \lstick{$\zero$} & \gate{H} & \ctrl{1} & \qw \\
+    q_0 \quad \lstick{$\zero$} & \qw & \gate{X} & \qw
+  \end{quantikz}
+\]
+
+In this case, \(q_1\) and \(q_0\) become entangled through the CNOT gate,
+while \(q_2\) remains in a superposition state but independent of the other
+qubits. The final state is:
+
+\[
+  \ket{\psi_f} = \frac{1}{\sqrt{2}}\ket{+}_2 \otimes
+  \frac{1}{\sqrt{2}}(\ket{00}_{10} + \ket{11}_{10})
+\]
+
+%%%%%%%%%%%%%%%
+
+\subsection*{Getting Started with \texttt{Cirq}}
+
+\index{Cirq}
+\texttt{Cirq}\footnote{\texttt{Cirq} documentation:
+\url{https://quantumai.google/cirq}} is an open-source framework for
+programming quantum computers, developed by Google Quantum AI. It provides
+tools for creating, manipulating, and optimizing quantum circuits, as well as
+simulating quantum computations.
+
+\vspace{0.3cm}
+
+\noindent
+\textbf{
+  Key features of \texttt{Cirq} include:
+}
+
+\begin{itemize}
+  \item Native support for quantum gates and circuits
+  \item Built-in quantum simulator
+  \item Tools for noise modeling and error mitigation
+  \item Integration with TensorFlow Quantum
+\end{itemize}
+
+\index{Cirq!introduction}
+\subsubsection*{Overview and Installation}
+Cirq allows you to work with qubits, gates, and operations to build circuits.
+To begin, install \texttt{Cirq} in your Python environment:
+
+\begin{minted}{python}
+  !pip install --quiet cirq
+\end{minted}
+
+Then import the library:
+
+\begin{minted}{python}
+  import cirq
+\end{minted}
+
+\subsubsection*{Defining Qubits}
+Cirq supports different types of qubits:
+\begin{itemize}
+  \item \textbf{NamedQubit}: Qubits with custom names.
+  \item \textbf{LineQubit}: Qubits arranged in a linear array.
+  \item \textbf{GridQubit}: Qubits arranged in a 2D grid.
+\end{itemize}
+For example, to create line qubits:
+\begin{minted}{python}
+  q0, q1, q2 = cirq.LineQubit.range(3)
+\end{minted}
+
+\subsubsection*{Gates and Operations}
+In Cirq, a \emph{Gate} represents an abstract quantum operation, while an
+\emph{Operation} is a gate applied to specific qubits.
+
+\begin{itemize}
+  \item Single-qubit gates: \texttt{cirq.X}, \texttt{cirq.H},
+    \texttt{cirq.S}, etc.
+  \item Two-qubit gates: \texttt{cirq.CNOT}, \texttt{cirq.CZ},
+    \texttt{cirq.SWAP}, etc.
+\end{itemize}
+
+Example: Applying a Hadamard gate to qubit \(q0\) and a CNOT with \(q0\) as
+control and \(q1\) as target:
+
+\begin{minted}{python}
+  circuit = cirq.Circuit()
+  circuit.append(cirq.H(q0))
+  circuit.append(cirq.CNOT(q0, q1))
+\end{minted}
+
+\subsubsection*{Circuits and Moments}
+A \emph{Circuit} in Cirq is composed of \emph{Moments}—collections of
+operations that occur simultaneously (on disjoint sets of qubits). When you
+append operations, Cirq automatically schedules them into moments.
+
+\subsubsection*{Simulation and Measurement}
+
+Cirq provides a simulator to compute the resulting state vector or sample
+measurement outcomes.
+
+\begin{itemize}
+  \item \texttt{simulate()}: Returns the final state vector.
+  \item \texttt{run()}: Samples measurement outcomes.
+\end{itemize}
+
+\textbf{Example: Creating and Simulating a Bell State}
+\begin{minted}{python}
+  import cirq
+
+  # Create two line qubits.
+  q0, q1 = cirq.LineQubit.range(2)
+
+  # Construct the Bell state circuit.
+  bell_circuit = cirq.Circuit(
+  cirq.H(q0),         # Create superposition on q0.
+  cirq.CNOT(q0, q1)   # Entangle q0 with q1.
+  )
+
+  print("Bell Circuit:")
+  print(bell_circuit)
+
+  # Initialize the simulator.
+  simulator = cirq.Simulator()
+
+  # Simulate to obtain the final state vector.
+  result = simulator.simulate(bell_circuit)
+  print("Final state vector:")
+  print(result.final_state_vector)
+
+  # Add measurement and run the circuit.
+  bell_circuit.append(cirq.measure(q0, q1, key='result'))
+  samples = simulator.run(bell_circuit, repetitions=1024)
+  print("Measurement histogram:")
+  print(samples.histogram(key='result'))
+\end{minted}
+
+\subsubsection*{Advanced Topics in Cirq}
+
+Cirq also supports:
+
+\begin{itemize}
+
+  \item \textbf{Parameter Sweeps}: Optimize variational algorithms using free
+    parameters.
+
+  \item \textbf{Unitary Access and Decomposition}: Retrieve matrix
+    representations and decompose complex gates.
+
+  \item \textbf{Transformers}: Automatically merge or re-schedule operations
+    for hardware compatibility.
+
+\end{itemize}
+
+\textbf{Example: Sweeping a Parameter in an \(X\) Gate}
+\begin{minted}{python}
+  import sympy
+  import matplotlib.pyplot as plt
+
+  # Define a qubit.
+  q = cirq.GridQubit(1, 1)
+
+  # Create a circuit with an X gate raised to a symbolic exponent.
+  circuit = cirq.Circuit(cirq.X(q) ** sympy.Symbol('t'),
+  cirq.measure(q, key='m'))
+
+  # Sweep the parameter 't' from 0 to 2.
+  param_sweep = cirq.Linspace('t', start=0, stop=2, length=200)
+
+  # Simulate the sweep.
+  simulator = cirq.Simulator()
+  trials = simulator.run_sweep(circuit, param_sweep, repetitions=1000)
+
+  # Plot the frequency of measuring 1.
+  x_data = [trial.params['t'] for trial in trials]
+  y_data = [trial.histogram(key='m')[1] / 1000.0 for trial in trials]
+  plt.scatter(x_data, y_data)
+  plt.xlabel("Parameter t")
+  plt.ylabel("Frequency of 1")
+  plt.show()
+\end{minted}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End of Lecture 8
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

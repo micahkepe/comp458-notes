@@ -49,17 +49,28 @@
 \usepackage{tikzsymbols}
 \renewcommand\qedsymbol{$\blacksquare$}
 
-% Minted Package for Code Listings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Minted Package Configuration %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{minted}
-\usemintedstyle{friendly} % Choose a style (e.g., friendly, colorful, etc.)
+\usemintedstyle{monokai} % More modern and readable style
 \setminted{
-    linenos=true,          % Enable line numbers
-    frame=lines,           % Add a frame around the code
-    framesep=2mm,          % Frame padding
-    fontsize=\small,       % Font size for code
-    tabsize=4,             % Tab width
-    breaklines=true,       % Allow line breaking
-    breakanywhere=true     % Break lines anywhere
+    linenos=true,              % Enable line numbers
+    frame=single,              % Single line frame (cleaner look)
+    framesep=3mm,             % Slightly more padding
+    fontsize=\small,          % Maintain small font size
+    tabsize=4,                % Standard tab width
+    breaklines=true,          % Enable line breaking
+    breakanywhere=true,       % Break lines anywhere
+    bgcolor=gray!10,          % Light gray background
+    numberblanklines=false,   % Don't number blank lines
+    autogobble=true,          % Remove common leading whitespace
+    style=friendly,           % Base style
+    python3=true,             % Enforce Python 3 syntax
+    xleftmargin=20pt,         % Left margin for line numbers
+    linenos=true,             % Show line numbers
+    numbersep=8pt,            % Space between numbers and code
+    formatcom=\setlength{\baselineskip}{0.8\baselineskip} % Tighter line spacing
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
