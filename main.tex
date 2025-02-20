@@ -23,16 +23,34 @@
 
 \maketitle
 \newpage  % or `\cleardoublepage` if using two-sided layout
-\renewcommand*\contentsname{Table of Contents}
-\pdfbookmark[section]{\contentsname}{toc}
-\tableofcontents
-\pagebreak
+
+% Add a blank page after the title
+\null\thispagestyle{empty}
+\newpage
 
 % ==============================
 % PREFACE
 % ==============================
 \chapter*{Preface}
 \input{supplementary/preface.tex}
+
+
+% ==============================
+% TABLE OF CONTENTS
+% ==============================
+\renewcommand*\contentsname{Table of Contents}
+\pdfbookmark[section]{\contentsname}{toc}
+\tableofcontents
+\pagebreak
+
+\clearpage
+\pagenumbering{arabic}  % Switch back to Arabic numerals
+\setcounter{page}{1}    % Reset page numbering
+
+
+% ==============================
+% START OF CONTENT
+% ==============================
 
 % ==============================
 % PHASE I: INTRODUCTION

@@ -39,6 +39,35 @@
 	bookmarksopen=true
 }
 
+\usepackage{fancyhdr}  % Package for custom headers/footers
+\pagestyle{fancy}
+
+% Define the header style
+\fancyhf{}  % Clear default header/footer settings
+
+% Define headers for odd and even pages
+\fancyhead[LE]{\textbf{\thepage}}         % Left side (Even pages) - Page number
+\fancyhead[RE]{\textbf{\rightmark}}       % Right side (Even pages) - Section name
+\fancyhead[LO]{\textbf{\leftmark}}        % Left side (Odd pages) - Chapter name
+\fancyhead[RO]{\textbf{\thepage}}         % Right side (Odd pages) - Page number
+
+% Remove header/footer on the first page of each chapter
+\fancypagestyle{plain}{%
+    \fancyhf{}  % Clear header/footer for first page of chapter
+    \renewcommand{\headrulewidth}{0pt}  % Remove header rule
+    \renewcommand{\footrulewidth}{0pt}  % Remove footer rule
+}
+
+% Ensure that LaTeX recognizes chapter and section names for headers
+\renewcommand{\chaptermark}[1]{\markboth{\textbf{\thechapter. #1 }}{}}
+\renewcommand{\sectionmark}[1]{\markright{\textbf{\thesection. #1 }}}
+
+% Adjust header rule thickness
+\renewcommand{\headrulewidth}{0.4pt} % Line under header
+
+% Ensure footer is empty
+\renewcommand{\footrulewidth}{0pt}
+
 \newcommand\mycommfont[1]{\footnotesize\ttfamily\textcolor{blue}{#1}}
 \SetCommentSty{mycommfont}
 \newcommand{\incfig}[1]{%

@@ -39,7 +39,7 @@ $\ket{t}$.}
 Applying the CNOT gate to a two-qubit state $\ket{\psi} = \alpha\ket{00} +
 \beta\ket{01} + \gamma\ket{10} + \delta\ket{11}$:
 
-\begin{equation}
+\begin{equation*}
   \begin{aligned}
       % CX |00>
     CX \ket{00} & = \begin{bmatrix}
@@ -86,7 +86,7 @@ Applying the CNOT gate to a two-qubit state $\ket{\psi} = \alpha\ket{00} +
       0 \\ 0 \\ 1 \\ 0
     \end{bmatrix} = \ket{10}
   \end{aligned}
-\end{equation}
+\end{equation*}
 
 \index{quantum gates!multi-qubit gates!controlled-Z gate}
 \subsection*{Controlled-Z Gate}
@@ -103,6 +103,22 @@ Applying the CNOT gate to a two-qubit state $\ket{\psi} = \alpha\ket{00} +
     \end{pmatrix}
   \]
 }
+
+
+Applying the CZ gate to a 2-qubit system, we obtain:
+
+\[
+  CZ \ket{00} = \ket{00}, \quad
+  CZ \ket{01} = \ket{01}, \quad
+  CZ \ket{10} = \ket{10}, \quad
+  CZ \ket{11} = -\ket{11}
+\]
+
+\noindent
+Unlike the CNOT gate, which \textit{flips} the target qubit, the CZ gate only
+introduces a \textbf{phase change to $\ket{11}$}.
+
+\vspace{0.3cm}
 
 \index{Circuit notation!multi-qubit gates}
 \subsection*{Circuit Representations}
@@ -123,11 +139,11 @@ The standard circuit representations for these multi-qubit gates are:
 \subsection*{Tensor Product Ordering and Circuit Representations}
 
 When converting quantum circuits to mathematical expressions, it's important
-to understand that tensor products are not commutative: $A \otimes B \neq B
-\otimes A$ in general. However, we can modify the ordering of tensor products
-in our mathematical representation as long as we maintain the dependencies
-established by the circuit diagram. This leads to multiple valid mathematical
-representations of the same quantum circuit.
+to understand that \textbf{tensor products are not commutative}: $A \otimes B
+\neq B \otimes A$ in general. However, we can modify the ordering of tensor
+products in our mathematical representation as long as we maintain the
+dependencies established by the circuit diagram. This leads to multiple valid
+mathematical representations of the same quantum circuit.
 
 \dfn{Bit Ordering Convention}{Due to the non-commutativity of tensor
   products, we adopt the convention of representing qubits from most
