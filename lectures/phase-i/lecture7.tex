@@ -58,8 +58,7 @@ No-Cloning Theorem}\label{sec:lecture7}
 
 \subsection*{More Multi-Qubit Gates}
 
-\subsubsection*{More 2-Qubit Gates}
-
+\subsubsection*{$CX(q_0 \rightarrow q_1)$ Gate}
 \index{quantum gates!multi-qubit gates!CNOT with swapped target and control}
 \dfn{$CX(q_0 \rightarrow q_1)$ Gate}{
 
@@ -194,9 +193,10 @@ After computation, the resulting matrix is:
 This matrix corresponds to the CNOT gate with the control and target qubits
 swapped.
 
+\vspace{0.3cm}
 
 \index{quantum gates!multi-qubit gates!SWAP gate}
-\subsection*{SWAP Gate}
+\subsubsection*{SWAP Gate}
 
 \dfn{SWAP Gate}{
   The SWAP gate exchanges the states of two qubits. Its matrix representation
@@ -218,24 +218,37 @@ swapped.
   \]
 }
 
-
 \paragraph{Effects of SWAP Gate}\label{par:Effects of SWAP Gate}
 The SWAP gate interchanges the states of two qubits. For any 2-qubit
 computational basis state, its action is:
 
 \nt{
   \[
-    \begin{aligned}
-      SWAP\,\ket{00} &= \ket{00}, \\
-      SWAP\,\ket{01} &= \ket{10}, \\
-      SWAP\,\ket{10} &= \ket{01}, \\
-      SWAP\,\ket{11} &= \ket{11}.
-    \end{aligned}
+    \text{SWAP} \ket{00} = \ket{00}, \quad
+    \text{SWAP} \ket{01} = \ket{10}, \quad
+    \text{SWAP} \ket{10} = \ket{01}, \quad
+    \text{SWAP} \ket{11} = \ket{11}
   \]
 }
 
 Thus, for any superposition of 2-qubit states, the SWAP gate exchanges the
 amplitudes corresponding to each qubit's position.
+
+\index{Circuit notation!multi-qubit gates}
+\subsubsection*{Circuit Representations}
+
+The standard circuit representations for these 2-qubit gates are:
+
+\begin{align*}
+  \begin{quantikz}
+    % Flipped CNOT
+    \lstick{$CNOT_{\text{target, control}}$:} & \gate{X} & \qw \\
+                                              & \ctrl{-1} & \qw \\[0.5cm]
+    % SWAP
+    \lstick{SWAP:} & \swap{1} & \qw \\
+                   & \swap{0}  & \qw \\[0.5cm]
+  \end{quantikz}
+\end{align*}
 
 
 \index{quantum gates!$n$-qubit gates}
@@ -245,7 +258,7 @@ Before we just looked at the 2-qubit version of the Controlled X gate, but
 it extends to $n$-qubits.
 
 \index{quantum gates!multi-qubit gates!Toffoli gate}
-\subsection*{Toffoli Gate}
+\subsubsection*{Toffoli Gate}
 
 \dfn{Toffoli Gate}{(CCX) is a three-qubit gate with two control qubits and
   one target qubit. Its matrix representation is:
@@ -267,6 +280,20 @@ it extends to $n$-qubits.
   qubits are in state $\ket{1}$.
 }
 
+\index{Circuit notation!multi-qubit gates}
+\subsubsection*{Circuit Representation}
+
+The standard circuit representation for the Toffoli/ $CCX$ gate is as follows:
+
+\begin{align*}
+  \begin{quantikz}
+    % Toffoli
+    \lstick{CCX:} & \ctrl{1} & \qw \\
+                  & \ctrl{1} & \qw \\
+                  & \gate{X} & \qw
+  \end{quantikz}
+\end{align*}
+
 \paragraph{Effects of Toffoli Gate}\label{par:Effects of Toffoli Gate}
 
 The Toffoli (CCX) gate acts on a 3-qubit system, where the first two qubits
@@ -276,20 +303,17 @@ computational basis states is:
 \nt{
   \[
     \begin{aligned}
-      \text{Toffoli}\,\ket{000} &= \ket{000}, \\
-      \text{Toffoli}\,\ket{001} &= \ket{001}, \\
-      \text{Toffoli}\,\ket{010} &= \ket{010}, \\
-      \text{Toffoli}\,\ket{011} &= \ket{011}, \\
-      \text{Toffoli}\,\ket{100} &= \ket{100}, \\
-      \text{Toffoli}\,\ket{101} &= \ket{101}, \\
-      \text{Toffoli}\,\ket{110} &= \ket{111}, \\
-      \text{Toffoli}\,\ket{111} &= \ket{110}.
+      \text{Toffoli}\,\ket{000} &= \ket{000}  \quad & \text{Toffoli}\,\ket{100} &= \ket{100} \\
+      \text{Toffoli}\,\ket{001} &= \ket{001} \quad &       \text{Toffoli}\,\ket{101} &= \ket{101} \\
+      \text{Toffoli}\,\ket{010} &= \ket{010} \quad &       \text{Toffoli}\,\ket{110} &= \ket{111} \\
+      \text{Toffoli}\,\ket{011} &= \ket{011}  \quad &       \text{Toffoli}\,\ket{111} &= \ket{110}
     \end{aligned}
   \]
 }
 
 In essence, the target qubit is flipped only when both control qubits are in
 the \(\ket{1}\) state; otherwise, the state remains unchanged.
+
 
 As you would expect, multi-controlled $X$ gates are Hermitian.
 
