@@ -1,0 +1,230 @@
+\section{Lecture 9: Grover's Search Algorithm}\label{sec:lecture9}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem Statement
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\index{Grover's Search Algorithm!problem statement}
+\subsection*{Problem Statement}
+
+Given a bitstring \( x \in \{0, 1\}^n \) and a function
+
+\[
+  f(x) =
+  \begin{cases}
+    1, & \text{if } x \text{ is the marked (or winning) state}, \\
+    0, & \text{otherwise},
+  \end{cases}
+\]
+
+our goal is to find the unique (or one of the) \( x \) such that \( f(x)=1 \).
+
+\vspace{0.3cm}
+
+In plain terms, imagine you have an unsorted database of \( N = 2^n \) items,
+and only one item is “special.” Classically, you must check each item one by
+one (on average, \( O(2^n) \) trials) to find the special item. Grover's
+algorithm, however, uses quantum amplitude amplification to solve this
+problem in only \( O(\sqrt{2^n}) \) iterations- a quadratic speedup over
+classical search.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Grover's Algorithm Circuit (General n-qubit Version)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\index{Grover's Search Algorithm!circuit}
+\subsection*{Grover's Algorithm Circuit}
+
+The general structure of Grover's algorithm is as follows:
+
+\begin{enumerate}
+  \item \textbf{State Preparation:} Initialize all qubits in the state
+    \(\ket{0}^{\otimes n}\) and apply \( H^{\otimes n} \) to create a uniform
+    superposition:
+
+    \[
+      \ket{s} = H^{\otimes n} \ket{0}^{\otimes n} = \frac{1}{\sqrt{2^n}}
+      \sum_{x \in \{0,1\}^n} \ket{x}.
+    \]
+
+  \item \textbf{Grover Iteration:} Repeat the following two steps
+    approximately \(\sqrt{2^n}\) times:
+
+    \begin{itemize}
+      \item \textbf{Oracle \(O\):} Flip the phase of the marked state(s);
+        that is, for every \( x \),
+
+        \[
+          O \ket{x} = (-1)^{f(x)} \ket{x}.
+        \]
+
+        In our example, if the winning state is \(\ket{w}\), then \( O\ket{w}
+        = -\ket{w} \).
+
+      \item \textbf{Diffusion Operator \(D\):} Reflect all amplitudes about
+        the average amplitude. This operator is given by
+
+        \[
+          D = 2\ket{s}\bra{s} - I.
+        \]
+
+        In practice, \( D \) is implemented by the sequence:
+
+        \[
+          H^{\otimes n} \; X^{\otimes n} \; (CZ) \; X^{\otimes n} \;
+          H^{\otimes n}.
+        \]
+
+    \end{itemize}
+\end{enumerate}
+
+The following diagram shows the high-level circuit for an \( n \)-qubit
+Grover algorithm:
+
+\[
+\begin{quantikz}
+  \lstick{$q_{n - 1}$} & \gate{H} &  \gate[5]{\shortstack{$f(x)$ \\ Oracle}} & \qw & \gate[5]{\text{Diffusion Circuit}} & \meter{} \\
+  \lstick{$q_{n - 2}$} & \gate{H} &  &  & & \meter{} \\
+  \vdots & \vdots & & \vdots & & \vdots \\
+  \lstick{$q_1$} & \gate{H} & &  & & \meter{} \\
+  \lstick{$q_0$} & \gate{H} &  & & & \meter{}
+\end{quantikz}
+\]
+
+\[
+  \hspace{1.5cm}
+  \underbrace{\hspace{6cm}}_{\text{Repeat } \sqrt{2^n} \text{ times}}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2-Qubit Example
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{2-Qubit Example}
+
+To build intuition, let us consider the case \( n=2 \) (i.e. \( N=4 \)) with
+the winning state chosen as \(\ket{11}\).
+
+\vspace{0.3cm}
+
+\textbf{Oracle:} For a 2-qubit system, the Oracle \(O\) can be implemented as
+a controlled-Z (CZ) gate since
+
+\[
+  CZ =
+  \begin{pmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & -1
+  \end{pmatrix},
+\]
+
+which multiplies the state \(\ket{11}\) by \(-1\).
+
+\vspace{0.3cm}
+
+\textbf{Diffusion Operator:} For 2 qubits, the diffusion operator is given by:
+
+\[
+  D = H^{\otimes 2}\; X^{\otimes 2}\; CZ\; X^{\otimes 2}\; H^{\otimes 2}.
+\]
+
+\textbf{2-Qubit Grover Circuit:}
+
+
+% TODO: fill me in with nice quantikz diagram
+
+The diffusion block expands to:
+
+\[
+  H \; \rightarrow \; X \; \rightarrow \; CZ \; \rightarrow \; X \;
+  \rightarrow \; H.
+\]
+
+\textbf{Explanation:}
+
+\begin{itemize}
+  \item \textbf{Oracle:} The Oracle adds a phase of \(-1\) to the winner
+    state \(\ket{11}\), effectively marking it.
+
+  \item \textbf{Diffusion Operator:} The diffusion circuit reflects all
+    amplitudes about the average. This inversion about the mean amplifies the
+    amplitude of the marked state while reducing that of all others.
+
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Algorithm Walkthrough and Pseudocode
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\index{Grover's Search Algorithm!pseudocode}
+\subsection*{Walkthrough of the Algorithm and Generalization to \(n\) Qubits}
+
+Grover's algorithm can be summarized in the following pseudocode:
+
+\begin{algorithm}[H]
+  \caption{Grover's Search Algorithm}
+  \KwIn{A function \( f: \{0,1\}^n \rightarrow \{0,1\} \) with a unique
+  marked state \( x_0 \) such that \( f(x_0) = 1 \).}
+  \KwOut{The marked element \( x_0 \).}
+
+  \textbf{Initialize:} Set the quantum state to \( \ket{\psi} \gets
+  \ket{0}^{\otimes n} \).\\
+
+  Apply \( H^{\otimes n} \) to obtain the uniform superposition:
+
+  \[
+    \ket{s} = H^{\otimes n}\ket{0}^{\otimes n} = \frac{1}{\sqrt{2^n}} \sum_{x
+    \in \{0,1\}^n} \ket{x}.
+  \]
+
+  \For{\( i = 1 \) \KwTo \( \left\lfloor \frac{\pi}{4}\sqrt{2^n}
+  \right\rfloor \)}{
+
+    Apply the Oracle \( O \) which performs:
+
+    \[
+      O\ket{x} = (-1)^{f(x)}\ket{x},
+    \]
+
+    \quad (i.e., flip the phase of the marked state).\;
+    Apply the Diffusion Operator \( D = 2\ket{s}\bra{s} - I \) (which
+    reflects amplitudes about the average).\;
+  }
+
+  Measure the state in the computational basis to obtain \( x_0 \).\;
+
+\end{algorithm}
+
+\vspace{0.3cm}
+
+\noindent
+\textbf{Detailed Explanation:}
+\begin{enumerate}
+  \item \textbf{Initialization:} All qubits are set to \(\ket{0}\) and then
+    put into an equal superposition via \(H^{\otimes n}\).
+
+  \item \textbf{Oracle Application:} The Oracle selectively flips the phase
+    of the winning state(s) (e.g., for the marked state \(\ket{w}\),
+    \(O\ket{w} = -\ket{w}\)).
+
+  \item \textbf{Diffusion (Inversion about the Mean):} This operator reflects
+    the state vector about the average amplitude. Geometrically, if you
+    visualize the amplitudes as vectors in the complex plane, the Oracle
+    rotates the winning state's amplitude by 180°, and the diffusion operator
+    then “pushes” this amplitude further away from the average, thereby
+    amplifying it.
+
+  \item \textbf{Iteration:} Repeating the Oracle and Diffusion steps
+    approximately \( \sqrt{2^n} \) times ensures that the probability
+    amplitude of the marked state is maximized.
+
+  \item \textbf{Measurement:} Finally, a measurement in the computational
+    basis yields the marked element with high probability.
+\end{enumerate}
+
+This algorithm demonstrates how quantum algorithms can achieve a quadratic
+speedup over classical brute-force search methods.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End of Lecture 9
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
