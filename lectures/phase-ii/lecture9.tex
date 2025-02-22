@@ -131,15 +131,18 @@ which multiplies the state \(\ket{11}\) by \(-1\).
 \textbf{2-Qubit Grover Circuit:}
 
 
-% TODO: fill me in with nice quantikz diagram
-
-The diffusion block expands to:
+The following circuit implements Grover's algorithm for 2 qubits:
 
 \[
-  H \; \rightarrow \; X \; \rightarrow \; CZ \; \rightarrow \; X \;
-  \rightarrow \; H.
+\begin{quantikz}
+  \lstick{$\ket{0}$} & \gate{H} & \ctrl{1} & \gate{H} & \gate{X} & \qw & \ctrl{1} & \qw & \gate{X} & \gate{H} & \meter{} \\
+  \lstick{$\ket{0}$} & \gate{H} & \ctrl{0} & \gate{H} & \gate{X} & \gate{H} & \gate{X} & \gate{H} & \gate{X} & \gate{H} & \meter{}
+\end{quantikz}
 \]
 
+\vspace{0.3cm}
+
+\noindent
 \textbf{Explanation:}
 
 \begin{itemize}
