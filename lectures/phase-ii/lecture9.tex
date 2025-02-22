@@ -98,9 +98,62 @@ The high-level circuit for an \( n \)-qubit Grover algorithm is illustrated as:
 \]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Inversion About the Mean Diagram
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Inversion About the Mean}
+
+The diffusion operator \( D \) reflects the amplitudes of all states about
+the average amplitude. This process is often referred to as "inversion about
+the mean." The following diagram illustrates this concept:
+
+\begin{center}
+\begin{tikzpicture}
+  % Draw axes
+  \draw[->] (0,0) -- (8,0) node[right]{States};
+  \draw[->] (0,0) -- (0,5) node[above]{Amplitude};
+
+  % Draw average amplitude line
+  \draw[dashed] (0,2.5) -- (8,2.5) node[right]{Average Amplitude};
+
+  % Draw initial amplitudes
+  \foreach \x/\y in {1/1, 2/1.5, 3/2, 4/2.5, 5/3, 6/3.5, 7/4} {
+    \draw[blue, thick] (\x,0) -- (\x,\y);
+    \fill[blue] (\x,\y) circle (0.1);
+  }
+
+  % Draw reflected amplitudes
+  \foreach \x/\y in {1/4, 2/3.5, 3/3, 4/2.5, 5/2, 6/1.5, 7/1} {
+    \draw[red, thick, dashed] (\x,0) -- (\x,\y);
+    \fill[red] (\x,\y) circle (0.1);
+  }
+
+  % Labels
+  \node at (1,-0.5) {\(\ket{000}\)};
+  \node at (2,-0.5) {\(\ket{001}\)};
+  \node at (3,-0.5) {\(\ket{010}\)};
+  \node at (4,-0.5) {\(\ket{011}\)};
+  \node at (5,-0.5) {\(\ket{100}\)};
+  \node at (6,-0.5) {\(\ket{101}\)};
+  \node at (7,-0.5) {\(\ket{110}\)};
+
+  % Legend
+  \draw[blue, thick] (0.5,4.5) -- (1.5,4.5) node[right]{Initial Amplitudes};
+  \draw[red, thick, dashed] (0.5,4) -- (1.5,4) node[right]{Reflected Amplitudes};
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.3cm}
+
+The blue bars represent the initial amplitudes of the states, and the red
+dashed bars represent the amplitudes after inversion about the mean. The
+marked state's amplitude is amplified, while the amplitudes of the other
+states are reduced.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 2-Qubit Example
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection*{2-Qubit Example}
+\subsection*{2-Qubit Example}
 
 To build intuition, consider the case \( n=2 \) (i.e., \( N=4 \)) with the winning
 state chosen as \(\ket{11}\).
@@ -210,8 +263,7 @@ Grover's algorithm can be summarized in the following pseudocode:
 
   \item \textbf{Diffusion (Inversion about the Mean):} This operator reflects
     the state vector about the average amplitude. Geometrically, one can
-    view the process as a rotation in a two-dimensional subspace (see
-    below).
+    view the process as a rotation in a two-dimensional subspace.
 
   \item \textbf{Iteration:} Repeating the Oracle and Diffusion steps
     approximately \( \sqrt{2^n} \) times amplifies the probability amplitude of
