@@ -36,6 +36,7 @@ in LaTeX.
 | [Lecture 7](./lectures/phase-i/lecture7.tex)  | More Multi-Qubit Gates, Reversibility Property, No-Cloning Theorem |
 |          <strong>Phase II </strong>           | <em>Fundamentals of Quantum Algorithms</em>                        |
 | [Lecture 8](./lectures/phase-ii/lecture8.tex) | Entanglement, Bell State, and Intro to <code>Cirq</code>           |
+| [Lecture 9](./lectures/phase-ii/lecture9.tex) | Grover's Search Algorithm                                          |
 
 </div>
 
