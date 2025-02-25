@@ -37,6 +37,8 @@ in LaTeX.
 |          <strong>Phase II </strong>           | <em>Fundamentals of Quantum Algorithms</em>                        |
 | [Lecture 8](./lectures/phase-ii/lecture8.tex) | Entanglement, Bell State, and Intro to <code>Cirq</code>           |
 | [Lecture 9](./lectures/phase-ii/lecture9.tex) | Grover's Search Algorithm                                          |
+|         <strong>Supplmentary</strong>         | <em> Additional supplementary material. </em>                      |
+| [Cheatsheet](./supplementary/cheatsheet.tex)  | Quick reference to important concepts and facts.                   |
 
 </div>
 
