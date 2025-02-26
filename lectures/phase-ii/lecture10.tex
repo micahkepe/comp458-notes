@@ -1,0 +1,325 @@
+\section{Lecture 10: Quantum Logic Gates, Applying Grover's Search Algorithm
+to SAT}\label{sec:lecture10}
+
+%%%%%%%%%%%%%%
+
+\subsection*{Review Question from Last Lecture}
+
+\qs{Function of the Hadamard Layer in Grover's Algorithm}{
+  Why does Grover's algorithm apply a Hadamard ($H$) gate to each of the $n$
+  qubits at the beginning of the circuit?
+}
+
+\sol{
+  The purpose of the Hadamard layer is that it allows up to work with all
+  bitstring permutations simultaneously by putting all states in equal
+  superposition.
+
+  The Hadamard layer initializes the system in a uniform superposition of all
+  possible $2^n$ states, allowing Grover's algorithm to explore all bitstring
+  permutations simultaneously. For $n$ qubits starting at $|0\rangle^{\otimes
+  n}$, applying $H^{\otimes n}$ yields:
+
+  \[
+    |s\rangle = H^{\otimes n} |0\rangle^{\otimes n} = \frac{1}{\sqrt{2^n}}
+    \sum_{x \in \{0,1\}^n} |x\rangle.
+  \]
+
+  This equal superposition ensures that the algorithm can amplify the
+  amplitude of the solution state(s) efficiently.
+}
+
+%%%%%%%%%%%%%
+
+\subsection*{Quantum Implementations of Classical Logic Gates}
+
+\index{quantum gates!OR gate}
+\subsubsection*{OR Gate}
+
+The quantum OR gate computes $c = a \lor b$ using a combination of CNOT and
+Toffoli gates. Below is the two-way OR implementation:
+
+\[
+  \begin{quantikz}
+    \lstick{$|a\rangle$} & \ctrl{1} & \ctrl{2} & \qw \\
+    \lstick{$|b\rangle$} & \ctrl{1} & \targ{} & \qw \\
+    \lstick{$|c\rangle$} & \targ{} & \targ{} & \qw
+  \end{quantikz}
+\]
+
+\textbf{Truth Table:}
+\[
+  \begin{array}{ccc|c}
+    a & b & c_{\text{in}} & c_{\text{out}} = a \lor b \\
+    \hline
+    0 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 1 \\
+    1 & 0 & 0 & 1 \\
+    1 & 1 & 0 & 1 \\
+  \end{array}
+\]
+
+The circuit uses CCNOT (Toffoli) to set $c$ if both $a$ and $b$ are 1, then
+CNOTs to flip $c$ if either $a$ or $b$ is 1, effectively computing OR. NOT
+gates ($X$) can be added to inputs for negated terms (e.g., $\neg a \lor \neg
+b$).
+
+\index{quantum gates!NOR gate}
+\subsubsection*{NOR Gate}
+
+A NOR gate ($c = \neg (a \lor b)$) can be implemented by adding an $X$ gate
+on the output qubit after the OR circuit:
+
+\[
+  \begin{quantikz}
+    \lstick{$|a\rangle$} & \ctrl{1} & \ctrl{2} & \qw \\
+    \lstick{$|b\rangle$} & \ctrl{1} & \targ{} & \qw \\
+    \lstick{$|c\rangle$} & \targ{} & \targ{} & \gate{X} & \qw
+  \end{quantikz}
+\]
+
+
+\textbf{Truth Table:}
+\[
+  \begin{array}{ccc|c}
+    a & b & c_{\text{in}} & c_{\text{out}} = \neg (a \lor b) \\
+    \hline
+    0 & 0 & 0 & 1 \\
+    0 & 1 & 0 & 0 \\
+    1 & 0 & 0 & 0 \\
+    1 & 1 & 0 & 0 \\
+  \end{array}
+\]
+
+\index{quantum gates!AND gate}
+\subsubsection*{AND Gate}
+
+An AND gate ($c = a \land b$) is directly implemented with a Toffoli gate:
+
+\[
+  \begin{quantikz}
+    \lstick{$| a \rangle$} & \ctrl{1} & \qw \\
+    \lstick{$| b \rangle$} & \ctrl{1} & \qw \\
+    \lstick{$| c \rangle$} & \targ{} & \qw
+  \end{quantikz}
+\]
+
+\textbf{Truth Table:}
+\[
+  \begin{array}{ccc|c}
+    a & b & c_{\text{in}} & c_{\text{out}} = a \land b \\
+    \hline
+    0 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    1 & 0 & 0 & 0 \\
+    1 & 1 & 0 & 1 \\
+  \end{array}
+\]
+
+\index{quantum gates!NAND gate}
+\subsubsection*{NAND Gate}
+A NAND gate ($c = \neg (a \land b)$) adds an $X$ gate after the AND:
+
+\[
+  \begin{quantikz}
+    \lstick{$|a\rangle$} & \ctrl{1} & \qw \\
+    \lstick{$|b\rangle$} & \ctrl{1} & \qw \\
+    \lstick{$|c\rangle$} & \targ{} & \gate{X} & \qw
+  \end{quantikz}
+\]
+
+\textbf{Truth Table:}
+\[
+  \begin{array}{ccc|c}
+    a & b & c_{\text{in}} & c_{\text{out}} = \neg (a \land b) \\
+    \hline
+    0 & 0 & 0 & 1 \\
+    0 & 1 & 0 & 1 \\
+    1 & 0 & 0 & 1 \\
+    1 & 1 & 0 & 0 \\
+  \end{array}
+\]
+
+%%%%%%%%%%%%%
+
+\subsection*{Applying Grover's Algorithm to SAT}
+
+\index{quantum kickback}
+\dfn{Quantum Kickback}{
+  Quantum kickback occurs when a controlled operation transfers a phase from
+  the target qubit to the control qubit(s). In Grover's algorithm, the oracle
+  uses this to mark solution states. Consider a simple example with a
+  controlled-$X$ and phase:
+
+  \[
+    \begin{quantikz}
+      \lstick{$|+\rangle$} & \ctrl{1} & \qw \\
+      \lstick{$|-\rangle$} & \targ{} & \qw
+    \end{quantikz}
+  \]
+
+  Initial state: $|+\rangle|-\rangle = \frac{1}{\sqrt{2}}(|0\rangle +
+  |1\rangle) \otimes \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle) =
+  \frac{1}{2}(|00\rangle - |01\rangle + |10\rangle - |11\rangle)$.
+
+  After CNOT:
+
+  \[
+    \frac{1}{2}(|00\rangle - |01\rangle + |11\rangle - |10\rangle) =
+    \frac{1}{\sqrt{2}}(|0\rangle|-\rangle - |1\rangle|+\rangle).
+  \]
+
+  The phase of the target ($|-\rangle$) "kicks back" to the control, flipping
+  its relative phase. In Grover’s oracle, a multi-controlled $X$ on an
+  ancilla in $|-\rangle$ state marks solutions with a $-1$ phase.
+}
+
+\paragraph{Implications of Quantum Kickback}\label{par:Implications of
+Quantum Kickback}
+
+Quantum kickback enables efficient phase marking in Grover’s algorithm
+without altering the computational basis states directly. It implies that:
+
+\begin{itemize}
+  \item Ancilla qubits in superposition (e.g., $|-\rangle$) can encode
+    solution conditions.\footnote{\textbf{ancilla}: extra qubits (beyond the
+    clauses) that we need to complete the complete the computation}
+
+  \item The oracle’s design must ensure correct phase inversion for all
+    satisfying assignments.
+
+  \item When designing algorithms, we leverage kickback to avoid classical
+    computation of each clause, reducing circuit depth and enhancing quantum
+    speedup.
+\end{itemize}
+
+\index{Grover's Search Algorithm!Alexandria Ship Example@\textit{Alexandria
+Ship Example}}
+\ex{Alexandria Ship Example}{
+
+  In 48 BCE Alexandria, a merchant must maximize passengers on a ship to
+  Italy under these constraints:
+
+  \begin{enumerate}
+    \item \textit{Arsinoe (A)} won’t go if Cleopatra (C) is on the ship:
+      $\neg A \lor \neg C$.
+
+    \item \textit{Arsinoe} won’t go alone: $\neg A \lor J \lor P$.
+
+    \item \textit{Ptolemy (P)} only goes if Julius Caesar (J) goes: $\neg P
+      \lor J$.
+
+    \item \textit{Ptolemy} won’t go if Cleopatra is on: $\neg P \lor \neg C$.
+
+    \item \textit{Julius Caesar} must go: $J$.
+
+    \item \textit{Cleopatra} won’t go if Julius Caesar is on: $\neg C \lor
+      \neg J$.
+  \end{enumerate}
+
+  \textbf{Goal:} Find the maximum number of passengers (A, C, J, P)
+  satisfying all constraints using Grover’s algorithm.
+}
+
+\paragraph{Creating SAT Clauses}\label{par:Creating SAT Clauses} % (fold)
+
+The problem is a SAT instance with clauses:
+
+\begin{enumerate}
+  \item $\neg A \lor \neg C$ (Arsinoe-Cleopatra conflict).
+  \item $\neg A \lor J \lor P$ (Arsinoe not alone).
+  \item $\neg P \lor J$ (Ptolemy needs Caesar).
+  \item $\neg P \lor \neg C$ (Ptolemy-Cleopatra conflict).
+  \item $J$ (Caesar must go).
+  \item $\neg C \lor \neg J$ (Cleopatra-Caesar conflict).
+\end{enumerate}
+
+These are implemented as OR gates in the quantum circuit, with an
+ancilla qubit per clause. The final ancilla ($q_9$) computes the AND of all
+clauses using a multi-controlled $X$, marking satisfying assignments with a
+phase flip.
+
+% paragraph Creating SAT Clauses (end)
+
+\subsubsection*{\texttt{Cirq} Implementation}
+
+Below is the Cirq code with detailed explanations:
+
+\begin{minted}[linenos,highlightlines={6-10},highlightcolor=yellow!20]{python}
+import cirq
+
+# Qubits: A=0, C=1, J=2, P=3, clause ancillas=4-8, final output=9
+qubits = cirq.LineQubit.range(10)
+
+def twoway_OR(circuit, a, b, c, not_a, not_b):
+    if not_a: circuit.append(cirq.X(a))
+    if not_b: circuit.append(cirq.X(b))
+    circuit.append(cirq.CCNOT(a, b, c))  # AND to target
+    circuit.append(cirq.CNOT(a, c))      # OR logic
+    circuit.append(cirq.CNOT(b, c))
+    if not_a: circuit.append(cirq.X(a))
+    if not_b: circuit.append(cirq.X(b))
+    return circuit
+\end{minted}
+\textit{Lines 6-10}: Implements $c = a \lor b$ by computing AND then adding
+single-qubit terms, with optional inversions for negated inputs.
+
+\begin{minted}[linenos,highlightlines={11-14}]{python}
+clauses_circuit = cirq.Circuit()
+twoway_OR(clauses_circuit, qubits[0], qubits[1], qubits[4], 1, 1)  # A or not C
+threeway_OR(clauses_circuit, qubits[0], qubits[2], qubits[3], qubits[5], 1, 0, 0)  # not A or J or P
+twoway_OR(clauses_circuit, qubits[1], qubits[2], qubits[6], 1, 1)  # not C or not J
+twoway_OR(clauses_circuit, qubits[1], qubits[3], qubits[7], 1, 1)  # not C or not P
+twoway_OR(clauses_circuit, qubits[2], qubits[3], qubits[8], 0, 1)  # J or not P
+
+oracle_circuit = cirq.Circuit()
+oracle_circuit.append(clauses_circuit)
+oracle_circuit.append(cirq.X(qubits[9]).controlled_by(qubits[2], qubits[4], qubits[5],
+                                                      qubits[6], qubits[7], qubits[8]))
+oracle_circuit.append(clauses_circuit)
+\end{minted}
+\textit{Lines 11-14}: The oracle computes all clauses, then uses a
+multi-controlled $X$ on $q_9$ (in $|-\rangle$ state) to flip the phase of
+satisfying states, leveraging kickback.
+
+\begin{minted}[linenos,highlightlines={5-7}]{python}
+final_circuit = cirq.Circuit()
+final_circuit.append(cirq.H.on_each(qubits[0:4]))  # Superposition
+final_circuit.append(cirq.X(qubits[9]))            # Prepare ancilla
+final_circuit.append(cirq.H(qubits[9]))
+final_circuit.append(oracle_circuit)
+final_circuit.append(diffusion_circuit)            # From notebook
+final_circuit.append(cirq.measure(qubits[0:4][::-1], key='PJCA'))
+\end{minted}
+
+\textit{Lines 5-7}: Initializes input qubits in superposition and ancilla in
+$|-\rangle$, applies oracle and diffusion, then measures.
+
+\paragraph{Results from the Circuit}\label{par:Results from the Circuit}
+Running the circuit with 8192 repetitions yields:
+
+\begin{verbatim}
+Counter({5: 2079, 13: 2043, 12: 2037, 4: 2033})
+\end{verbatim}
+
+\noindent
+Converting to binary (PJCA order):
+
+\begin{itemize}
+  \item $5 = 0101$: $P=0, J=1, C=0, A=1$ (J, A).
+  \item $13 = 1101$: $P=1, J=1, C=0, A=1$ (P, J, A).
+  \item $12 = 1100$: $P=1, J=1, C=0, A=0$ (P, J).
+  \item $4 = 0100$: $P=0, J=1, C=0, A=0$ (J).
+\end{itemize}
+
+All solutions have $J=1$ (Caesar goes), $C=0$ (Cleopatra stays), and vary in
+A and P, satisfying all constraints. The maximum passengers (3) is $P=1, J=1,
+A=1$, excluding Cleopatra, optimizing the merchant’s goal.
+
+We have shown how Grover’s Search Algorithm efficiently solves this SAT
+problem, amplifying valid configurations quadratically faster than classical
+search!
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End of Lecture 10
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
