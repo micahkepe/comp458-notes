@@ -335,39 +335,137 @@
 
                         \item Measure to find solution with high probability
                       \end{enumerate}
+
+                      \conceptbox{Important Insight}{Grover's algorithm provides quadratic speedup
+                      over classical search, which is proven to be optimal for quantum algorithms}
+
+                    \item \textbf{Circuit}
+                      \[
+                        \resizebox{0.25\textwidth}{!}{
+                          \begin{quantikz}
+                            \lstick{$q_{n - 1}$} & \gate{H} & \gate[5]{\shortstack{$f(x)$ \\ Oracle}} & \qw & \gate[5]{\text{Diffusion Circuit}} & \meter{} \\
+                            \lstick{$q_{n - 2}$} & \gate{H} & & & & \meter{} \\
+                            \vdots & \vdots & & \vdots & & \vdots \\
+                            \lstick{$q_1$} & \gate{H} & & & & \meter{} \\
+                            \lstick{$q_0$} & \gate{H} & & & & \meter{}
+                          \end{quantikz}
+                        }
+                      \]
+
+                      \[
+                        \hspace{1cm}
+                        \underbrace{\hspace{3cm}}_{\text{Repeat } \sqrt{2^n} \text{ times}}
+                      \]
+
+                    \item \textbf{General Diffusion Circuit}: Layer of H, then layer of X, H on LSB, then Controlled-X
+                      layer over all qubits, another H on LSB, then layer of X, and
+                      then layer of H
+
+                    \item \textbf{phase kickback}: when a controlled
+                      operation transfers a phase from the target qubit to
+                      the control qubit(s)
                   \end{itemize}
 
-                  \conceptbox{Important Insight}{Grover's algorithm provides quadratic speedup
-                  over classical search, which is proven to be optimal for quantum algorithms}
+                  \section*{Quantum Implementations of Classical Logic Gates}
+                  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+                    \item \textbf{OR Gate}: Computes $c = a \lor b$
+                      \begin{align*}
+                        \begin{quantikz}
+                          \lstick{$|a\rangle$} & \ctrl{1} & \ctrl{2} & \qw \\
+                          \lstick{$|b\rangle$} & \ctrl{1} & \targ{} & \qw \\
+                          \lstick{$|c\rangle$} & \targ{} & \targ{} & \qw
+                        \end{quantikz}
+                      \end{align*}
+                      \begin{itemize}[nosep]
+                        \item Effect: $|a,b,c\rangle \to |a,b,c \oplus (a \lor b)\rangle$
+                        \item Truth Table: $|000\rangle \to |000\rangle$, $|010\rangle \to |011\rangle$
+                        \item $|100\rangle \to |101\rangle$, $|110\rangle \to |111\rangle$
+                      \end{itemize}
 
-                  \section*{Grover's Search Algorithm Circuit}
-                  \[
-                  \resizebox{0.25\textwidth}{!}{
-                    \begin{quantikz}
-                      \lstick{$q_{n - 1}$} & \gate{H} & \gate[5]{\shortstack{$f(x)$ \\ Oracle}} & \qw & \gate[5]{\text{Diffusion Circuit}} & \meter{} \\
-                      \lstick{$q_{n - 2}$} & \gate{H} & & & & \meter{} \\
-                      \vdots & \vdots & & \vdots & & \vdots \\
-                      \lstick{$q_1$} & \gate{H} & & & & \meter{} \\
-                      \lstick{$q_0$} & \gate{H} & & & & \meter{}
-                    \end{quantikz}
-                  }
-                  \]
+                    \item \textbf{NOR Gate}: Computes $c = \lnot(a \lor b)$
+                      \begin{align*}
+                        \begin{quantikz}
+                          \lstick{$|a\rangle$} & \ctrl{1} & \ctrl{2} & \qw \\
+                          \lstick{$|b\rangle$} & \ctrl{1} & \targ{} & \qw \\
+                          \lstick{$|c\rangle$} & \targ{} & \targ{} & \gate{X} & \qw
+                        \end{quantikz}
+                      \end{align*}
+                      \begin{itemize}[nosep]
+                        \item Effect: $|a,b,c\rangle \to |a,b,c \oplus \lnot(a \lor b)\rangle$
+                        \item Truth Table: $|000\rangle \to |001\rangle$, $|010\rangle \to |010\rangle$
+                        \item $|100\rangle \to |100\rangle$, $|110\rangle \to |110\rangle$
+                      \end{itemize}
 
-                  \[
-                    \hspace{1cm}
-                    \underbrace{\hspace{3cm}}_{\text{Repeat } \sqrt{2^n} \text{ times}}
-                  \]
+                    \item \textbf{AND Gate}: Computes $c = a \land b$
+                      \begin{align*}
+                        \begin{quantikz}
+                          \lstick{$|a\rangle$} & \ctrl{1} & \qw \\
+                          \lstick{$|b\rangle$} & \ctrl{1} & \qw \\
+                          \lstick{$|c\rangle$} & \targ{} & \qw
+                        \end{quantikz}
+                      \end{align*}
+                      \begin{itemize}[nosep]
+                        \item Effect: $|a,b,c\rangle \to |a,b,c \oplus (a \land b)\rangle$
+                        \item Truth Table: $|000\rangle \to |000\rangle$, $|010\rangle \to |010\rangle$
+                        \item $|100\rangle \to |100\rangle$, $|110\rangle \to |111\rangle$
+                        \item Direct implementation using Toffoli gate
+                      \end{itemize}
 
-                  \textbf{General Diffusion Circuit}
-                  - Layer of H, then layer of X, H on LSB, then Controlled-X
-                  layer over all qubits, another H on LSB, then layer of X, and
-                  then layer of H
+                    \item \textbf{NAND Gate}: Computes $c = \lnot(a \land b)$
+                      \begin{align*}
+                        \begin{quantikz}
+                          \lstick{$|a\rangle$} & \ctrl{1} & \qw \\
+                          \lstick{$|b\rangle$} & \ctrl{1} & \qw \\
+                          \lstick{$|c\rangle$} & \targ{} & \gate{X} & \qw
+                        \end{quantikz}
+                      \end{align*}
+                      \begin{itemize}[nosep]
+                        \item Effect: $|a,b,c\rangle \to |a,b,c \oplus \lnot(a \land b)\rangle$
+                        \item Truth Table: $|000\rangle \to |001\rangle$, $|010\rangle \to |011\rangle$
+                        \item $|100\rangle \to |101\rangle$, $|110\rangle \to |110\rangle$
+                      \end{itemize}
 
-                    \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-                      \item \textbf{phase kickback}: when a controlled
-                        operation transfers a phase from the target qubit to
-                        the control qubit(s)
-                    \end{itemize}
+                    \item \textbf{XOR Gate}: Computes $c = a \oplus b$
+                      \begin{align*}
+                        \begin{quantikz}
+                          \lstick{$|a\rangle$} & \ctrl{1} & \qw \\
+                          \lstick{$|b\rangle$} & \targ{} & \qw
+                        \end{quantikz}
+                      \end{align*}
+                      \begin{itemize}[nosep]
+                        \item For 3-qubit implementation:
+                          \begin{align*}
+                            \begin{quantikz}
+                              \lstick{$|a\rangle$} & \ctrl{2} & \qw \\
+                              \lstick{$|b\rangle$} & \qw & \ctrl{1} & \qw \\
+                              \lstick{$|c\rangle$} & \targ{} & \targ{} & \qw
+                            \end{quantikz}
+                          \end{align*}
+                        \item Effect: $|a,b,c\rangle \to |a,b,c \oplus (a \oplus b)\rangle$
+                        \item Truth Table: $|000\rangle \to |000\rangle$, $|010\rangle \to |011\rangle$
+                        \item $|100\rangle \to |101\rangle$, $|110\rangle \to |110\rangle$
+                      \end{itemize}
+
+                    \item \textbf{XNOR Gate}: Computes $c = \lnot(a \oplus b)$
+                      \begin{align*}
+                        \begin{quantikz}
+                          \lstick{$|a\rangle$} & \ctrl{2} & \qw \\
+                          \lstick{$|b\rangle$} & \qw & \ctrl{1} & \qw \\
+                          \lstick{$|c\rangle$} & \targ{} & \targ{} & \gate{X} & \qw
+                        \end{quantikz}
+                      \end{align*}
+                      \begin{itemize}[nosep]
+                        \item Effect: $|a,b,c\rangle \to |a,b,c \oplus \lnot(a \oplus b)\rangle$
+                        \item Truth Table: $|000\rangle \to |001\rangle$, $|010\rangle \to |010\rangle$
+                        \item $|100\rangle \to |100\rangle$, $|110\rangle \to |111\rangle$
+                      \end{itemize}
+                  \end{itemize}
+
+                  \conceptbox{Important Note}{The output qubit $|c\rangle$
+                    should be initialized to $|0\rangle$ for classical logic
+                    gate operation. The circuits preserve input states
+                    ($|a\rangle$ and $|b\rangle$) allowing for reversible
+                  computation.}
 
                 \end{multicols}
                 \endgroup
