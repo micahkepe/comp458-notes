@@ -9,24 +9,225 @@ we saw at the end of the last lecture were:
   \item The extensive use of ancilla qubits.
 \end{enumerate}
 
+\vspace{0.3cm}
+
+\noindent
 We will address both of these inefficiencies to get a shallower and simpler
 circuit.
 
+\index{quantum gates!OR gate!optimizations@\textit{optimizations}}
 \subsection*{More Efficient OR Gate Implementation}
 
-% fill me in
+The original OR gate implementations (e.g., \texttt{twoway\_OR},
+\texttt{threeway\_OR}) in Lecture 10 used multiple Toffoli and CNOT gates,
+leading to high depth and gate redundancy. For example, the three-way OR ($d
+= a \lor b \lor c$) had a depth of 6. We optimize this using a single
+multi-controlled NOT gate:
+
+\begin{minted}[linenos,highlightlines={6-8}]{python}
+def OR(circuit, qubits, nots):
+  for index, is_not in enumerate(nots):
+    if not is_not:
+      circuit.append(cirq.X(qubits[index]))
+  circuit.append(cirq.X(qubits[-1]))
+  circuit.append(cirq.X(qubits[-1]).controlled_by(*qubits[:-1]))
+  for index, is_not in enumerate(nots):
+    if not is_not:
+      circuit.append(cirq.X(qubits[index]))
+  return circuit
+\end{minted}
+
+\textbf{Explanation:}
+\begin{itemize}
+  \item \textit{Lines 6-8}: Inverts the output qubit, then applies a
+    multi-controlled $X$ (e.g., Toffoli for 2 inputs, CCCNOT for 3) to flip
+    it back only if all inputs are 0 (after negation if needed). This
+    computes $a \lor b \lor c$ efficiently.
+
+  \item \textit{Negations}: $X$ gates preprocess inputs based on
+    \texttt{nots} (0 for normal, 1 for negated), e.g., $\neg a \lor \neg b$
+    uses $X$ on $a$ and $b$.
+\end{itemize}
+
+\textbf{Circuit Diagram (e.g., $\neg a \lor \neg b$):}
+\[
+ \begin{quantikz}
+  \lstick{$\ket{a}$} & \gate{X} & \ctrl{1} & \gate{X} & \qw \\
+  \lstick{$\ket{b}$} & \gate{X} & \ctrl{1} & \gate{X} & \qw \\
+  \lstick{$\ket{c}$} & \qw & \targ{} & \qw & \qw
+\end{quantikz}
+\]
+
+\textbf{Truth Table:}
+\[
+  \begin{array}{cc|c}
+    a & b & c = \neg a \lor \neg b \\
+    \hline
+    0 & 0 & 1 \\
+    0 & 1 & 1 \\
+    1 & 0 & 1 \\
+    1 & 1 & 0 \\
+  \end{array}
+\]
+
+\textbf{Advantages:}
+\begin{itemize}
+  \item Reduces depth to 3 (two $X$ layers + one multi-controlled $X$) vs. 5
+    in \texttt{twoway\_OR}.
+
+  \item Eliminates redundant CNOTs, e.g., in \texttt{threeway\_OR}, depth
+    drops from 6 to 4.
+
+  \item Scales efficiently for $n$-way OR with one $n$-controlled $X$ gate.
+
+\end{itemize}
+
+Applying this to the Alexandria ship clauses (e.g., $\neg A \lor \neg C$,
+$\neg A \lor J \lor P$):
+
+\begin{minted}{python}
+  OR(clauses_circuit, [qubits[0], qubits[1], qubits[4]], [1, 1])  # NOT A OR NOT C
+  OR(clauses_circuit, [qubits[0], qubits[2], qubits[3], qubits[5]], [1, 0, 0])  # NOT A OR J OR P
+\end{minted}
+
+This reduces gate count and depth per clause, improving the oracle’s efficiency.
 
 \subsection*{Reducing Ancilla Qubits}
 
+\index{algebraic normal form}
 \subsubsection*{Converting from CNF to ANF}
 
-In the last lecture, we wrote the clauses for the Alexandria ship problem using
-conjunctive normal form (exclusively using OR and NOT for each clause). However,
-by converting to using algebraic normal form (exclusively using AND and XOR), we
-will only have to use $O(1)$ additional ancilla for this problem\footnote{It is
-guaranteed that this conversion from CNF to ANF will produce similar results for
-all problems.}, as opposed to the original $O(\text{# of clauses})$ addition
-ancilla from the original CNF implementation.
+The Lecture 10 CNF implementation used 6 ancilla qubits for the Alexandria
+ship problem’s clauses, scaling as $O(\text{\# of clauses})$. Converting to
+Algebraic Normal Form (ANF) reduces this to $O(1)$ ancilla—typically one—by
+expressing the SAT problem as a single XOR polynomial.
 
-% fill me in with implementation details and all that jazz
+\textbf{CNF (Lecture 10):}
+
+\[
+  (\neg A \lor \neg C) \land (\neg A \lor J \lor P) \land (\neg C \lor \neg
+  J) \land (\neg C \lor \neg P) \land J \land (J \lor \neg P)
+\]
+
+\textbf{ANF Conversion (using SymPy):}
+\begin{minted}{python}
+from sympy import symbols, ANFform
+P, J, C, A = symbols('P, J, C, A')
+phrase = (~A | ~C) & (~A | J | P) & (~C | ~J) & (~C | ~P) & J & (J | ~P)
+truth_table = [int(bool(phrase.subs({P: int(seq[0]), J: int(seq[1]), C: int(seq[2]), A: int(seq[3])})))
+               for seq in itertools.product("01", repeat=4)]
+anf = ANFform([P, J, C, A], truth_table)  # Output: J XOR C J
+\end{minted}
+
+\textbf{Resulting ANF:} $f = J \oplus C J$ (simplified form from truth table).
+
+\textbf{Truth Table Verification:}
+
+\[
+  \begin{array}{cccc|c}
+    P & J & C & A & f \\
+    \hline
+    0 & 0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 1 & 0 \\
+    0 & 0 & 1 & 0 & 0 \\
+    0 & 0 & 1 & 1 & 0 \\
+    0 & 1 & 0 & 0 & 1 \\
+    0 & 1 & 0 & 1 & 1 \\
+    0 & 1 & 1 & 0 & 0 \\
+    0 & 1 & 1 & 1 & 0 \\
+    1 & 0 & 0 & 0 & 0 \\
+    1 & 0 & 0 & 1 & 0 \\
+    1 & 0 & 1 & 0 & 0 \\
+    1 & 0 & 1 & 1 & 0 \\
+    1 & 1 & 0 & 0 & 1 \\
+    1 & 1 & 0 & 1 & 1 \\
+    1 & 1 & 1 & 0 & 0 \\
+    1 & 1 & 1 & 1 & 0 \\
+  \end{array}
+\]
+
+Matches Lecture 10 solutions (e.g., 4=0100, 5=0101, 12=1100, 13=1101).
+
+\vspace{0.3cm}
+
+\textbf{Oracle Implementation:}
+\begin{minted}{python}
+oracle_circuit = cirq.Circuit()
+qubits = cirq.LineQubit.range(5)  # A=0, C=1, J=2, P=3, out=4
+oracle_circuit.append(cirq.CNOT(qubits[2], qubits[4]))  # J
+oracle_circuit.append(cirq.CCNOT(qubits[1], qubits[2], qubits[4]))  # C J
+\end{minted}
+
+\vspace{0.3cm}
+
+\noindent
+\textbf{Circuit Diagram:}
+\[
+\begin{quantikz}
+  \lstick{$\ket{A}$} & \qw & \qw & \qw \\
+  \lstick{$\ket{C}$} & \qw & \ctrl{3} & \qw \\
+  \lstick{$\ket{J}$} & \ctrl{2} & \ctrl{1} & \qw \\
+  \lstick{$\ket{P}$} & \qw & \qw & \qw \\
+  \lstick{$\ket{out}$} & \targ{} & \targ{} & \qw
+\end{quantikz}
+\]
+
+\vspace{0.3cm}
+
+\noindent
+\textbf{Advantages:}
+\begin{itemize}
+  \item \textit{Ancilla}: Only 1 ancilla vs. 6, reducing qubit overhead.
+
+  \item \textit{Depth}: 2 gates (CNOT, Toffoli) vs. multiple OR gates plus a
+    6-controlled $X$.
+
+  \item \textit{Generality}: ANF conversion applies to any CNF, often
+    simplifying to fewer terms.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\noindent
+\textbf{Full Circuit Results (8192 runs):}
+\begin{verbatim}
+Counter({5: 2075, 13: 2060, 4: 2047, 12: 2010})
+\end{verbatim}
+
+Matches Lecture 10, confirming correctness.
+
+\vspace{0.3cm}
+
+\noindent
+\textbf{Single Winner Case (A AND NOT C AND J AND P):}
+\begin{minted}{python}
+phrase = A & ~C & J & P
+anf = ANFform([P, J, C, A], truth_table)  # P J A XOR P J C A
+oracle_circuit.append(cirq.X(qubits[4]).controlled_by(qubits[0], qubits[2], qubits[3]))
+oracle_circuit.append(cirq.X(qubits[4]).controlled_by(qubits[0], qubits[1], qubits[2], qubits[3]))
+\end{minted}
+
+Results (3 iterations): High probability for 13=1101 ($P=1, J=1, C=0, A=1$).
+
+\vspace{0.3cm}
+
+These optimizations reduce gate redundancy and ancilla usage, enhancing
+Grover’s efficiency for SAT problems.
+
+\vspace{0.3cm}
+
+Looking at the Cirq circuit output, we can see how much simpler the circuit
+looks:
+
+\begin{verbatim}
+0: ---H---------------H---X-------@---X---H-------M-----------
+                                  |               |
+1: ---H-----------@---H---X-------@---X---H-------M-----------
+                  |               |               |
+2: ---H-------@---@---H---X-------@---X---H-------M-----------
+              |   |               |               |
+3: ---H---------------H---X---H---X---H---X---H---M('PJCA')---
+              |   |
+4: ---X---H---X---X-------------------------------------------
+\end{verbatim}
 
