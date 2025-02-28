@@ -1,0 +1,32 @@
+\section{Lecture 11: Quantum Circuit Optimizations}\label{sec:lecture11}
+
+The biggest sources of inefficiencies from the Grover's Search circuit that
+we saw at the end of the last lecture were:
+
+\begin{enumerate}
+  \item The way in which we implemented the multi-way OR gates.
+
+  \item The extensive use of ancilla qubits.
+\end{enumerate}
+
+We will address both of these inefficiencies to get a shallower and simpler
+circuit.
+
+\subsection*{More Efficient OR Gate Implementation}
+
+% fill me in
+
+\subsection*{Reducing Ancilla Qubits}
+
+\subsubsection*{Converting from CNF to ANF}
+
+In the last lecture, we wrote the clauses for the Alexandria ship problem using
+conjunctive normal form (exclusively using OR and NOT for each clause). However,
+by converting to using algebraic normal form (exclusively using AND and XOR), we
+will only have to use $O(1)$ additional ancilla for this problem\footnote{It is
+guaranteed that this conversion from CNF to ANF will produce similar results for
+all problems.}, as opposed to the original $O(\text{# of clauses})$ addition
+ancilla from the original CNF implementation.
+
+% fill me in with implementation details and all that jazz
+
