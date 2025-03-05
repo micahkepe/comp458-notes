@@ -38,6 +38,8 @@ in LaTeX.
 |  [Lecture 8](./lectures/phase-ii/lecture8.tex)  | Entanglement, Bell State, and Intro to <code>Cirq</code>           |
 |  [Lecture 9](./lectures/phase-ii/lecture9.tex)  | Grover's Search Algorithm                                          |
 | [Lecture 10](./lectures/phase-ii/lecture10.tex) | Quantum Logic Gates, Applying Grover's Search Algorithm to SAT     |
+| [Lecture 11](./lectures/phase-ii/lecture11.tex) | Quantum Circuit Optimizations                                      |
+|           <strong>Phase III </strong>           | <em>Advanced Quantum Algorithms</em>                               |
 |          <strong>Supplmentary</strong>          | <em> Additional supplementary material. </em>                      |
 |  [Cheatsheet](./supplementary/cheatsheet.tex)   | Quick reference to important concepts and facts.                   |
 
