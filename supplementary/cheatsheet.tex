@@ -497,24 +497,25 @@
                         \item Quantum: CNOT/Toffoli for XOR/AND, $O(1)$ ancilla (typically 1)
 
                         \item Circuit: \[
-                          \begin{quantikz}
-                            \lstick{$x_1$} & \qw & \qw \\
-                            \lstick{$x_2$} & \ctrl{2} & \qw \\
-                            \lstick{$x_3$} & \ctrl{1} & \qw \\
-                            \lstick{$a$} & \targ{} & \targ{}
-                          \end{quantikz}
-                        \]
+                            \begin{quantikz}
+                              \lstick{$x_1$} & \qw & \qw \\
+                              \lstick{$x_2$} & \ctrl{2} & \qw \\
+                              \lstick{$x_3$} & \ctrl{1} & \qw \\
+                              \lstick{$a$} & \targ{} & \targ{}
+                            \end{quantikz}
+                          \]
                       \end{itemize}
 
                     \item \textbf{Comparison}:
                       \begin{itemize}[nosep]
                         \item CNF: Intuitive, scales with clauses, higher depth
-                        \item ANF: Compact, fewer ancilla, lower depth, needs conversion
+                        \item ANF: Compact, typically fewer ancilla, lower
+                          depth, needs conversion
                       \end{itemize}
                   \end{itemize}
 
-                  \conceptbox{ANF Advantage}{Reduces ancilla from $O(\text{\#
-                  clauses})$ to $O(1)$, simplifies oracle for Grover’s SAT}
+                  \conceptbox{ANF Advantage}{Can reduce ancilla qubits,
+                  simplifies oracle for Grover’s SAT}
 
                 \end{multicols}
                 \endgroup
