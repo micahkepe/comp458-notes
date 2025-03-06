@@ -1,4 +1,202 @@
-\section{Lecture 12: Introduction to Variation Quantum
+\section{Lecture 12: Introduction to Variational Quantum
 Algorithms}\label{sec:lecture12}
 
-% fill me in
+Before we can begin discussions on Quantum Approximate Optimization
+Algorithms (QAOA)\footnote{This class of algorithms are also interchangeably
+  referred to as "Quantum Alternating Operator Ansatz," with "ansatz" meaning
+"guess" in German for reasons that will become clear in the next lectures.},
+we must first refine our conception of the classes of algorithms that are
+affected by quantum computing. Additionally, we will get an introduction to a
+broader class of algorithms called \emph{variational quantum algorithms
+(VQA)}, of which QAOA is a subset.
+
+\subsection*{Classes of Algorithms}
+
+We can group algorithms into two classes: (1) those with proven quantum
+speedup and (2) those with not fully proven quantum speedup.
+
+\index{proven quantum speedup algorithms}
+\subsubsection*{Proven Quantum Speedup Algorithms}
+
+We have already seen one of these algorithms with Grover's Algorithm, which
+has proven quadratic speedup. This means that for a search problem over $N$
+items, Grover’s algorithm reduces the complexity from $O(N)$ in classical
+computing to $O(\sqrt{N})$ in the quantum domain. Other examples include:
+
+\begin{itemize}
+  \index{proven quantum speedup algorithms!Shor's Algorithm}
+  \item \textbf{Shor’s Algorithm}: Provides exponential speedup for integer
+    factorization, reducing the complexity from $O(\exp((\log N)^{1/3}))$ to
+    $O((\log N)^3)$.
+
+    \index{proven quantum speedup algorithms!QFT}
+  \item \textbf{Quantum Fourier Transform (QFT)}: Used in phase estimation,
+    offering exponential speedup over classical FFT for certain applications.
+\end{itemize}
+
+These algorithms leverage quantum superposition, entanglement, and
+interference to achieve rigorously proven advantages, often validated through
+mathematical analysis of their unitary operators and measurement probabilities.
+
+\index{heuristic quantum algorithms}
+\subsubsection*{Heuristic Quantum Algorithms}
+
+Heuristic quantum algorithms lack a fully proven speedup but show promise
+based on empirical evidence or specific problem instances. These include:
+
+\begin{itemize}
+  \index{heuristic quantum algorithms!QAOA}
+  \item \textbf{Quantum Approximate Optimization Algorithm (QAOA)}: A hybrid
+    quantum-classical approach for combinatorial optimization, conjectured to
+    offer speedup for certain graphs, though the exact advantage remains
+    under investigation.
+
+    \index{heuristic quantum algorithms!quantum machine learning}
+  \item \textbf{Quantum Machine Learning (QML)}: Algorithms like quantum
+    support vector machines or clustering may provide polynomial or
+    context-specific speedups, often relying on variational techniques (see
+    below).
+
+    \index{heuristic quantum algorithms!quantum stimulation}
+  \item \textbf{Quantum Simulation}: Simulating quantum systems (e.g.,
+    molecular dynamics) is believed to be exponentially faster than classical
+    methods, but the speedup depends on the Hamiltonian and is not
+    universally proven.
+\end{itemize}
+
+These algorithms often use an "ansatz"—a parameterized guess for the quantum
+state—adjusted iteratively, making their performance problem-dependent and
+harder to analyze theoretically.
+
+%%%%%%%%%%%
+
+\index{Variational Quantum Algorithms}
+\subsection*{Variational Quantum Algorithms (VQA)}
+
+Variational Quantum Algorithms (VQA) are a class of hybrid quantum-classical
+algorithms that optimize a cost function by varying circuit parameters to
+achieve an objective. As noted in the lecture notes, they involve "varying
+circuit parameters," typically through a parameterized quantum circuit (the
+ansatz), followed by classical optimization of the parameters based on
+measurement outcomes. Key features include:
+
+\begin{itemize}
+  \item \textbf{Hybrid Nature}: A quantum circuit prepares a state
+    $\ket{\psi(\theta)}$ with parameters $\theta$, measured to compute a cost
+    $C(\theta)$, which a classical optimizer (e.g., gradient descent) minimizes.
+
+  \item \textbf{Applications}: VQAs are used for optimization (e.g., QAOA),
+    quantum chemistry (e.g., Variational Quantum Eigensolver, VQE), and
+    machine learning.
+
+  \item \textbf{Flexibility}: The ansatz can be tailored to the problem,
+    balancing expressiveness with hardware constraints like qubit count and
+    gate depth.
+\end{itemize}
+
+The general process is depicted as:
+
+\[
+  \ket{\psi(\theta)} \xrightarrow{\text{varying circuit}} \text{Measure }
+  C(\theta) \xrightarrow{\text{classical optimization}} \theta_{\text{opt}}
+\]
+
+\textbf{Advantages:}
+\begin{itemize}
+  \item Robust to noise in near-term quantum devices (NISQ).
+
+  \item Scales with available quantum resources, unlike exact algorithms
+    requiring deep circuits.
+\end{itemize}
+
+\textbf{Challenges:}
+\begin{itemize}
+  \item Barren plateaus in the optimization landscape can hinder convergence.
+
+  \item Ansatz design impacts solution quality and computational cost.
+
+\end{itemize}
+
+\ex{Toy Example: Bell State Preparation}{
+  A simple VQA example is preparing a Bell state, such as $\ket{\Phi^+} =
+  \frac{\ket{00} + \ket{11}}{\sqrt{2}}$, using a parameterized circuit.
+  Consider a circuit with a rotation gate $R_y(\theta)$ on one qubit followed
+  by a CNOT:
+
+  \textbf{Circuit Diagram:}
+  \[
+    \begin{quantikz}
+      \lstick{$\ket{0}$} & \gate{R_y(\theta)} & \ctrl{1} & \qw \\
+      \lstick{$\ket{0}$} & \qw & \targ{} & \qw
+    \end{quantikz}
+  \]
+
+  \textbf{Objective}: Minimize the cost function $C(\theta) = 1 - |\langle
+  \Phi^+ | \psi(\theta) \rangle|^2$, where $\ket{\psi(\theta)} = \text{CNOT}
+  \cdot (R_y(\theta) \ket{0}) \otimes \ket{0}$. For $\theta = \pi/2$,
+  $R_y(\pi/2)\ket{0} = \frac{\ket{0} + \ket{1}}{\sqrt{2}}$, and the circuit
+  yields the Bell state exactly.
+
+  \textbf{Truth Table (post-measurement probabilities):}
+  \[
+    \begin{array}{cc|c}
+      q_0 & q_1 & P(q_0, q_1) \\
+      \hline
+      0 & 0 & 0.5 \\
+      0 & 1 & 0 \\
+      1 & 0 & 0 \\
+      1 & 1 & 0.5 \\
+    \end{array}
+  \]
+
+  This toy example illustrates parameter tuning to achieve a target state, a
+  core concept in VQAs.
+}
+
+%%%%%%%%% Cirq code
+
+Below is a Cirq implementation of the Bell state preparation, adapted from
+the homework’s quantum circuit style:
+
+\begin{minted}[linenos]{python}
+import cirq
+import numpy as np
+
+# Define qubits
+q0, q1 = cirq.LineQubit.range(2)
+
+# Parameterized circuit
+theta = np.pi / 2  # Optimal parameter
+circuit = cirq.Circuit(
+    cirq.ry(theta).on(q0),  # Rotation
+    cirq.CNOT(q0, q1)       # Entanglement
+)
+
+# Simulate
+simulator = cirq.Simulator()
+result = simulator.simulate(circuit)
+state = result.final_state_vector
+print("Final state:", np.round(state, 3))
+
+# Measure (8192 shots)
+circuit.append(cirq.measure(q0, q1, key='result'))
+samples = simulator.run(circuit, repetitions=8192)
+counts = samples.histogram(key='result')
+print("Counts:", counts)
+\end{minted}
+
+\textbf{Output Explanation:}
+\begin{itemize}
+  \item \textit{State Vector}: Approximately $[0.707, 0, 0, 0.707]$, matching
+    $\ket{\Phi^+}$.
+
+  \item \textit{Counts}: Roughly $\{0: 4096, 3: 4096\}$ (binary 00 and 11),
+    confirming 50\% probability each.
+\end{itemize}
+
+This demonstrates a VQA’s ability to prepare a desired quantum state via
+parameter optimization, foundational to more complex algorithms like QAOA.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End of Lecture 12
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
