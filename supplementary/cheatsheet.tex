@@ -467,5 +467,54 @@
                     ($|a\rangle$ and $|b\rangle$) allowing for reversible
                   computation.}
 
+                  \section*{CNF and ANF for SAT}
+                  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+                    \item \textbf{CNF (Conjunctive Normal Form)}:
+                      \begin{itemize}[nosep]
+                        \item Form: $\bigwedge_i (\lor_j l_{ij})$, $l_{ij} = x_k$ or $\neg x_k$ (literals)
+
+                        \item E.g., $(\neg A \lor \neg C) \land (J \lor P)$
+
+                        \item Quantum: OR gates per clause, multi-controlled $X$ for AND, $O(\text{\# clauses})$ ancilla
+
+                        \item Circuit: \[
+                            \begin{quantikz}
+                              \lstick{$x_1$} & \ctrl{2} & \qw \\
+                              \lstick{$x_2$} & \ctrl{1} & \qw \\
+                              \lstick{$a_1$} & \targ{} & \ctrl{2} \\
+                              \lstick{$x_3$} & \ctrl{1} & \qw \\
+                              \lstick{$a_2$} & \targ{} & \targ{}
+                            \end{quantikz}
+                          \]
+                      \end{itemize}
+
+                    \item \textbf{ANF (Algebraic Normal Form)}:
+                      \begin{itemize}[nosep]
+                        \item Form: XOR of AND terms, e.g., $f = J \oplus C J$
+
+                        \item Conversion: From CNF via truth table or Boolean algebra
+
+                        \item Quantum: CNOT/Toffoli for XOR/AND, $O(1)$ ancilla (typically 1)
+
+                        \item Circuit: \[
+                          \begin{quantikz}
+                            \lstick{$x_1$} & \qw & \qw \\
+                            \lstick{$x_2$} & \ctrl{2} & \qw \\
+                            \lstick{$x_3$} & \ctrl{1} & \qw \\
+                            \lstick{$a$} & \targ{} & \targ{}
+                          \end{quantikz}
+                        \]
+                      \end{itemize}
+
+                    \item \textbf{Comparison}:
+                      \begin{itemize}[nosep]
+                        \item CNF: Intuitive, scales with clauses, higher depth
+                        \item ANF: Compact, fewer ancilla, lower depth, needs conversion
+                      \end{itemize}
+                  \end{itemize}
+
+                  \conceptbox{ANF Advantage}{Reduces ancilla from $O(\text{\#
+                  clauses})$ to $O(1)$, simplifies oracle for Grover’s SAT}
+
                 \end{multicols}
                 \endgroup
