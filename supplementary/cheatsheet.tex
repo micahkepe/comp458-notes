@@ -336,8 +336,9 @@
                         \item Measure to find solution with high probability
                       \end{enumerate}
 
-                      \conceptbox{Important Insight}{Grover's algorithm provides quadratic speedup
-                      over classical search, which is proven to be optimal for quantum algorithms}
+                      \conceptbox{Important Insight}{Grover's algorithm
+                        provides quadratic speedup over classical search, which
+                      is proven to be optimal for quantum algorithms}
 
                     \item \textbf{Circuit}
                       \[
@@ -357,9 +358,10 @@
                         \underbrace{\hspace{3cm}}_{\text{Repeat } \sqrt{2^n} \text{ times}}
                       \]
 
-                    \item \textbf{General Diffusion Circuit}: Layer of H, then layer of X, H on LSB, then Controlled-X
-                      layer over all qubits, another H on LSB, then layer of X, and
-                      then layer of H
+                    \item \textbf{General Diffusion Circuit}: Layer of H,
+                      then layer of X, H on LSB, then Controlled-X layer over
+                      all qubits, another H on LSB, then layer of X, and then
+                      layer of H
 
                     \item \textbf{phase kickback}: when a controlled
                       operation transfers a phase from the target qubit to
@@ -454,10 +456,14 @@
                           \lstick{$|c\rangle$} & \targ{} & \targ{} & \gate{X} & \qw
                         \end{quantikz}
                       \end{align*}
+
                       \begin{itemize}[nosep]
                         \item Effect: $|a,b,c\rangle \to |a,b,c \oplus \lnot(a \oplus b)\rangle$
+
                         \item Truth Table: $|000\rangle \to |001\rangle$, $|010\rangle \to |010\rangle$
+
                         \item $|100\rangle \to |100\rangle$, $|110\rangle \to |111\rangle$
+
                       \end{itemize}
                   \end{itemize}
 
@@ -471,11 +477,13 @@
                   \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
                     \item \textbf{CNF (Conjunctive Normal Form)}:
                       \begin{itemize}[nosep]
-                        \item Form: $\bigwedge_i (\lor_j l_{ij})$, $l_{ij} = x_k$ or $\neg x_k$ (literals)
+                        \item Form: $\bigwedge_i (\lor_j l_{ij})$, $l_{ij} =
+                          x_k$ or $\neg x_k$ (literals)
 
                         \item E.g., $(\neg A \lor \neg C) \land (J \lor P)$
 
-                        \item Quantum: OR gates per clause, multi-controlled $X$ for AND, $O(\text{\# clauses})$ ancilla
+                        \item Quantum: OR gates per clause, multi-controlled
+                          $X$ for AND, $O(\text{\# clauses})$ ancilla
 
                         \item Circuit: \[
                             \begin{quantikz}
@@ -492,9 +500,11 @@
                       \begin{itemize}[nosep]
                         \item Form: XOR of AND terms, e.g., $f = J \oplus C J$
 
-                        \item Conversion: From CNF via truth table or Boolean algebra
+                        \item Conversion: From CNF via truth table or Boolean
+                          algebra
 
-                        \item Quantum: CNOT/Toffoli for XOR/AND, $O(1)$ ancilla (typically 1)
+                        \item Quantum: CNOT/Toffoli for XOR/AND, $O(1)$
+                          ancilla (typically 1)
 
                         \item Circuit: \[
                             \begin{quantikz}
@@ -516,6 +526,78 @@
 
                   \conceptbox{ANF Advantage}{Can reduce ancilla qubits,
                   simplifies oracle for Grover’s SAT}
+
+                  \section*{Quantum Approximate Optimization Algorithm (QAOA)}
+                  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+                    \item \textbf{Purpose}: Approximate solutions to
+                      combinatorial optimization problems (e.g., Max-Cut)
+                      using a hybrid quantum-classical approach
+
+                    \item \textbf{Key Components}:
+                      \begin{itemize}[nosep]
+                        \item \textit{Cost Hamiltonian} ($H_C$): Encodes
+                          problem, e.g., $H_C = \sum_{\langle i,j \rangle}
+                          Z_i Z_j$ for Max-Cut
+
+                        \item \textit{Mixing Hamiltonian} ($H_M$): Drives
+                          exploration, typically $H_M = \sum_i X_i$
+
+                        \item \textit{Ansatz}: $\ket{\psi(\gamma, \beta)} =
+                          \prod_{p=1}^P e^{-i\beta_p H_M} e^{-i\gamma_p H_C}
+                          \ket{s}$, where $\ket{s} = H^{\otimes n}
+                          \ket{0}^{\otimes n}$
+
+                        \item \textit{Goal}: Minimize $\langle \psi(\gamma,
+                          \beta) | H_C | \psi(\gamma, \beta) \rangle$
+                      \end{itemize}
+
+                    \item \textbf{Steps}:
+                      \begin{enumerate}[nosep]
+                        \item Initialize: $\ket{s} = H^{\otimes n}
+                          \ket{0}^{\otimes n}$ (e.g., $n=10$ for `$10
+                          \mathrm{~N} \rightarrow \mathrm{H}$`)
+
+                        \item Apply $P$ layers of $e^{-i\gamma_p H_C}$ and
+                          $e^{-i\beta_p H_M}$
+
+                        \item Measure $\langle H_C \rangle$
+
+                        \item Optimize $\gamma_p, \beta_p$ classically
+
+                        \item Repeat until convergence
+                      \end{enumerate}
+
+                    \item \textbf{Max-Cut Circuit ($P=1$)}:
+                      \[
+                        \resizebox{0.25\textwidth}{!}{
+                          \begin{quantikz}
+                            \lstick{$q_0$} & \gate{H} & \gate{e^{-i\gamma Z Z}} & \gate{e^{-i\gamma Z Z}} & \gate{R_X(2\beta)} & \meter{} \\
+                            \lstick{$q_1$} & \gate{H} & \gate[2]{Z Z} & \qw & \gate{R_X(2\beta)} & \meter{} \\
+                            \lstick{$q_2$} & \gate{H} & \qw & \gate[2]{Z Z} & \gate{R_X(2\beta)} & \meter{} \\
+                            \lstick{$q_3$} & \gate{H} & \qw & \qw & \gate{R_X(2\beta)} & \meter{}
+                          \end{quantikz}
+                        }
+                      \]
+
+                    \item \textbf{Gate Implementation}:
+                      \begin{itemize}[nosep]
+                        \item $e^{-i\gamma Z_i Z_j}$: CNOT, $R_Z(2\gamma)$, CNOT
+                        \item $e^{-i\beta X_i}$: $R_X(2\beta)$
+                      \end{itemize}
+
+                    \item \textbf{Properties}:
+                      \begin{itemize}[nosep]
+                        \item \textit{Advantages}: NISQ-friendly (small $P$),
+                          scales to exact solution as $P \to \infty$
+                        \item \textit{Limitations}: Barren plateaus, unproven
+                          speedup
+                      \end{itemize}
+                  \end{itemize}
+
+                  \conceptbox{QAOA Insight}{Hybrid approach leverages quantum
+                    circuits for state preparation and classical optimization
+                    for parameter tuning, balancing NISQ constraints with
+                  computational power}
 
                 \end{multicols}
                 \endgroup
