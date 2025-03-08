@@ -27,29 +27,32 @@ Algorithms}\label{sec:lecture13}
 
 \index{Quantum Approximate Optimization Algorithms}
 \subsubsection*{Quantum Approximate Optimization Algorithms}
-
-The Quantum Approximate Optimization Algorithm (QAOA) is a hybrid
-quantum-classical algorithm within the VQA family, tailored for combinatorial
-optimization problems (e.g., \textsc{Max-Cut}, graph coloring). Introduced by
-Farhi et al.\footnote{"A Quantum Approximate Optimization Algorithm":
-https://arxiv.org/abs/1411.4028}, it approximates the ground state of a cost
-Hamiltonian by alternating two types of unitary operators, controlled by
-parameters optimized classically.
+\dfn{Quantum Approximate Optimization Algorithm (QAOA)}{ \textbf{The Quantum
+  Approximate Optimization Algorithm (QAOA)} is a hybrid quantum-classical
+  algorithm within the Variational Quantum Algorithm (VQA) family, designed
+  to approximate solutions to combinatorial optimization problems (e.g.,
+  Max-Cut, graph coloring). Introduced by Farhi, Goldstone, and Gutmann
+  \footnote{"A Quantum Approximate Optimization Algorithm":
+  https://arxiv.org/abs/1411.4028}, QAOA uses a parameterized quantum circuit
+  to prepare a state $\ket{\psi(\gamma, \beta)}$ whose expectation value with
+  respect to a cost Hamiltonian $H_C$ is minimized via classical optimization.
+}
 
 \vspace{0.3cm}
 
 \noindent
-\textbf{Core Idea:}
+\textbf{Core Ideas:}
 \begin{itemize}
   \index{Quantum Approximate Optimization Algorithms!Cost Hamiltonian}
   \item \textbf{Cost Hamiltonian ($H_C$)}: Encodes the problem’s objective,
     e.g., $H_C = \sum_{\langle i,j \rangle} Z_i Z_j$ for Max-Cut, where lower
     energy states correspond to better solutions.
 
+    \index{Quantum Approximate Optimization Algorithms!Mixing Hamiltonian}
   \item \textbf{Mixing Hamiltonian ($H_M$)}: Typically $H_M = \sum_i X_i$,
     drives exploration across the solution space.
 
-  \index{Quantum Approximate Optimization Algorithms!ansatz}
+    \index{Quantum Approximate Optimization Algorithms!ansatz}
   \item \textbf{Ansatz State}: $\ket{\psi(\gamma, \beta)} = \prod_{p=1}^P
     e^{-i\beta_p H_M} e^{-i\gamma_p H_C} \ket{s}$, where $\ket{s}$ is a
     uniform superposition (e.g., $H^{\otimes n} \ket{0}^{\otimes n}$), and
@@ -60,6 +63,13 @@ parameters optimized classically.
     \beta) | H_C | \psi(\gamma, \beta) \rangle$.
 
 \end{itemize}
+
+\vspace{0.3cm}
+
+\nt{
+  QAOA’s hybrid nature makes it suitable for Noisy Intermediate-Scale Quantum
+  (NISQ) devices, as it relies on shallow circuits and classical feedback loops.
+}
 
 \vspace{0.3cm}
 
@@ -128,6 +138,30 @@ optimal).
 
 \end{itemize}
 
+\vspace{0.3cm}
+
+\ex{Max-Cut Circuit ($P=1$)}{
+  The QAOA ansatz for $P=1$ is implemented as:
+
+  \[
+    \begin{quantikz}
+      \lstick{$q_0: \ket{0}$} & \gate{H} & \gate{e^{-i\gamma Z_0 Z_1}} & \gate{e^{-i\gamma Z_3 Z_0}} & \gate{R_X(2\beta)} & \meter{} \\
+      \lstick{$q_1: \ket{0}$} & \gate{H} & \gate[2]{Z_1 Z_2} & \qw & \gate{R_X(2\beta)} & \meter{} \\
+      \lstick{$q_2: \ket{0}$} & \gate{H} & \qw & \gate[2]{Z_2 Z_3} & \gate{R_X(2\beta)} & \meter{} \\
+      \lstick{$q_3: \ket{0}$} & \gate{H} & \qw & \qw & \gate{R_X(2\beta)} & \meter{}
+    \end{quantikz}
+  \]
+
+  \begin{itemize}
+    \item $e^{-i\gamma Z_i Z_j}$: Implemented with CNOTs and $R_Z(2\gamma)$,
+      since $e^{-i\theta Z_i Z_j} = \text{CNOT} \cdot (I \otimes R_Z(\theta))
+      \cdot \text{CNOT}$.
+
+    \item $e^{-i\beta X_i}$: Directly applied as $R_X(2\beta)$.
+
+  \end{itemize}
+}
+
 \subsubsection*{Cirq Implementation}
 
 Here’s a QAOA circuit for the 4-qubit Max-Cut with $P=1$:
@@ -162,22 +196,45 @@ print("Counts:", counts)
 
 \subsubsection*{Properties}
 
-\textbf{Advantages:}
+\noindent
+\index{Quantum Approximate Optimization Algorithms!advantages@\textit{advantages}}
+\textbf{QAOA Advantages}
 \begin{itemize}
-  \item Works on NISQ devices with shallow circuits ($P$ small).
-  \item $P \to \infty$ theoretically yields the exact solution (adiabatic limit).
+  \item \textbf{NISQ Compatibility}: QAOA uses shallow circuits (small
+    $P$), making it feasible on current quantum hardware.
+
+  \item \textbf{Scalability}: As $P \to \infty$, QAOA approaches the exact
+    solution, resembling adiabatic quantum computation.
 \end{itemize}
 
-\textbf{Limitations:}
+
+\aside{
+  The connection to adiabatic computation suggests QAOA’s theoretical power,
+  but practical limits (e.g., noise) often restrict $P$ to small values.
+}
+
+\vspace{0.3cm}
+
+\noindent
+\index{Quantum Approximate Optimization Algorithms!limitations@\textit{limitations}}
+\textbf{QAOA Limitations}
+
 \begin{itemize}
-  \item Barren plateaus may trap optimization.
-  \item Speedup not guaranteed; depends on problem and $P$.
+
+  \item \textbf{Barren Plateaus}: Large parameter spaces can lead to flat
+    optimization landscapes, stalling convergence.
+
+  \item \textbf{Unproven Speedup}: No guaranteed polynomial speedup over
+    classical algorithms; performance depends on the problem and $P$.
 \end{itemize}
+
+\vspace{0.3cm}
 
 \ex{Toy Example: 3-Qubit Triangle}{
-  Graph: edges $(0,1), (1,2), (2,0)$, $H_C = Z_0 Z_1 + Z_1 Z_2 + Z_2 Z_0$.
-  Max cut is 2 (e.g., $\ket{010}$). For $P=1$, QAOA with tuned $\gamma,
-  \beta$ boosts $\ket{010}$ and $\ket{101}$ probabilities.
+  For a triangle graph with edges $(0,1), (1,2), (2,0)$, define $H_C = Z_0
+  Z_1 + Z_1 Z_2 + Z_2 Z_0$. The maximum cut is 2 (e.g., $\ket{010}$). With
+  $P=1$, QAOA boosts probabilities of $\ket{010}$ and $\ket{101}$ after
+  optimizing $\gamma$ and $\beta$.
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
