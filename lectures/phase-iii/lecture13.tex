@@ -16,16 +16,170 @@ Algorithms}\label{sec:lecture13}
 }
 
 \sol{
-  Making a gues about the quantum circuit to use for optimization.
+  Making a guess about the quantum circuit to use for optimization. In QAOA,
+  the ansatz is a parameterized circuit alternating between cost and mixing
+  Hamiltonians, designed to approximate the optimal state for a problem, with
+  parameters tuned iteratively.
 }
 
 
 %%%%%%%%%%%%%%%%%
 
+\index{Quantum Approximate Optimization Algorithms}
 \subsubsection*{Quantum Approximate Optimization Algorithms}
 
-% TODO: fill me in
+The Quantum Approximate Optimization Algorithm (QAOA) is a hybrid
+quantum-classical algorithm within the VQA family, tailored for combinatorial
+optimization problems (e.g., \textsc{Max-Cut}, graph coloring). Introduced by
+Farhi et al.\footnote{"A Quantum Approximate Optimization Algorithm":
+https://arxiv.org/abs/1411.4028}, it approximates the ground state of a cost
+Hamiltonian by alternating two types of unitary operators, controlled by
+parameters optimized classically.
+
+\vspace{0.3cm}
+
+\noindent
+\textbf{Core Idea:}
+\begin{itemize}
+  \index{Quantum Approximate Optimization Algorithms!Cost Hamiltonian}
+  \item \textbf{Cost Hamiltonian ($H_C$)}: Encodes the problem’s objective,
+    e.g., $H_C = \sum_{\langle i,j \rangle} Z_i Z_j$ for Max-Cut, where lower
+    energy states correspond to better solutions.
+
+  \item \textbf{Mixing Hamiltonian ($H_M$)}: Typically $H_M = \sum_i X_i$,
+    drives exploration across the solution space.
+
+  \index{Quantum Approximate Optimization Algorithms!ansatz}
+  \item \textbf{Ansatz State}: $\ket{\psi(\gamma, \beta)} = \prod_{p=1}^P
+    e^{-i\beta_p H_M} e^{-i\gamma_p H_C} \ket{s}$, where $\ket{s}$ is a
+    uniform superposition (e.g., $H^{\otimes n} \ket{0}^{\otimes n}$), and
+    $P$ is the number of layers.
+
+  \item \textbf{Goal}: Find $\gamma = (\gamma_1, \ldots, \gamma_P)$ and
+    $\beta = (\beta_1, \ldots, \beta_P)$ minimizing $\langle \psi(\gamma,
+    \beta) | H_C | \psi(\gamma, \beta) \rangle$.
+
+\end{itemize}
+
+\vspace{0.3cm}
+
+\noindent
+\textbf{Algorithm Steps:}
+\begin{enumerate}
+  \item \textbf{Initialize}: For $n$ qubits, apply Hadamard gates: $\ket{s} =
+    H^{\otimes n} \ket{0}^{\otimes n} = \frac{1}{\sqrt{2^n}} \sum_{x \in
+    \{0,1\}^n} \ket{x}$. (Your note `$10 \mathrm{~N} \rightarrow \mathrm{H}$`
+    suggests $n=10$.)
+
+  \item \textbf{Apply Ansatz}: For $p=1$ to $P$, apply $e^{-i\gamma_p H_C}$
+    (cost evolution) and $e^{-i\beta_p H_M}$ (mixing evolution).
+
+  \item \textbf{Measure}: Compute $\langle H_C \rangle$ by measuring in the
+    computational basis.
+
+  \item \textbf{Optimize}: Use a classical algorithm (e.g., gradient descent)
+    to adjust $\gamma_p$ and $\beta_p$.
+
+  \item \textbf{Repeat}: Iterate until $\langle H_C \rangle$ converges to an
+    approximate minimum.
+
+\end{enumerate}
+
+\subsubsection*{\textsc{Max-Cut} Example}
+
+Consider a 4-node cycle graph with edges $\{(0,1), (1,2), (2,3), (3,0)\}$,
+weights $w_{ij} = 1$. The Max-Cut problem seeks a partition maximizing cut
+edges.
+
+\vspace{0.3cm}
+
+\noindent
+\textbf{Cost Hamiltonian:}
+\[
+  H_C = Z_0 Z_1 + Z_1 Z_2 + Z_2 Z_3 + Z_3 Z_0
+\]
+
+Eigenstate $\ket{0101}$ (alternating partition) has eigenvalue $-4$ (4 cuts,
+optimal).
+
+\textbf{Mixing Hamiltonian:}
+\[
+  H_M = X_0 + X_1 + X_2 + X_3
+\]
+
+\textbf{Ansatz Circuit ($P=1$):}
+
+\[
+  \begin{quantikz}
+    \lstick{$q_0: \ket{0}$} & \gate{H} & \gate{e^{-i\gamma Z_0 Z_1}} & \gate{e^{-i\gamma Z_3 Z_0}} & \gate{R_X(2\beta)} & \meter{} \\
+    \lstick{$q_1: \ket{0}$} & \gate{H} & \gate[2]{Z_1 Z_2} & \qw & \gate{R_X(2\beta)} & \meter{} \\
+    \lstick{$q_2: \ket{0}$} & \gate{H} & \qw & \gate[2]{Z_2 Z_3} & \gate{R_X(2\beta)} & \meter{} \\
+    \lstick{$q_3: \ket{0}$} & \gate{H} & \qw & \qw & \gate{R_X(2\beta)} & \meter{}
+  \end{quantikz}
+\]
+
+\begin{itemize}
+
+  \item $e^{-i\gamma Z_i Z_j}$: Use CNOTs and $R_Z(2\gamma)$, since
+    $e^{-i\theta Z_i Z_j} = \text{CNOT} \cdot (I \otimes R_Z(\theta)) \cdot
+    \text{CNOT}$.
+
+  \item $e^{-i\beta X_i}$: Direct $R_X(2\beta)$ gate.
+
+\end{itemize}
+
+\subsubsection*{Cirq Implementation}
+
+Here’s a QAOA circuit for the 4-qubit Max-Cut with $P=1$:
+
+\begin{minted}[linenos]{python}
+import cirq
+import numpy as np
+
+# Qubits
+qubits = cirq.LineQubit.range(4)
+
+# Parameters (example)
+gamma, beta = 0.5, 0.3
+
+# Circuit
+circuit = cirq.Circuit()
+circuit.append(cirq.H.on_each(qubits))  # Superposition
+# Cost terms
+for i in range(4):
+    circuit.append(cirq.ZZPowGate(exponent=2 * gamma/ np.pi).on(qubits[i], qubits[(i + 1) % 4]))
+# Mixing terms
+circuit.append(cirq.rx(2*beta).on_each(qubits))
+# Measure
+circuit.append(cirq.measure(*qubits, key='result'))
+
+# Simulate
+simulator = cirq.Simulator()
+result = simulator.run(circuit, repetitions=8192)
+counts = result.histogram(key='result')
+print("Counts:", counts)
+\end{minted}
+
+\subsubsection*{Properties}
+
+\textbf{Advantages:}
+\begin{itemize}
+  \item Works on NISQ devices with shallow circuits ($P$ small).
+  \item $P \to \infty$ theoretically yields the exact solution (adiabatic limit).
+\end{itemize}
+
+\textbf{Limitations:}
+\begin{itemize}
+  \item Barren plateaus may trap optimization.
+  \item Speedup not guaranteed; depends on problem and $P$.
+\end{itemize}
+
+\ex{Toy Example: 3-Qubit Triangle}{
+  Graph: edges $(0,1), (1,2), (2,0)$, $H_C = Z_0 Z_1 + Z_1 Z_2 + Z_2 Z_0$.
+  Max cut is 2 (e.g., $\ket{010}$). For $P=1$, QAOA with tuned $\gamma,
+  \beta$ boosts $\ket{010}$ and $\ket{101}$ probabilities.
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% End of Lecture 12
+% End of Lecture 13
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
