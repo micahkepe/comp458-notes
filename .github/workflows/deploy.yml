@@ -21,8 +21,10 @@ jobs:
         uses: xu-cheng/latex-action@v3
         with:
           root_file: main.tex
+          extra_system_packages: wget
           pre_compile: |
-            tlmgr update --self
+            wget https://mirror.ctan.org/systems/texlive/tlnet/update-tlmgr-latest.sh
+            sh update-tlmgr-latest.sh
             tlmgr install newpx
       - name: Prepare Output Directory
         run: |
