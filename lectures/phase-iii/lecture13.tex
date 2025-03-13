@@ -1,5 +1,5 @@
 \section{Lecture 13: Introduction to Quantum Approximate Optimization
-Algorithms}\label{sec:lecture13}
+Algorithms (QAOA)}\label{sec:lecture13}
 
 \subsubsection*{Review}
 
@@ -40,14 +40,14 @@ Algorithms}\label{sec:lecture13}
 
 \vspace{0.3cm}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \begin{tikzpicture}
     \node[draw, rounded corners, minimum width=8cm, minimum height=3cm, fill=blue!10] (box) {};
     \node[align=center] at (box.center) {
         \textbf{QAOA Core Principle}\\
-        Quantum circuit prepares state $\ket{\psi(\gamma, \beta)}$\\
-        Classical optimizer adjusts $\gamma, \beta$ to minimize\\
+        \textbf{Quantum circuit} prepares state $\ket{\psi(\gamma, \beta)}$\\
+        \textbf{Classical optimizer} adjusts $\gamma, \beta$ to minimize\\
         $\langle \psi(\gamma, \beta) | H_C | \psi(\gamma, \beta) \rangle$
       };
   \end{tikzpicture}
@@ -79,7 +79,7 @@ Algorithms}\label{sec:lecture13}
 
     \vspace{0.3cm}
 
-  \item \textbf{Goal}: Find $\gamma = (\gamma_1, \ldots, \gamma_P)$ and
+  \item \boxed{\textbf{Goal}}: Find $\gamma = (\gamma_1, \ldots, \gamma_P)$ and
     $\beta = (\beta_1, \ldots, \beta_P)$ minimizing $\langle \psi(\gamma,
     \beta) | H_C | \psi(\gamma, \beta) \rangle$.
 
@@ -94,7 +94,7 @@ Algorithms}\label{sec:lecture13}
 
 \vspace{0.3cm}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \begin{tikzpicture}
         % Define the nodes for the flowchart
@@ -146,7 +146,7 @@ Algorithms}\label{sec:lecture13}
 to partition graph vertices into two sets, maximizing the number (or weight)
 of edges crossing between the sets.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \begin{tikzpicture}
         % Draw the nodes of the cycle graph
@@ -202,19 +202,23 @@ Eigenstate $\ket{0101}$ (alternating partition) has eigenvalue $-4$
 
 \vspace{0.3cm}
 
+\noindent
 \textbf{Mixing Hamiltonian:}
 \[
   H_M = X_0 + X_1 + X_2 + X_3
 \]
+
+\vspace{0.3cm}
 
 The mixing Hamiltonian generates transitions between computational basis
 states, enabling exploration of the solution space.
 
 \vspace{0.3cm}
 
+\noindent
 \textbf{QAOA Circuit Implementation ($P=1$):}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \begin{quantikz}
     \lstick{$q_0: \ket{0}$} & \gate{H} & \ctrl{1} & \qw & \ctrl{1} & \qw & \ctrl{3} & \qw & \ctrl{3} & \qw & \gate{R_X(2\beta)} & \meter{} \\
@@ -344,7 +348,7 @@ print(f"Optimized parameters: gamma={gamma_opt}, beta={beta_opt}")
 print(f"Estimated Max-Cut: {-run_qaoa_max_cut(gamma_opt, beta_opt)}")
 \end{minted}
 
-\subsubsection*{QAOA Properties}
+%%%%%%%%%%%
 
 \noindent
 \index{Quantum Approximate Optimization Algorithms!advantages@\textit{advantages}}
@@ -354,11 +358,11 @@ print(f"Estimated Max-Cut: {-run_qaoa_max_cut(gamma_opt, beta_opt)}")
     $P$), making it feasible on current noisy quantum hardware without error
     correction.
 
-  \item \textbf{Theoretical Guarantees}: For $P \to \infty$, QAOA approaches the exact
-    solution, resembling adiabatic quantum computation\footnote{Farhi et al.
-      demonstrated that QAOA with $P \to \infty$ converges to the adiabatic
-      quantum algorithm, which provides a theoretical foundation for QAOA's
-    potential quantum advantage.}.
+  \item \textbf{Theoretical Guarantees}: For $P \to \infty$, QAOA approaches
+    the exact solution, resembling adiabatic quantum
+    computation\footnote{Farhi et al. demonstrated that QAOA with $P \to
+    \infty$ converges to the adiabatic quantum algorithm, which provides a
+  theoretical foundation for QAOA's potential quantum advantage.}.
 
   \item \textbf{Problem Flexibility}: Can be adapted to many NP-hard problems
     by appropriate encoding of the cost Hamiltonian.
@@ -368,12 +372,13 @@ print(f"Estimated Max-Cut: {-run_qaoa_max_cut(gamma_opt, beta_opt)}")
 
 \aside{
   The connection to adiabatic computation suggests QAOA's theoretical power,
-  but practical limits (e.g., noise, coherence time) often restrict $P$ to small values in current hardware.
+  but practical limits (e.g., noise, coherence time) often restrict $P$ to
+  small values in current hardware.
 }
 
 \vspace{0.3cm}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \begin{tikzpicture}
         % Draw axes

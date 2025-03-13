@@ -41,7 +41,8 @@ in LaTeX.
 | [Lecture 11](./lectures/phase-ii/lecture11.tex)  | Quantum Circuit Optimizations                                      |
 |           <strong>Phase III </strong>            | <em>Advanced Quantum Algorithms</em>                               |
 | [Lecture 12](./lectures/phase-iii/lecture12.tex) | Introduction to Variation Quantum Algorithms                       |
-| [Lecture 13](./lectures/phase-iii/lecture13.tex) | Introduction to Quantum Approximate Optimization Algorithms        |
+| [Lecture 13](./lectures/phase-iii/lecture13.tex) | Introduction to Quantum Approximate Optimization Algorithms (QAOA) |
+| [Lecture 14](./lectures/phase-iii/lecture14.tex) | More on QAOA: Cost and Mixer Hamiltonians, Full Circuit            |
 |          <strong>Supplmentary</strong>           | <em> Additional supplementary material. </em>                      |
 |   [Cheatsheet](./supplementary/cheatsheet.tex)   | Quick reference to important concepts and facts.                   |
 
