@@ -530,14 +530,14 @@
                   \section*{Quantum Approximate Optimization Algorithm (QAOA)}
                   \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
                     \item \textbf{Purpose}: Approximate solutions to
-                      combinatorial optimization problems (e.g., Max-Cut)
+                      combinatorial optimization problems (e.g., \textsc{Max-Cut})
                       using a hybrid quantum-classical approach
 
                     \item \textbf{Key Components}:
                       \begin{itemize}[nosep]
                         \item \textit{Cost Hamiltonian} ($H_C$): Encodes
                           problem, e.g., $H_C = \sum_{\langle i,j \rangle}
-                          Z_i Z_j$ for Max-Cut
+                          Z_i Z_j$ for \textsc{Max-Cut}
 
                         \item \textit{Mixing Hamiltonian} ($H_M$): Drives
                           exploration, typically $H_M = \sum_i X_i$
@@ -567,7 +567,7 @@
                         \item Repeat until convergence
                       \end{enumerate}
 
-                    \item \textbf{Max-Cut Circuit ($P=1$)}:
+                    \item \textbf{\textsc{Max-Cut} Circuit ($P=1$)}:
                       \[
                         \resizebox{0.25\textwidth}{!}{
                           \begin{quantikz}
@@ -599,5 +599,88 @@
                     for parameter tuning, balancing NISQ constraints with
                   computational power}
 
+                  \section*{Variational Quantum Algorithms (VQA)}
+                  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+                    \item \textbf{Overview}: Hybrid quantum–classical
+                      algorithms that iteratively optimize a parameterized
+                      quantum circuit.
+                    \item \textbf{Process}:
+                      \begin{enumerate}[nosep]
+                        \item \textit{State Preparation}: Create an ansatz
+                          $\ket{\psi(\theta)}$.
+                        \item \textit{Measurement}: Evaluate a cost function
+                          $C(\theta)$ based on quantum measurement outcomes.
+                        \item \textit{Optimization}: Adjust the parameters
+                          $\theta$ using a classical optimizer.
+                      \end{enumerate}
+                    \item \textbf{Example} (Bell State Preparation):
+                      \[
+                        \ket{\psi(\theta)} = \mathrm{CNOT}\Bigl(R_y(\theta)\ket{0}\otimes\ket{0}\Bigr)
+                      \]
+                      with cost function
+                      \[
+                        C(\theta)=1-|\langle\Phi^+|\psi(\theta)\rangle|^2,
+                      \]
+                      where $\ket{\Phi^+}=\frac{1}{\sqrt{2}}(\ket{00}+\ket{11})$.
+                  \end{itemize}
+
+                  \section*{Advanced QAOA Concepts}
+                  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+                    \item \textbf{Cost Hamiltonian} ($H_C$):
+                      \begin{itemize}[nosep]
+                        \item Encodes the optimization objective. For any computational basis state \(\ket{x}\), the operator satisfies
+                          \[
+                          H_C \ket{x} = C(x) \ket{x},
+                          \]
+                          where \(C(x)\) is the classical cost evaluated on bitstring \(x\).
+                        \item \textbf{Max-Cut Example}: The cost function is defined as
+                          \[
+                          C = \frac{1}{2} \sum_{(i,j) \in E} \Bigl(I - Z_i Z_j\Bigr),
+                          \]
+                          which assigns a cost based on the number of edges cut by a partition.
+                      \end{itemize}
+                    \item \textbf{Mixing Hamiltonian} ($H_M$):
+                      \begin{itemize}[nosep]
+                        \item Drives exploration of the solution space; standard form:
+                          \[
+                            H_M = \sum_i X_i.
+                          \]
+                        \item Advanced variants (e.g., XY mixers) can preserve additional problem constraints.
+                      \end{itemize}
+                    \item \textbf{Circuit Structure}:
+                      \begin{enumerate}[nosep]
+                        \item \textit{Initialization}: Prepare the uniform superposition via \(\ket{s}=H^{\otimes n}\ket{0}^{\otimes n}\).
+                        \item \textit{Alternating Layers}: For each layer \(p=1,\dots,P\) apply:
+                          \begin{itemize}[nosep]
+                            \item Cost evolution: \(e^{-i\gamma_p H_C}\).
+                            \item Mixer evolution: \(e^{-i\beta_p H_M}\).
+                          \end{itemize}
+                        \item \textit{Measurement}: Read out in the computational basis.
+                      \end{enumerate}
+                    \item \textbf{Parameter Optimization}:
+                      \begin{itemize}[nosep]
+                        \item Classical methods (e.g., COBYLA, BFGS) adjust \(\{\gamma_p,\beta_p\}\).
+                        \item Initialization strategies include random starts, linear ramps, or layer-by-layer training.
+                      \end{itemize}
+                    \item \textbf{Scaling \& Limitations}:
+                      \begin{itemize}[nosep]
+                        \item Increasing \(P\) can improve approximation quality (approaching adiabatic dynamics) but raises challenges such as barren plateaus and hardware noise.
+                      \end{itemize}
+                  \end{itemize}
+                  \conceptbox{QAOA Advanced Insight}{Optimal parameter tuning in QAOA balances circuit depth with performance, leveraging both quantum state preparation and classical optimization.}
+
+                  \section*{Cirq Implementation of QAOA (Max-Cut)}
+                  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+                    \item \textbf{Circuit Steps}:
+                      \begin{enumerate}[nosep]
+                        \item \textit{Initialization}: Apply Hadamard gates to all qubits to create \(\ket{s}\).
+                        \item \textit{Cost Evolution}: For each edge \((i,j)\), implement
+                            $e^{-i\gamma Z_i Z_j}$ using a CNOT, $R_Z(2\gamma)$, and a CNOT.
+                        \item \textit{Mixing Evolution}: Apply \(R_X(2\beta)\) to each qubit.
+                        \item \textit{Measurement}: Measure all qubits to estimate the cut value.
+                      \end{enumerate}
+                    \item \textbf{Optimization}: Utilize a classical optimizer (e.g., COBYLA) to tune the parameters by minimizing the negative cut value.
+                  \end{itemize}
+                  \conceptbox{Cirq QAOA Insight}{Efficient circuit implementations leverage native gate sets to balance circuit depth and operational fidelity on NISQ hardware.}
                 \end{multicols}
                 \endgroup

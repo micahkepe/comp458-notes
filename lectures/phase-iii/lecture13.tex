@@ -16,10 +16,7 @@ Algorithms (QAOA)}\label{sec:lecture13}
 }
 
 \sol{
-  Making a guess about the quantum circuit to use for optimization. In QAOA,
-  the ansatz is a parameterized circuit alternating between cost and mixing
-  Hamiltonians, designed to approximate the optimal state for a problem, with
-  parameters tuned iteratively.
+  Making a guess about the quantum circuit to use for optimization.
 }
 
 
@@ -31,9 +28,9 @@ Algorithms (QAOA)}\label{sec:lecture13}
   Approximate Optimization Algorithm (QAOA)} is a hybrid quantum-classical
   algorithm within the Variational Quantum Algorithm (VQA) family, designed
   to approximate solutions to combinatorial optimization problems (e.g.,
-  Max-Cut, graph coloring). Introduced by Farhi, Goldstone, and Gutmann
+  \textsc{Max-Cut}, graph coloring). Introduced by Farhi, Goldstone, and Gutmann,
   \footnote{"A Quantum Approximate Optimization Algorithm":
-  \url{https://arxiv.org/abs/1411.4028}}, QAOA uses a parameterized quantum circuit
+  \url{https://arxiv.org/abs/1411.4028}} QAOA uses a parameterized quantum circuit
   to prepare a state $\ket{\psi(\gamma, \beta)}$ whose expectation value with
   respect to a cost Hamiltonian $H_C$ is minimized via classical optimization.
 }
@@ -60,7 +57,7 @@ Algorithms (QAOA)}\label{sec:lecture13}
 \begin{itemize}
   \index{Quantum Approximate Optimization Algorithms!Cost Hamiltonian}
   \item \textbf{Cost Hamiltonian ($H_C$)}: Encodes the problem's objective,
-    e.g., $H_C = \sum_{\langle i,j \rangle} Z_i Z_j$ for Max-Cut, where lower
+    e.g., $H_C = \sum_{\langle i,j \rangle} Z_i Z_j$ for \textsc{Max-Cut}, where lower
     energy states correspond to better solutions.
 
     \vspace{0.3cm}
@@ -167,13 +164,13 @@ of edges crossing between the sets.
     \draw[dashed, red, thick] (1.5,1) -- (2.5,1);
     \draw[dashed, red, thick] (1,-0.5) -- (1,2.5);
   \end{tikzpicture}
-  \caption{A 4-node cycle graph with an optimal Max-Cut solution (nodes
+  \caption{A 4-node cycle graph with an optimal \textsc{Max-Cut} solution (nodes
   colored by partition)}
   \label{fig:max-cut-example}
 \end{figure}
 
 Consider a 4-node cycle graph with edges $\{(0,1), (1,2), (2,3), (3,0)\}$ and
-weights $w_{ij} = 1$. The Max-Cut problem seeks a partition maximizing cut
+weights $w_{ij} = 1$. The \textsc{Max-Cut} problem seeks a partition maximizing cut
 edges.
 
 \vspace{0.3cm}
@@ -181,7 +178,9 @@ edges.
 \noindent
 \textbf{Cost Hamiltonian:}
 
-For the Max-Cut problem, the cost Hamiltonian is constructed as:
+\vspace{0.3cm}
+
+For the \textsc{Max-Cut} problem, the cost Hamiltonian is constructed as:
 \[
   H_C = \sum_{\langle i,j \rangle} \frac{1 - Z_i Z_j}{2} = \text{constant} -
   \frac{1}{2}\sum_{\langle i,j \rangle} Z_i Z_j
@@ -226,7 +225,7 @@ states, enabling exploration of the solution space.
     \lstick{$q_2: \ket{0}$} & \gate{H} & \qw & \qw & \qw & \targ{} & \qw & \gate{R_Z(2\gamma)} & \qw & \ctrl{1} & \gate{R_X(2\beta)} & \meter{} \\
     \lstick{$q_3: \ket{0}$} & \gate{H} & \qw & \qw & \qw & \qw & \targ{} & \qw & \targ{} & \targ{} & \gate{R_X(2\beta)} & \meter{} \\
   \end{quantikz}
-  \caption{Detailed QAOA circuit for the 4-node Max-Cut problem with $P=1$}
+  \caption{Detailed QAOA circuit for the 4-node \textsc{Max-Cut} problem with $P=1$}
   \label{fig:detailed-qaoa-circuit}
 \end{figure}
 
@@ -240,7 +239,7 @@ states, enabling exploration of the solution space.
 
 \vspace{0.3cm}
 
-\ex{Simplified Max-Cut Circuit ($P=1$)}{
+\ex{Simplified \textsc{Max-Cut} Circuit ($P=1$)}{
   The QAOA ansatz for $P=1$ can be represented at a higher level as:
 
   \[
@@ -259,8 +258,8 @@ states, enabling exploration of the solution space.
 
 \subsubsection*{Circuit Implementation in Cirq}
 
-Here's a complete QAOA circuit for the 4-qubit Max-Cut with $P=1$ using
-Google's Cirq framework:
+Here's a complete QAOA circuit for the 4-qubit \textsc{Max-Cut} with $P=1$ using
+Google's \texttt{Cirq} framework:
 
 \begin{minted}[linenos]{python}
 import cirq

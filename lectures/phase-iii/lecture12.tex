@@ -64,9 +64,17 @@ based on empirical evidence or specific problem instances. These include:
     universally proven.
 \end{itemize}
 
-These algorithms often use an "ansatz"—a parameterized guess for the quantum
-state—adjusted iteratively, making their performance problem-dependent and
-harder to analyze theoretically.
+These algorithms often use an \textbf{"ansatz"}—a parameterized guess for the
+quantum state—adjusted iteratively, making their performance
+problem-dependent and harder to analyze theoretically.
+
+\index{ansatz}
+\dfn{Ansatz}{
+  A trial wavefunction or trial state used as a starting point for
+  approximations or optimizations. It is a parameterized quantum state that
+  serves as an educated guess for the solution to a particular problem, such
+  as finding the ground state of a quantum system.
+}
 
 %%%%%%%%%%%
 
@@ -101,6 +109,9 @@ The general process is depicted as:
   C(\theta) \xrightarrow{\text{classical optimization}} \theta_{\text{opt}}
 \]
 
+\vspace{0.3cm}
+
+\noindent
 \textbf{Advantages:}
 \begin{itemize}
   \item Robust to noise in near-term quantum devices (NISQ).
@@ -109,6 +120,9 @@ The general process is depicted as:
     requiring deep circuits.
 \end{itemize}
 
+\vspace{0.3cm}
+
+\noindent
 \textbf{Challenges:}
 \begin{itemize}
   \item Barren plateaus in the optimization landscape can hinder convergence.
@@ -116,6 +130,8 @@ The general process is depicted as:
   \item Ansatz design impacts solution quality and computational cost.
 
 \end{itemize}
+
+\vspace{0.3cm}
 
 \ex{Toy Example: Bell State Preparation}{
   A simple VQA example is preparing a Bell state, such as $\ket{\Phi^+} =
