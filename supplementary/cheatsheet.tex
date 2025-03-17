@@ -630,12 +630,12 @@
                       \begin{itemize}[nosep]
                         \item Encodes the optimization objective. For any computational basis state \(\ket{x}\), the operator satisfies
                           \[
-                          H_C \ket{x} = C(x) \ket{x},
+                            H_C \ket{x} = C(x) \ket{x},
                           \]
                           where \(C(x)\) is the classical cost evaluated on bitstring \(x\).
                         \item \textbf{Max-Cut Example}: The cost function is defined as
                           \[
-                          C = \frac{1}{2} \sum_{(i,j) \in E} \Bigl(I - Z_i Z_j\Bigr),
+                            C = \frac{1}{2} \sum_{(i,j) \in E} \Bigl(I - Z_i Z_j\Bigr),
                           \]
                           which assigns a cost based on the number of edges cut by a partition.
                       \end{itemize}
@@ -675,12 +675,29 @@
                       \begin{enumerate}[nosep]
                         \item \textit{Initialization}: Apply Hadamard gates to all qubits to create \(\ket{s}\).
                         \item \textit{Cost Evolution}: For each edge \((i,j)\), implement
-                            $e^{-i\gamma Z_i Z_j}$ using a CNOT, $R_Z(2\gamma)$, and a CNOT.
+                          $e^{-i\gamma Z_i Z_j}$ using a CNOT, $R_Z(2\gamma)$, and a CNOT.
                         \item \textit{Mixing Evolution}: Apply \(R_X(2\beta)\) to each qubit.
                         \item \textit{Measurement}: Measure all qubits to estimate the cut value.
                       \end{enumerate}
                     \item \textbf{Optimization}: Utilize a classical optimizer (e.g., COBYLA) to tune the parameters by minimizing the negative cut value.
                   \end{itemize}
                   \conceptbox{Cirq QAOA Insight}{Efficient circuit implementations leverage native gate sets to balance circuit depth and operational fidelity on NISQ hardware.}
+
+                  \section*{QUBO Formulation}
+                  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+                    \item \textbf{Definition}: $f(x) = \sum_{i=1}^n\sum_{j=1}^n Q_{ij}x_i x_j$
+                    \item \textbf{Matrix Form}: $f(x) = \mathbf{x}^T Q \mathbf{x}$
+                    \item \textbf{Components}:
+                      \begin{itemize}[nosep]
+                        \item Linear terms: Diagonal $Q_{ii}$
+                        \item Quadratic terms: Off-diagonal $Q_{ij}$
+                      \end{itemize}
+                    \item \textbf{QUBO to Ising Conversion}:
+                      \begin{itemize}[nosep]
+                        \item $h_i = \frac{Q_{ii}}{2} + \sum_{j \neq i}\frac{Q_{ij}}{4}$
+                        \item $J_{ij} = \frac{Q_{ij}}{4}$
+                        \item Offset = $\sum_i\frac{Q_{ii}}{4} + \sum_{i<j}\frac{Q_{ij}}{4}$
+                      \end{itemize}
+                  \end{itemize}
                 \end{multicols}
                 \endgroup
