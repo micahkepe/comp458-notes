@@ -1,0 +1,161 @@
+\section{Lecture 16: Quantum Compiler Optimizations}\label{sec:lecture16}
+
+\subsubsection*{Review}
+
+\qs{Number of $CX$ Gates}{
+  How many $CX$ gates are required to implement the following QUBO cost function:
+
+  \[
+    c(x) = 0.1x_1x_2 + 0.0x_0x_2 + 0.2x_1x_2 + 0.3x_0x_1
+  \]
+}
+
+\sol{
+  To implement this QUBO cost function, we need to count the number of unique
+  two-qubit interactions:
+
+  \begin{itemize}
+    \item $x_1x_2$: appears twice (0.1 and 0.2)
+    \item $x_0x_1$: appears once (0.3)
+    \item $x_0x_2$: appears once (0.0, but still requires a gate)
+  \end{itemize}
+
+  These interactions suggest 4 distinct $CX$ gates are required, noting that
+  repeated interactions don't necessarily increase gate count.
+
+  \[
+    \boxed{4}
+  \]
+}
+
+%%%%%%%%%%%%%%%%%%%%%%
+
+% ● Overview of quantum compilers and their role in quantum computing
+\index{quantum compilers}
+\subsubsection*{Overview of Quantum Compilers}
+
+Until now, we have primarily explored quantum algorithms through simulation
+and theoretical models. However, translating these algorithms to actual
+quantum hardware requires sophisticated compilation techniques. Quantum
+compilers bridge the gap between theoretical quantum circuits and physical
+quantum processors by addressing several key challenges:
+
+\begin{itemize}
+  \item \textbf{Hardware Constraints}: Different quantum hardware have
+    varying gate sets, qubit connectivity, and noise characteristics
+
+  \item \textbf{Circuit Optimization}: Reducing the number of gates and
+    circuit depth to mitigate quantum decoherence
+
+  \item \textbf{Error Mitigation}: Transforming circuits to be more resilient
+    to quantum noise
+
+  \item \textbf{Basis Gate Translation}: Converting high-level quantum gates
+    to hardware-native gate sets
+\end{itemize}
+
+Compilers apply logical operations to optimize certain desirable metrics to make
+the execution of a quantum circuit on quantum hardware more feasible, while
+preserving the mathematical properties of the circuit.
+
+Compilers for quantum circuits achieve this by two means-- reducing (1) the
+number of gates, and (2) the circuit depth.
+
+% ● Introduction to quantum compiler optimizations
+\index{quantum compilers!optimizations}
+\subsubsection*{Quantum Compiler Optimizations}
+
+Quantum compiler optimizations can be categorized into several key strategies:
+
+\paragraph{Gate Deletion}
+Gate deletion is an optimization technique that removes quantum gates which
+have no significant impact on the final quantum state. This can occur in
+scenarios where:
+
+\begin{itemize}
+  \item Gates cancel each other out (e.g., $R_z(0)$ or successive rotations
+    that net to zero)
+
+  \item Gates act on qubits not involved in the final measurement
+
+  \item Redundant gates can be eliminated without changing the circuit's
+    computational outcome
+\end{itemize}
+
+\ex{Gate Deletion Example}{
+Consider a circuit with successive rotations:
+
+\[
+  R_z(\pi/2) \circ R_z(-\pi/2) \equiv \text{Identity}
+\]
+
+A quantum compiler would recognize this and delete both gates, reducing
+circuit complexity.
+}
+
+
+\paragraph{Gate Synthesis}
+Gate synthesis involves combining multiple gates into more efficient,
+hardware-compatible implementations. The primary goals are:
+
+\begin{itemize}
+  \item Reduce total gate count
+
+  \item Minimize circuit depth
+
+  \item Ensure compatibility with hardware gate sets
+\end{itemize}
+
+\ex{Gate Synthesis}{ Converting a three-qubit Toffoli gate into a sequence of
+elementary $CX$ and single-qubit rotations that can be implemented on
+hardware with limited multi-qubit gate capabilities. }
+
+
+\paragraph{Gate Decomposition}
+Gate decomposition breaks complex multi-qubit gates into sequences of
+simpler, hardware-native gates. This is crucial because:
+
+\begin{itemize}
+  \item Quantum hardware often supports only limited gate types (e.g., $CX$,
+    single-qubit rotations)
+
+  \item Complex gates like Toffoli must be decomposed into supported
+    primitive gates
+
+  \item Decomposition helps manage qubit connectivity constraints
+\end{itemize}
+
+\ex{Toffoli Gate Decomposition}{
+A Toffoli gate controlling on two qubits can be decomposed into a sequence of
+$CX$ and single-qubit rotations:
+
+\begin{enumerate}
+  \item Reduce to controlled-$V$ gate
+
+  \item Use ancilla qubits to implement multi-controlled rotations
+
+  \item Minimize total gate count and depth
+\end{enumerate}
+}
+
+\subsubsection*{Practical Implications}
+
+The effectiveness of quantum compiler optimizations directly impacts:
+
+\begin{itemize}
+  \item \textbf{Circuit Fidelity}: Fewer gates mean less accumulated noise
+
+  \item \textbf{Computational Efficiency}: Reduced gate count and depth
+
+  \item \textbf{Hardware Utilization}: Better adaptation to specific quantum
+    hardware constraints
+\end{itemize}
+
+\nt{Modern quantum compilers like Qiskit, Cirq, and PennyLane implement
+sophisticated optimization passes that can dramatically reduce circuit
+complexity before execution.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End of Lecture 16
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

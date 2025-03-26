@@ -267,150 +267,150 @@ MaxCut in PennyLane:
 \subsubsection*{QUBO in Code}
 
 \begin{minted}{python}
-  import pennylane as qml
-  import numpy as np
-  import networkx as nx
+import pennylane as qml
+import numpy as np
+import networkx as nx
 
-  # Define a QUBO problem
-  num_qubits = 6  # 6 jobs
-  np.random.seed(42)
+# Define a QUBO problem
+num_qubits = 6  # 6 jobs
+np.random.seed(42)
 
-  # Generate random job priorities and interference costs
-  priorities = np.random.uniform(1, 10, size=num_qubits)
-  interferences = np.random.uniform(0, 5, size=(num_qubits, num_qubits))
-  interferences = (interferences + interferences.T) / 2  # Make symmetric
-  np.fill_diagonal(interferences, 0)  # No self-interference
+# Generate random job priorities and interference costs
+priorities = np.random.uniform(1, 10, size=num_qubits)
+interferences = np.random.uniform(0, 5, size=(num_qubits, num_qubits))
+interferences = (interferences + interferences.T) / 2  # Make symmetric
+np.fill_diagonal(interferences, 0)  # No self-interference
 
-  # Create QUBO matrix
-  Q = np.zeros((num_qubits, num_qubits))
-  for i in range(num_qubits):
-  Q[i, i] = priorities[i]  # Diagonal elements are priorities
-  for j in range(num_qubits):
-  if i != j:
-  Q[i, j] = -interferences[i, j] / 2  # Off-diagonals are -interferences/2
+# Create QUBO matrix
+Q = np.zeros((num_qubits, num_qubits))
+for i in range(num_qubits):
+    Q[i, i] = priorities[i]  # Diagonal elements are priorities
+    for j in range(num_qubits):
+        if i != j:
+            Q[i, j] = -interferences[i, j] / 2  # Off-diagonals are -interferences/2
 
-  # Convert QUBO to Ising Hamiltonian
-  def qubo_to_ising(Q):
-  n = Q.shape[0]
-  J = np.zeros((n, n))
-  h = np.zeros(n)
-  offset = 0
+# Convert QUBO to Ising Hamiltonian
+def qubo_to_ising(Q):
+    n = Q.shape[0]
+    J = np.zeros((n, n))
+    h = np.zeros(n)
+    offset = 0
 
-  for i in range(n):
-  for j in range(n):
-  if i == j:
-  h[i] += Q[i, i] / 2
-  offset += Q[i, i] / 4
-  else:
-  J[i, j] = Q[i, j] / 4
-  h[i] += Q[i, j] / 4
-  offset += Q[i, j] / 4
+    for i in range(n):
+        for j in range(n):
+            if i == j:
+                h[i] += Q[i, i] / 2
+                offset += Q[i, i] / 4
+            else:
+                J[i, j] = Q[i, j] / 4
+                h[i] += Q[i, j] / 4
+                offset += Q[i, j] / 4
 
-  return h, J, offset
+    return h, J, offset
 
-  h, J, offset = qubo_to_ising(Q)
+h, J, offset = qubo_to_ising(Q)
 
-  # Create a PennyLane device
-  dev = qml.device("default.qubit", wires=range(num_qubits))
+# Create a PennyLane device
+dev = qml.device("default.qubit", wires=range(num_qubits))
 
-  # Define the cost Hamiltonian operator
-  def cost_hamiltonian(h, J):
-  obs = []
-  # Single-qubit terms
-  for i, coeff in enumerate(h):
-  if abs(coeff) > 1e-10:
-  obs.append(coeff * qml.PauliZ(i))
+# Define the cost Hamiltonian operator
+def cost_hamiltonian(h, J):
+    obs = []
+    # Single-qubit terms
+    for i, coeff in enumerate(h):
+        if abs(coeff) > 1e-10:
+            obs.append(coeff * qml.PauliZ(i))
 
-  # Two-qubit terms
-  for i in range(num_qubits):
-  for j in range(i+1, num_qubits):
-  if abs(J[i, j]) > 1e-10:
-  obs.append(J[i, j] * qml.PauliZ(i) @ qml.PauliZ(j))
+    # Two-qubit terms
+    for i in range(num_qubits):
+        for j in range(i+1, num_qubits):
+            if abs(J[i, j]) > 1e-10:
+                obs.append(J[i, j] * qml.PauliZ(i) @ qml.PauliZ(j))
 
-  return qml.Hamiltonian(coeffs=[1.0] * len(obs), observables=obs)
+    return qml.Hamiltonian(coeffs=[1.0] * len(obs), observables=obs)
 
-  # Create the cost Hamiltonian
-  H_C = cost_hamiltonian(h, J)
+# Create the cost Hamiltonian
+H_C = cost_hamiltonian(h, J)
 
-  # Define the mixer Hamiltonian
-  H_M = qml.Hamiltonian(
-  coeffs=[1.0] * num_qubits,
-  observables=[qml.PauliX(i) for i in range(num_qubits)]
-  )
+# Define the mixer Hamiltonian
+H_M = qml.Hamiltonian(
+    coeffs=[1.0] * num_qubits,
+    observables=[qml.PauliX(i) for i in range(num_qubits)]
+)
 
-  # Define the QAOA layers
-  def qaoa_layer(gamma, beta):
-  qml.exp(H_C, gamma)
-  qml.exp(H_M, beta)
+# Define the QAOA layers
+def qaoa_layer(gamma, beta):
+    qml.exp(H_C, gamma)
+    qml.exp(H_M, beta)
 
-  # Define the QAOA circuit
-  @qml.qnode(dev)
-  def qaoa_circuit(params, p=1):
-  # Initial state
-  for i in range(num_qubits):
-  qml.Hadamard(wires=i)
+# Define the QAOA circuit
+@qml.qnode(dev)
+def qaoa_circuit(params, p=1):
+    # Initial state
+    for i in range(num_qubits):
+        qml.Hadamard(wires=i)
 
-  # QAOA layers
-  for i in range(p):
-  qaoa_layer(params[2*i], params[2*i+1])
+    # QAOA layers
+    for i in range(p):
+        qaoa_layer(params[2*i], params[2*i+1])
 
-  # Return expectation value of the cost Hamiltonian
-  return qml.expval(H_C)
+    # Return expectation value of the cost Hamiltonian
+    return qml.expval(H_C)
 
-  # Optimize the QAOA parameters
-  p = 1  # Number of QAOA layers
-  params = np.random.uniform(0, 2*np.pi, size=2*p)
-  steps = 100
-  optimizer = qml.GradientDescentOptimizer(stepsize=0.1)
+# Optimize the QAOA parameters
+p = 1  # Number of QAOA layers
+params = np.random.uniform(0, 2*np.pi, size=2*p)
+steps = 100
+optimizer = qml.GradientDescentOptimizer(stepsize=0.1)
 
-  for i in range(steps):
-  params = optimizer.step(lambda p: qaoa_circuit(p, p=p), params)
-  if i % 10 == 0:
-  cost = qaoa_circuit(params, p=p)
-  print(f"Step {i}: Cost = {cost}")
+for i in range(steps):
+    params = optimizer.step(lambda p: qaoa_circuit(p, p=p), params)
+    if i % 10 == 0:
+        cost = qaoa_circuit(params, p=p)
+        print(f"Step {i}: Cost = {cost}")
 
-  # Final cost
-  final_cost = qaoa_circuit(params, p=p)
-  print(f"Final cost: {final_cost}")
-  print(f"Optimal parameters: {params}")
+# Final cost
+final_cost = qaoa_circuit(params, p=p)
+print(f"Final cost: {final_cost}")
+print(f"Optimal parameters: {params}")
 
-  # Execute circuit with optimal parameters and measure in computational basis
-  @qml.qnode(dev)
-  def qaoa_measure(params, p=1):
-  # Initial state
-  for i in range(num_qubits):
-  qml.Hadamard(wires=i)
+# Execute circuit with optimal parameters and measure in computational basis
+@qml.qnode(dev)
+def qaoa_measure(params, p=1):
+    # Initial state
+    for i in range(num_qubits):
+        qml.Hadamard(wires=i)
 
-  # QAOA layers
-  for i in range(p):
-  qaoa_layer(params[2*i], params[2*i+1])
+    # QAOA layers
+    for i in range(p):
+        qaoa_layer(params[2*i], params[2*i+1])
 
-  # Return samples in computational basis
-  return qml.sample(wires=range(num_qubits))
+    # Return samples in computational basis
+    return qml.sample(wires=range(num_qubits))
 
-  # Get samples
-  n_samples = 1000
-  samples = qaoa_measure(params, p=p)
-  samples = np.array([samples for _ in range(n_samples)])
+# Get samples
+n_samples = 1000
+samples = qaoa_measure(params, p=p)
+samples = np.array([samples for _ in range(n_samples)])
 
-  # Convert to binary solutions
-  binary_samples = (samples + 1) // 2  # Convert from {-1,1} to {0,1}
+# Convert to binary solutions
+binary_samples = (samples + 1) // 2  # Convert from {-1,1} to {0,1}
 
-  # Evaluate the original QUBO objective for each sample
-  def evaluate_qubo(x, Q):
-  return x.T @ Q @ x
+# Evaluate the original QUBO objective for each sample
+def evaluate_qubo(x, Q):
+    return x.T @ Q @ x
 
-  # Find the best solution
-  best_cost = float('inf')
-  best_solution = None
-  for sample in binary_samples:
-  cost = evaluate_qubo(sample, Q)
-  if cost < best_cost:
-  best_cost = cost
-  best_solution = sample
+# Find the best solution
+best_cost = float('inf')
+best_solution = None
+for sample in binary_samples:
+    cost = evaluate_qubo(sample, Q)
+    if cost < best_cost:
+        best_cost = cost
+        best_solution = sample
 
-  print(f"Best solution found: {best_solution}")
-  print(f"Best solution cost: {best_cost}")
+print(f"Best solution found: {best_solution}")
+print(f"Best solution cost: {best_cost}")
 \end{minted}
 
 \vspace{0.3cm}
@@ -487,3 +487,8 @@ When implementing QAOA for real-world problems, consider:
   \item \textbf{Hybrid approaches}: Combining quantum and classical
     algorithms often yields the best results in practice
 \end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End of Lecture 15
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
