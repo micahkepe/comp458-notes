@@ -24,31 +24,32 @@ in LaTeX.
 
 <div align="center">
 
-|                     Section                      | Topics                                                                 |
-| :----------------------------------------------: | ---------------------------------------------------------------------- |
-|             <strong>Phase I</strong>             | <em>Introduction and Background</em>                                   |
-|   [Lecture 1](./lectures/phase-i/lecture1.tex)   | Overview of Quantum Computing Concepts                                 |
-|   [Lecture 2](./lectures/phase-i/lecture2.tex)   | Review of Linear Algebra Concepts                                      |
-|   [Lecture 3](./lectures/phase-i/lecture3.tex)   | Quantum Bits and Quantum States                                        |
-|   [Lecture 4](./lectures/phase-i/lecture4.tex)   | Quantum Gates and Transformations                                      |
-|   [Lecture 5](./lectures/phase-i/lecture5.tex)   | Other Quantum Gates, Measurement, Multi-Qubit Systems                  |
-|   [Lecture 6](./lectures/phase-i/lecture6.tex)   | Multi-Qubit Gates and Circuit Construction                             |
-|   [Lecture 7](./lectures/phase-i/lecture7.tex)   | More Multi-Qubit Gates, Reversibility Property, No-Cloning Theorem     |
-|            <strong>Phase II </strong>            | <em>Fundamentals of Quantum Algorithms</em>                            |
-|  [Lecture 8](./lectures/phase-ii/lecture8.tex)   | Entanglement, Bell State, and Intro to <code>Cirq</code>               |
-|  [Lecture 9](./lectures/phase-ii/lecture9.tex)   | Grover's Search Algorithm                                              |
-| [Lecture 10](./lectures/phase-ii/lecture10.tex)  | Quantum Logic Gates, Applying Grover's Search Algorithm to SAT         |
-| [Lecture 11](./lectures/phase-ii/lecture11.tex)  | Quantum Circuit Optimizations                                          |
-|           <strong>Phase III </strong>            | <em>Advanced Quantum Algorithms</em>                                   |
-| [Lecture 12](./lectures/phase-iii/lecture12.tex) | Introduction to Variation Quantum Algorithms                           |
-| [Lecture 13](./lectures/phase-iii/lecture13.tex) | Introduction to Quantum Approximate Optimization Algorithms (QAOA)     |
-| [Lecture 14](./lectures/phase-iii/lecture14.tex) | More on QAOA: Cost and Mixer Hamiltonians, Full Circuit                |
-| [Lecture 15](./lectures/phase-iii/lecture15.tex) | Wrapping Up QAOA: Intro to Coding in PennyLane, QUBO                   |
-|            <strong>Phase IV </strong>            | <em>Special Topics in Quantum Computing</em>                           |
-| [Lecture 16](./lectures/phase-iv/lecture16.tex)  | Quantum Compiler Optimizations                                         |
-| [Lecture 17](./lectures/phase-iv/lecture17.tex)  | More on Quantum Compiler Optimizations, Quantum Computer Architectures |
-|          <strong>Supplementary</strong>          | <em>Additional supplementary material.</em>                            |
-|   [Cheatsheet](./supplementary/cheatsheet.tex)   | Quick reference to important concepts and facts.                       |
+|                     Section                      | Topics                                                                  |
+| :----------------------------------------------: | ----------------------------------------------------------------------- |
+|             <strong>Phase I</strong>             | <em>Introduction and Background</em>                                    |
+|   [Lecture 1](./lectures/phase-i/lecture1.tex)   | Overview of Quantum Computing Concepts                                  |
+|   [Lecture 2](./lectures/phase-i/lecture2.tex)   | Review of Linear Algebra Concepts                                       |
+|   [Lecture 3](./lectures/phase-i/lecture3.tex)   | Quantum Bits and Quantum States                                         |
+|   [Lecture 4](./lectures/phase-i/lecture4.tex)   | Quantum Gates and Transformations                                       |
+|   [Lecture 5](./lectures/phase-i/lecture5.tex)   | Other Quantum Gates, Measurement, Multi-Qubit Systems                   |
+|   [Lecture 6](./lectures/phase-i/lecture6.tex)   | Multi-Qubit Gates and Circuit Construction                              |
+|   [Lecture 7](./lectures/phase-i/lecture7.tex)   | More Multi-Qubit Gates, Reversibility Property, No-Cloning Theorem      |
+|            <strong>Phase II </strong>            | <em>Fundamentals of Quantum Algorithms</em>                             |
+|  [Lecture 8](./lectures/phase-ii/lecture8.tex)   | Entanglement, Bell State, and Intro to <code>Cirq</code>                |
+|  [Lecture 9](./lectures/phase-ii/lecture9.tex)   | Grover's Search Algorithm                                               |
+| [Lecture 10](./lectures/phase-ii/lecture10.tex)  | Quantum Logic Gates, Applying Grover's Search Algorithm to SAT          |
+| [Lecture 11](./lectures/phase-ii/lecture11.tex)  | Quantum Circuit Optimizations                                           |
+|           <strong>Phase III </strong>            | <em>Advanced Quantum Algorithms</em>                                    |
+| [Lecture 12](./lectures/phase-iii/lecture12.tex) | Introduction to Variation Quantum Algorithms                            |
+| [Lecture 13](./lectures/phase-iii/lecture13.tex) | Introduction to Quantum Approximate Optimization Algorithms (QAOA)      |
+| [Lecture 14](./lectures/phase-iii/lecture14.tex) | More on QAOA: Cost and Mixer Hamiltonians, Full Circuit                 |
+| [Lecture 15](./lectures/phase-iii/lecture15.tex) | Wrapping Up QAOA: Intro to Coding in PennyLane, QUBO                    |
+|            <strong>Phase IV </strong>            | <em>Special Topics in Quantum Computing</em>                            |
+| [Lecture 16](./lectures/phase-iv/lecture16.tex)  | Quantum Compiler Optimizations                                          |
+| [Lecture 17](./lectures/phase-iv/lecture17.tex)  | More on Quantum Compiler Optimizations, Quantum Computer Architectures  |
+| [Lecture 18](./lectures/phase-iv/lecture18.tex)  | Quantum Circuits as DAGs, Qubit Topologies, Logical to Physical Mapping |
+|          <strong>Supplementary</strong>          | <em>Additional supplementary material.</em>                             |
+|   [Cheatsheet](./supplementary/cheatsheet.tex)   | Quick reference to important concepts and facts.                        |
 
 </div>
 

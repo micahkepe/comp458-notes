@@ -1,0 +1,168 @@
+\section{Lecture 18: Quantum Circuits as DAGs, Qubit Topologies, Logical to
+Physical Mapping}\label{sec:lecture18}
+
+\subsubsection*{Representing Quantum Circuits as Directed Acyclic Graphs (DAGs)}
+
+Quantum circuits are complex, but they can be visualized as Directed Acyclic
+Graphs (DAGs), where each gate is a node, and directed edges show which gates
+must happen before others. This helps in understanding the circuit's flow and
+dependencies.
+
+\index{directed acyclic graph}
+\dfn{Directed Acyclic Graph (DAG)}{
+  A graph with directed edges and no cycles, used to represent a quantum
+  circuit where:
+  \begin{itemize}
+    \item Nodes represent quantum gates or operations
+    \item Directed edges indicate dependencies between gates (which
+      operations must be performed before others)
+    \item Time flows in the direction of the edges
+    \item The acyclic property ensures no operation can depend on future
+      operations
+    \item Qubit lines from circuit diagrams become vertices at different time
+      steps
+    \item Two-qubit gates create edges between the affected qubits,
+      establishing execution dependencies
+  \end{itemize}
+
+  This representation provides a mathematical foundation for analyzing
+  circuit complexity, parallelism, and execution constraints.
+}
+
+\vspace{0.3cm}
+
+\noindent
+The conversion process from a standard quantum circuit to a DAG follows these
+principles:
+
+\begin{enumerate}
+  \item Each quantum gate operation (single-qubit gates like \(H, X, R_x,
+    R_y, R_z\) or two-qubit gates like CNOT, CZ) becomes a node in the graph.
+
+  \item Directed edges connect a gate to all subsequent gates that depend on it:
+
+    \begin{itemize}
+      \item Gates acting on the same qubit(s) later in the circuit
+
+      \item Two-qubit gates create dependencies between their control and
+        target qubits
+    \end{itemize}
+
+  \item The resulting graph is inherently acyclic due to the temporal
+    sequential nature of quantum circuits, with operations flowing forward in
+    time without feedback loops.
+
+  \item Gates that can be executed in parallel (acting on independent qubits)
+    will not have dependency paths between them.
+\end{enumerate}
+
+This representation makes it clear which operations can be performed
+simultaneously and which ones must wait for prior operations to complete.
+
+\index{critical path}
+\dfn{Critical Path}{
+  The longest path through the circuit's DAG representation from input to
+  output, which determines:
+
+  \begin{itemize}
+    \item The minimum execution time of the quantum circuit
+
+    \item The sequence of dependent operations that cannot be parallelized
+
+    \item The circuit depth when optimal parallelization is applied
+  \end{itemize}
+
+  The critical path is particularly important for quantum computing because:
+
+  \begin{itemize}
+    \item Quantum states are highly susceptible to decoherence over time
+
+    \item Minimizing the critical path reduces the total time qubits must
+      maintain coherence
+
+    \item The number of two-qubit gates in the critical path often dominates
+      error rates
+
+    \item It provides a key metric for comparing different implementations of
+      the same algorithm
+  \end{itemize}
+}
+
+\vspace{0.3cm}
+
+From the DAG, finding the critical path is a well-studied graph problem that
+can be solved efficiently using topological sorting and dynamic programming
+to compute the longest path length.
+
+\subsubsection*{Different Current Qubit Topology Designs}
+
+Where early qubit topology designs would potentially have some qubits with
+up to 4 qubit connections, this proved to produce noise effects that would
+cause incorrect output. Modern designs as of writing make use of altered
+qubit topology layouts that have at most 3 connections to other qubits.
+
+An interesting aspect is the fundamental trade-off between connectivity and
+noise: more connections between qubits can enable faster computations with
+fewer SWAP operations, but each additional coupling point introduces
+potential sources of crosstalk and errors. This trade-off has led modern
+designs to favor more conservative connectivity patterns that prioritize gate
+fidelity over maximum connectivity.
+
+This process of converting the circuit design onto actual, physical quantum
+hardware is appropriately called \textbf{logical to physical mapping}.
+Furthermore, the process seen in the above example where each qubit's path is
+manifested in the physical circuit (potentially with the use of SWAP gates
+due to the physical connections of the hardware) is called \textbf{routing}.
+
+\vspace{0.3cm}
+
+\dfn{Logical $\rightarrow$ Physical Mapping}{
+  The process of assigning logical qubits in a quantum algorithm to physical
+  qubits on a quantum processor, considering:
+
+  \begin{itemize}
+    \item The hardware connectivity constraints of the physical device
+    \item The specific interactions required by the quantum algorithm
+    \item The quality and error rates of individual physical qubits
+    \item The fidelity of two-qubit gate operations between specific physical
+      qubits
+  \end{itemize}
+
+  Effective logical-to-physical mapping minimizes the number of additional
+  operations (like SWAP gates) needed to execute the circuit on hardware with
+  limited connectivity, which is crucial for reducing noise exposure and
+  improving overall circuit performance.
+}
+
+\dfn{Routing}{
+  The process of determining how to move quantum information between
+  non-adjacent qubits on a quantum processor with limited connectivity,
+  including:
+
+  \begin{itemize}
+    \item Inserting SWAP operations to move quantum states between physical
+      qubits
+    \item Determining the optimal sequence of SWAP operations to enable
+      two-qubit gates between logical qubits mapped to non-adjacent physical
+      qubits
+    \item Balancing the trade-off between circuit depth increase and total
+      gate count
+    \item Considering the relative error rates of different physical
+      connections when deciding routing paths
+  \end{itemize}
+
+  Efficient routing is critical for quantum circuit execution on NISQ (Noisy
+  Intermediate-Scale Quantum) devices, as poor routing decisions can
+  significantly degrade algorithm performance through accumulated errors.
+}
+
+\vspace{0.3cm}
+
+As quantum devices continue to scale up, the complexity of the mapping and
+routing problems grows significantly, making efficient compilation techniques
+an essential area of research for practical quantum computing.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End of Lecture 18
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
