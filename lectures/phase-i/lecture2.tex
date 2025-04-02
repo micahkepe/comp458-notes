@@ -236,14 +236,28 @@ This will be useful when we cover the quantum bases in \autoref{sec:lecture3}.
     Additionally, the general matrix $M$ shown above is Hermitian iff. $c =
     e, d = -f$
   }
-
-  Hermitian matrices are unitary, but unitary matrices are not necessarily
-  Hermitian:
-
-  \[
-    H \rightarrow U, \quad U \not\rightarrow H
-  \]
 }
+
+Hermitian matrices are not necessarily unitary, and unitary matrices are not
+necessarily Hermitian. A matrix can be both, but these properties are distinct:
+
+\[
+  H = H^\dagger \quad (\text{Hermitian}), \quad U U^\dagger = I \quad (\text{unitary})
+\]
+
+In quantum computing, gates that are both Hermitian and unitary (e.g., Pauli
+gates) satisfy $U = U^\dagger$ and $U^2 = I$, making them their own
+inverses---they cancel out when applied twice in succession. However, not all
+unitary gates are Hermitian (e.g., the phase gate, which is unitary but not
+Hermitian):
+
+\[
+  \text{Pauli } X = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}, \quad X = X^\dagger, \quad X^2 = I; \quad
+  \text{Phase } S = \begin{bmatrix} 1 & 0 \\ 0 & i \end{bmatrix}, \quad S S^\dagger = I, \quad S \neq S^\dagger
+\]
+
+\vspace{0.3cm}
+%%%%%%%%%%%%%%
 
 \dfn{Eigenvalues and Eigenvectors}{
   For a square matrix $A \in \mathbb{C}^{n\times n}$, a vector
