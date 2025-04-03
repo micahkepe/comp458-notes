@@ -387,8 +387,8 @@
                     \item \textbf{NOR Gate}: Computes $c = \lnot(a \lor b)$
                       \begin{align*}
                         \begin{quantikz}
-                          \lstick{$|a\rangle$} & \ctrl{1} & \ctrl{2} & \qw \\
-                          \lstick{$|b\rangle$} & \ctrl{1} & \targ{} & \qw \\
+                          \lstick{$|a\rangle$} & \ctrl{1} & \ctrl{2} & \qw & \qw \\
+                          \lstick{$|b\rangle$} & \ctrl{1} & \targ{} & \qw & \qw \\
                           \lstick{$|c\rangle$} & \targ{} & \targ{} & \gate{X} & \qw
                         \end{quantikz}
                       \end{align*}
@@ -416,8 +416,8 @@
                     \item \textbf{NAND Gate}: Computes $c = \lnot(a \land b)$
                       \begin{align*}
                         \begin{quantikz}
-                          \lstick{$|a\rangle$} & \ctrl{1} & \qw \\
-                          \lstick{$|b\rangle$} & \ctrl{1} & \qw \\
+                          \lstick{$|a\rangle$} & \ctrl{1} & \qw & \qw \\
+                          \lstick{$|b\rangle$} & \ctrl{1} & \qw & \qw \\
                           \lstick{$|c\rangle$} & \targ{} & \gate{X} & \qw
                         \end{quantikz}
                       \end{align*}
@@ -527,6 +527,31 @@
                   \conceptbox{ANF Advantage}{Can reduce ancilla qubits,
                   simplifies oracle for Grover’s SAT}
 
+                  \section*{Variational Quantum Algorithms (VQA)}
+                  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+                    \item \textbf{Overview}: Hybrid quantum–classical
+                      algorithms that iteratively optimize a parameterized
+                      quantum circuit.
+                    \item \textbf{Process}:
+                      \begin{enumerate}[nosep]
+                        \item \textit{State Preparation}: Create an ansatz
+                          $\ket{\psi(\theta)}$.
+                        \item \textit{Measurement}: Evaluate a cost function
+                          $C(\theta)$ based on quantum measurement outcomes.
+                        \item \textit{Optimization}: Adjust the parameters
+                          $\theta$ using a classical optimizer.
+                      \end{enumerate}
+                    \item \textbf{Example} (Bell State Preparation):
+                      \[
+                        \ket{\psi(\theta)} = \mathrm{CNOT}\Bigl(R_y(\theta)\ket{0}\otimes\ket{0}\Bigr)
+                      \]
+                      with cost function
+                      \[
+                        C(\theta)=1-|\langle\Phi^+|\psi(\theta)\rangle|^2,
+                      \]
+                      where $\ket{\Phi^+}=\frac{1}{\sqrt{2}}(\ket{00}+\ket{11})$.
+                  \end{itemize}
+
                   \section*{Quantum Approximate Optimization Algorithm (QAOA)}
                   \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
                     \item \textbf{Purpose}: Approximate solutions to
@@ -599,32 +624,7 @@
                     for parameter tuning, balancing NISQ constraints with
                   computational power}
 
-                  \section*{Variational Quantum Algorithms (VQA)}
-                  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-                    \item \textbf{Overview}: Hybrid quantum–classical
-                      algorithms that iteratively optimize a parameterized
-                      quantum circuit.
-                    \item \textbf{Process}:
-                      \begin{enumerate}[nosep]
-                        \item \textit{State Preparation}: Create an ansatz
-                          $\ket{\psi(\theta)}$.
-                        \item \textit{Measurement}: Evaluate a cost function
-                          $C(\theta)$ based on quantum measurement outcomes.
-                        \item \textit{Optimization}: Adjust the parameters
-                          $\theta$ using a classical optimizer.
-                      \end{enumerate}
-                    \item \textbf{Example} (Bell State Preparation):
-                      \[
-                        \ket{\psi(\theta)} = \mathrm{CNOT}\Bigl(R_y(\theta)\ket{0}\otimes\ket{0}\Bigr)
-                      \]
-                      with cost function
-                      \[
-                        C(\theta)=1-|\langle\Phi^+|\psi(\theta)\rangle|^2,
-                      \]
-                      where $\ket{\Phi^+}=\frac{1}{\sqrt{2}}(\ket{00}+\ket{11})$.
-                  \end{itemize}
-
-                  \section*{Advanced QAOA Concepts}
+                  \section*{Advanced QAOA}
                   \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
                     \item \textbf{Cost Hamiltonian} ($H_C$):
                       \begin{itemize}[nosep]
@@ -667,37 +667,61 @@
                         \item Increasing \(P\) can improve approximation quality (approaching adiabatic dynamics) but raises challenges such as barren plateaus and hardware noise.
                       \end{itemize}
                   \end{itemize}
-                  \conceptbox{QAOA Advanced Insight}{Optimal parameter tuning in QAOA balances circuit depth with performance, leveraging both quantum state preparation and classical optimization.}
 
-                  \section*{Cirq Implementation of QAOA (Max-Cut)}
+                  \section*{QUBO}
                   \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-                    \item \textbf{Circuit Steps}:
-                      \begin{enumerate}[nosep]
-                        \item \textit{Initialization}: Apply Hadamard gates to all qubits to create \(\ket{s}\).
-                        \item \textit{Cost Evolution}: For each edge \((i,j)\), implement
-                          $e^{-i\gamma Z_i Z_j}$ using a CNOT, $R_Z(2\gamma)$, and a CNOT.
-                        \item \textit{Mixing Evolution}: Apply \(R_X(2\beta)\) to each qubit.
-                        \item \textit{Measurement}: Measure all qubits to estimate the cut value.
-                      \end{enumerate}
-                    \item \textbf{Optimization}: Utilize a classical optimizer (e.g., COBYLA) to tune the parameters by minimizing the negative cut value.
-                  \end{itemize}
-                  \conceptbox{Cirq QAOA Insight}{Efficient circuit implementations leverage native gate sets to balance circuit depth and operational fidelity on NISQ hardware.}
+                    \item \textbf{General Form of Cost Function}:
+                      \begin{align*}
+                        c(x) = \sum_{i = 0}^{n - 1} \sum_{j = 0}^{n - 1} c_{ij} x_i x_j + \sum_{i = 0}^{n - 1} c_i x_i
+                      \end{align*}
 
-                  \section*{QUBO Formulation}
+                    \item \textbf{X-Basis $\leftrightarrow$ s-Basis Conversions}:
+                      \begin{align*}
+                        x_i &= \frac{1}{2}(1 - s_i)\\
+                        s_i &= 1 - 2x_i = (-1)^{x_i}
+                      \end{align*}
+                      where $s_i \in \{-1,1\}$ are spin variables
+
+                    \item \textbf{Matrix Exponentiation}:
+                      \begin{align*}
+                        e^{-i\theta X} &= R_X(2\theta) = \begin{bmatrix} \cos\theta & -i\sin\theta \\ -i\sin\theta & \cos\theta \end{bmatrix} \\
+                        e^{-i\theta Y} &= R_Y(2\theta) = \begin{bmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{bmatrix} \\
+                        e^{-i\theta Z} &= R_Z(2\theta) = \begin{bmatrix} e^{-i\theta} & 0 \\ 0 & e^{i\theta} \end{bmatrix}
+                      \end{align*}
+
+                    \item \textbf{Expected Value}:
+                      \begin{align*}
+                        \langle H_C \rangle &= \langle\psi|H_C|\psi\rangle\\
+                                            &= \sum_x c(x)|\langle x|\psi\rangle|^2\\
+                                            &= \sum_x c(x)P(x)
+                      \end{align*}
+                      where $P(x)$ is the probability of measuring bitstring $x$
+                  \end{itemize}
+
+                  \section*{Circuit Equivalences}
                   \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-                    \item \textbf{Definition}: $f(x) = \sum_{i=1}^n\sum_{j=1}^n Q_{ij}x_i x_j$
-                    \item \textbf{Matrix Form}: $f(x) = \mathbf{x}^T Q \mathbf{x}$
-                    \item \textbf{Components}:
+                    \item \textbf{CNOT Variants}:
                       \begin{itemize}[nosep]
-                        \item Linear terms: Diagonal $Q_{ii}$
-                        \item Quadratic terms: Off-diagonal $Q_{ij}$
+                        \item $\text{CNOT} = \text{CX} = (I \otimes H) \cdot \text{CZ} \cdot (I \otimes H)$
+                        \item Flipped CNOT: $(H \otimes H) \cdot \text{CNOT} \cdot (H \otimes H)$ (swaps control and target)
                       \end{itemize}
-                    \item \textbf{QUBO to Ising Conversion}:
+                    \item \textbf{Pauli Transformations}:
                       \begin{itemize}[nosep]
-                        \item $h_i = \frac{Q_{ii}}{2} + \sum_{j \neq i}\frac{Q_{ij}}{4}$
-                        \item $J_{ij} = \frac{Q_{ij}}{4}$
-                        \item Offset = $\sum_i\frac{Q_{ii}}{4} + \sum_{i<j}\frac{Q_{ij}}{4}$
+                        \item $H X H = Z$
+                        \item $H Z H = X$
+                        \item $X Y X = -Y$, $Y Z Y = -Z$, $Z X Z = -X$
+                      \end{itemize}
+                    \item \textbf{Phase Gate Relations}:
+                      \begin{itemize}[nosep]
+                        \item $S = T^2$, $Z = S^2 = T^4$
+                        \item $H S H = \frac{1}{\sqrt{2}} \begin{bmatrix} 1 & -i \\ i & 1 \end{bmatrix}$ (rotates basis)
+                      \end{itemize}
+                    \item \textbf{Rotation Decompositions}:
+                      \begin{itemize}[nosep]
+                        \item $R_X(\theta) = H R_Z(\theta) H$
+                        \item $R_Y(\theta) = S^\dagger R_Z(\theta) S$
                       \end{itemize}
                   \end{itemize}
+
                 \end{multicols}
                 \endgroup
