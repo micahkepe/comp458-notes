@@ -166,16 +166,16 @@ A NAND gate ($c = \neg (a \land b)$) adds an $X$ gate after the AND:
 
   \[
     \frac{1}{2}(|00\rangle - |01\rangle + |11\rangle - |10\rangle) =
-    \frac{1}{\sqrt{2}}(|0\rangle|-\rangle - |1\rangle|+\rangle).
+    \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle) \otimes \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle) =
+    |-\rangle|-\rangle.
   \]
 
   The phase of the target ($|-\rangle$) "kicks back" to the control, flipping
-  its relative phase. In Grover’s oracle, a multi-controlled $X$ on an
+  its relative phase. In Grover's oracle, a multi-controlled $X$ on an
   ancilla in $|-\rangle$ state marks solutions with a $-1$ phase.
 }
 
-\paragraph{Implications of Quantum Kickback}\label{par:Implications of
-Quantum Kickback}
+\paragraph{Implications of Quantum Kickback}\label{par:Implications of Quantum Kickback}
 
 Quantum kickback enables efficient phase marking in Grover’s algorithm
 without altering the computational basis states directly. It implies that:
