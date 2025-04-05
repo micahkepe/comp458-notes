@@ -1,0 +1,198 @@
+\section{Lecture 19: More on Logical to Physical Mapping}\label{sec:lecture19}
+
+We will continue to delve deeper into the process of mapping logical quantum
+circuits to physical quantum hardware, focusing on IBM's heavy-hex lattice
+topology. This mapping is a critical step in quantum computing due to the
+constrained connectivity of physical qubits, often requiring the insertion of
+SWAP gates to enable interactions between non-adjacent qubits. We will
+explore how to decide on an effective mapping, and the consequences of
+suboptimal choices on circuit efficiency. The IBM hardware operates with a
+specific basis gate set—CX, X, RZ, and SX—into which all circuits must be
+decomposed, adding another layer of complexity to the mapping process.
+
+\subsubsection*{IBM's Heavy-Hex Lattice Topology}
+
+IBM's quantum processors, such as those in the Falcon and Hummingbird
+families, employ the heavy-hex lattice, a hexagonal arrangement of qubits
+with additional edge qubits designed to minimize error rates. This topology
+reduces frequency collisions and spectator errors compared to denser layouts
+like square lattices, enhancing scalability and error correction
+capabilities.\footnote{See \href{https://www.ibm.com/quantum/blog/heavy-hex-lattice}
+{The IBM Quantum heavy hex lattice} for more details on the design motivation.}
+For example, in a simplified seven-qubit heavy-hex layout, qubits might be
+arranged as a chain (p0-p1-p2-p3-p4) with dangling qubits (p5 connected to
+p1, p6 to p3), where each qubit has at most three neighbors.
+
+\vspace{0.3cm}
+
+\noindent
+This connectivity can be represented conceptually as:
+
+\begin{itemize}
+  \item p0 -- p1 -- p2 -- p3 -- p4
+  \item p5 -- p1
+  \item p6 -- p3
+\end{itemize}
+
+\vspace{0.3cm}
+
+\noindent
+Such a structure balances connectivity with error mitigation, as explored in
+research on topological codes.\footnote{Refer to \href{https://arxiv.org/abs/2404.15989}
+{Creating entangled logical qubits in the heavy-hex lattice with topological
+codes} for insights into error correction on this topology.}
+
+\subsubsection*{Basis Gates and Hardware Constraints}
+
+IBM's superconducting qubit platforms utilize a basis gate set consisting of
+CX (CNOT), X, RZ, and SX gates. All logical circuits must be transpiled into
+these gates for execution on IBM hardware.\footnote{Details on native gates
+are available at \href{https://docs.quantum.ibm.com/guides/native-gates}{Native
+gates and operations}.} This constraint, enforced by tools like Qiskit’s
+transpiler, ensures compatibility but impacts circuit depth and fidelity. For
+instance, a SWAP gate, necessary for non-adjacent qubit interactions,
+decomposes into three CX gates, amplifying the importance of efficient mapping.
+
+\ex{Mapping Logical Circuits to Physical Hardware}{
+
+  Consider a simple logical circuit with a single CNOT gate between two qubits,
+  q0 and q1:
+
+  \[
+    \begin{quantikz}
+      \qw & \ctrl{1} & \qw \\
+      \qw & \targ{} & \qw \\
+    \end{quantikz}
+  \]
+
+  On a physical device with a linear topology (p0-p1-p2, where p0 is connected
+  to p1, and p1 to p2), the mapping decision determines the circuit’s
+  efficiency:
+
+  \subsubsection*{Optimal Mapping}
+
+  Map q0 to p0 and q1 to p1, where p0 and p1 are adjacent. The physical circuit
+  remains:
+
+  \[
+    \begin{quantikz}
+      \lstick{p0 (q0)} & \ctrl{1} & \qw \\
+      \lstick{p1 (q1)} & \targ{} & \qw \\
+      \lstick{p2} & \qw & \qw \\
+    \end{quantikz}
+  \]
+
+
+  This requires no additional gates, preserving the circuit’s depth and
+  minimizing error accumulation.
+
+  \subsubsection*{Suboptimal Mapping}
+
+  Map q0 to p0 and q1 to p2, where p0 and p2 are not directly connected. To
+  execute the CNOT, we must swap q1 to an adjacent position:
+
+  \begin{enumerate}
+    \item SWAP p1 and p2 to move q1 to p1.
+    \item Apply CNOT between p0 and p1.
+    \item SWAP p1 and p2 back to restore the original mapping (if needed).
+  \end{enumerate}
+
+  The physical circuit becomes:
+
+  \[
+    \begin{quantikz}
+      \lstick{p0 (q0)} & \qw & \qw & \ctrl{1} & \qw & \qw \\
+      \lstick{p1} & \swap{1} & \qw & \targ{} & \swap{1} & \qw \\
+      \lstick{p2 (q1)} & \swap{-1} & \qw & \qw & \swap{-1} & \qw \\
+    \end{quantikz}
+  \]
+
+  Each SWAP decomposes into three CX gates, adding six CX gates total,
+  significantly increasing depth and error potential.\footnote{For SWAP gate
+    decomposition, see \href{https://learning.quantum.ibm.com/tutorial/explore-gates-and-circuits-with-the-quantum-composer}
+  {Explore gates and circuits with IBM Quantum Composer}.}
+}
+
+\subsubsection*{Efficiency Impacts of Mapping Choices}
+
+The choice of mapping directly affects circuit efficiency:
+
+\begin{itemize}
+  \item \textbf{Optimal Mapping:} No SWAPs, minimal gate count, and low error
+    rate.
+  \item \textbf{Suboptimal Mapping:} Two SWAPs, six additional CX gates,
+    increased depth, and higher error probability due to more operations.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\noindent
+For a larger circuit, such as one with three qubits (q0, q1, q2) and gates CX
+q0 q1, CX q1 q2, CX q0 q2, mapping q0 to p0, q1 to p1, and q2 to p2 leverages
+adjacency for the first two gates but requires a SWAP for the third (p0 to
+p2). A better strategy might cluster frequently interacting qubits, reducing
+SWAP overhead, as seen in optimization studies.\footnote{See
+  \href{https://arxiv.org/html/2402.09705v1}{Linear Depth QFT over IBM
+Heavy-hex Architecture} for mapping optimization techniques.}
+
+\vspace{0.3cm}
+
+\begin{center}
+  \begin{table}[h]
+    \centering
+    \begin{tabular}{lcccc}
+      \toprule
+      Mapping Type & Number of SWAPs & Additional CNOTs & Circuit Depth Increase & Error Potential \\
+      \midrule
+      Optimal (Adjacent) & 0 & 0 & 0 & Low \\
+      Suboptimal (Non-Adjacent) & 2 & 6 & Significant & High \\
+      \bottomrule
+    \end{tabular}
+    \caption{Comparison of mapping efficiency for a two-qubit CNOT circuit.}
+  \end{table}
+\end{center}
+
+\ex{Larger Circuit Mapping Example}{
+
+  Consider a three-qubit logical circuit:
+
+  \[
+    \begin{quantikz}
+      \lstick{q0} & \ctrl{1} & \qw & \ctrl{2} & \qw \\
+      \lstick{q1} & \targ{} & \ctrl{1} & \qw & \qw \\
+      \lstick{q2} & \qw & \targ{} & \targ{} & \qw \\
+    \end{quantikz}
+  \]
+
+
+  On a heavy-hex segment (p0-p1-p2), an optimal mapping (q0 to p0, q1 to p1, q2
+  to p2) executes the first two gates directly but requires a SWAP for CX q0 q2:
+
+  \[
+    \begin{quantikz}
+      \lstick{p0 (q0)} & \ctrl{1} & \qw & \qw & \ctrl{1} & \qw \\
+      \lstick{p1 (q1)} & \targ{} & \ctrl{1} & \swap{1} & \targ{} & \qw \\
+      \lstick{p2 (q2)} & \qw & \targ{} & \swap{-1} & \targ{} & \qw \\
+    \end{quantikz}
+  \]
+
+  Here, the SWAP p1 p2 moves q2 to p1, allowing the CNOT, adding three CX
+  gates. A suboptimal mapping (e.g., q0 to p0, q1 to p2, q2 to p1) would
+  require multiple SWAPs, worsening efficiency.
+}
+
+\subsubsection*{Practical Implications}
+
+Efficient mapping is crucial for quantum algorithm performance, especially as
+hardware scales to larger qubit counts (e.g., IBM’s Crossbill with 408
+qubits).\footnote{See \href{https://www.ibm.com/quantum/blog/ibm-quantum-roadmap-2025}
+{IBM roadmap to quantum-centric supercomputers} for future hardware plans.}
+Suboptimal mappings can render circuits impractical due to excessive depth,
+while optimal mappings, guided by tools like Qiskit, enhance fidelity.\footnote{
+  For hardware-aware strategies, see \href{https://www.ibm.com/blogs/research/2020/09/hardware-aware-quantum/}
+{Hardware-aware approach for fault-tolerant quantum computation}.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End of Lecture 19
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

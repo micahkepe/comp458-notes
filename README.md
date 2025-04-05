@@ -48,6 +48,7 @@ in LaTeX.
 | [Lecture 16](./lectures/phase-iv/lecture16.tex)  | Quantum Compiler Optimizations                                          |
 | [Lecture 17](./lectures/phase-iv/lecture17.tex)  | More on Quantum Compiler Optimizations, Quantum Computer Architectures  |
 | [Lecture 18](./lectures/phase-iv/lecture18.tex)  | Quantum Circuits as DAGs, Qubit Topologies, Logical to Physical Mapping |
+| [Lecture 19](./lectures/phase-iv/lecture19.tex)  | More on Logical to Physical Mapping                                     |
 |          <strong>Supplementary</strong>          | <em>Additional supplementary material.</em>                             |
 |   [Cheatsheet](./supplementary/cheatsheet.tex)   | Quick reference to important concepts and facts.                        |
 
