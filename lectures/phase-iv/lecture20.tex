@@ -1,0 +1,174 @@
+\section{Lecture 20: Quantum Error Correction}\label{sec:lecture20}
+
+Quantum circuits are highly sensitive to errors due to decoherence and
+environmental noise, making error correction a cornerstone of reliable
+quantum computation. This sensitivity stems from qubits losing their quantum
+state through interactions with the environment, a process known as
+decoherence. In quantum computing, significant effort is devoted not only to
+compiler optimizations that reduce circuit depth but also to creating
+redundancies within quantum circuits to protect information and enable
+fault-tolerant computation.\footnote{For an overview, see
+  \href{https://q-ctrl.com/topics/what-is-quantum-error-correction}{What is
+quantum error correction?}} This lecture contrasts classical error correction
+with quantum approaches, highlighting the unique challenges posed by quantum
+mechanics.
+
+\index{error correct!classical error detection}
+\subsection*{Classical Error Correction}
+
+Classical bits, which can be either 0 or 1, are prone to errors with a
+probability \( p \in [0, 1] \), where the bit flips with probability \( p \)
+and remains correct with probability \( 1 - p \). This is formally expressed as:
+
+\[
+  b =
+  \begin{cases}
+    \text{correct}, & \text{with probability } 1 - p \\
+    \text{incorrect}, & \text{with probability } p
+  \end{cases}
+\]
+
+Classical bits typically experience only bit-flip errors (e.g., 0 to 1 or 1
+to 0), unlike quantum bits, which can also suffer phase flips due to their
+superposition and entanglement properties.
+
+\ex{Error Encoding of 3 for Classical Bit}{
+  Suppose \( b = 0 \). Classically, we can build redundancies by making three
+  copies of \( b \), sending \( 000 \), and taking a majority vote at the
+  receiver to decode the original bit. The possible received states, their
+  probabilities, and the decoded outcomes are shown in the table below:
+
+  \begin{table}[H]
+    \centering
+    \begin{tabular}{lccc}
+      \toprule
+      Received State & Probability & Decoded Value & Correct? \\
+      \midrule
+      000 & \( (1 - p)^3 \) & 0 & Yes \\
+      001 & \( (1 - p)^2 p \) & 0 & Yes \\
+      010 & \( (1 - p)^2 p \) & 0 & Yes \\
+      100 & \( (1 - p)^2 p \) & 0 & Yes \\
+      011 & \( (1 - p) p^2 \) & 1 & No \\
+      101 & \( (1 - p) p^2 \) & 1 & No \\
+      110 & \( (1 - p) p^2 \) & 1 & No \\
+      111 & \( p^3 \) & 1 & No \\
+      \bottomrule
+    \end{tabular}
+    \caption{Probabilities of received states for a 3-bit repetition code.}
+  \end{table}
+
+  \vspace{0.3cm}
+
+  The probability of correctly decoding \( b = 0 \) is the sum of
+  probabilities where the majority is 0: \( (1 - p)^3 + 3 (1 - p)^2 p = 1 -
+  3p^2 + 2p^3 \). This improves the success probability from the initial \( 1
+  - p \) to \( 1 - 3p^2 + 2p^3 \).
+
+  \vspace{0.3cm}
+
+  For \( p = 0.01 \), the initial success rate without encoding is 0.99, but
+  with three-bit redundancy, it increases to 0.999702, significantly
+  enhancing reliability.
+}
+
+\vspace{0.3cm}
+
+Interestingly, modern devices like smart phones employ similar redundancy
+techniques, often using 5-7 redundancy bits in flash memory for error
+correction. This contributes to power consumption due to the additional
+storage and processing required, a trade-off for improved data integrity in
+noisy environments.
+
+\vspace{0.3cm}
+
+\index{error correct!quantum error detection}
+\subsection*{Quantum Error Correction}
+Quantum error correction is fundamentally more complex than its classical
+counterpart due to the no-cloning theorem, which states that an unknown
+quantum state cannot be perfectly copied.\footnote{For details on the
+no-cloning theorem, see \href{https://learning.quantum.ibm.com/course/basics-of-quantum-information/quantum-circuits}{Quantum circuits}.}
+This prevents us from simply making trivial copies of a qubit’s state, as in
+classical systems. Even attempting to "clone" a qubit would not preserve the
+original superposition \( |\psi\rangle = \alpha |0\rangle + \beta |1\rangle
+\), rendering direct repetition impractical. Instead, quantum error
+correction relies on encoding logical qubits into entangled states across
+multiple physical qubits, using codes like the repetition code.
+
+\vspace{0.3cm}
+
+\index{error correct!repetition code}
+\dfn{Repetition Code}{
+  The quantum \textbf{repetition code} encodes a single logical qubit into
+  multiple physical qubits to protect against errors. For a code distance of
+  3, the state \( |\psi\rangle = \alpha |0\rangle + \beta |1\rangle \) is
+  encoded into \( |\psi_3\rangle = \alpha |000\rangle + \beta |111\rangle \).
+  This is achieved by starting with the initial qubit in \( |\psi\rangle \)
+  and two ancilla qubits in \( |0\rangle \), then applying CNOT gates from
+  the original qubit to the ancillas:
+
+  \[
+    \begin{quantikz}
+      \lstick{$q_0 \: \ket{\psi}$} & \ctrl{1} & \ctrl{2} & \qw \\
+      \lstick{$q_1 : \zero$} & \targ{} & \qw & \qw \\
+      \lstick{$q_2 : \zero$} & \qw & \targ{} & \qw \\
+    \end{quantikz}
+  \]
+
+  This circuit entangles the qubits such that a single bit-flip error (e.g.,
+  \( X \) on one qubit) can be detected and corrected using syndrome
+  measurements without collapsing the superposition.\footnote{See
+    \href{https://www.nature.com/articles/s41567-023-02282-2}{Protecting
+    expressive circuits with a quantum error detection code} for encoding
+  techniques.}
+}
+
+\vspace{0.3cm}
+
+To correct a single qubit flip error, consider the encoded state \(
+|\psi_3\rangle = \alpha \ket{000} + \beta \ket{111} \). If an \( X \)
+error occurs on \( q_1 \), the state becomes \( \alpha \ket{010} + \beta
+\ket{101} \). Syndrome measurements are performed using two ancilla qubits
+to measure the parities \( q_0 q_1 \) and \( q_1 q_2 \):
+
+\begin{itemize}
+  \item Measure \( X \otimes X \) between \( q_0 \) and \( q_1 \) with an
+    ancilla initialized in \( |+\rangle \), applying CNOTs from \( q_0 \) and
+    \( q_1 \) to the ancilla, then measuring it in the \( Z \)-basis. Outcome
+    -1 indicates a flip on \( q_0 \) or \( q_1 \).
+  \item Measure \( X \otimes X \) between \( q_1 \) and \( q_2 \) similarly.
+    Outcome -1 indicates a flip on \( q_1 \) or \( q_2 \).
+\end{itemize}
+
+\vspace{0.3cm}
+
+\noindent
+For the error on \( q_1 \):
+\begin{itemize}
+  \item \( q_0 q_1 \): -1 (flip detected).
+  \item \( q_1 q_2 \): -1 (flip detected).
+  \item Syndrome (-1, -1) uniquely identifies \( q_1 \), and an \( X \) gate
+    corrects it, restoring \( |\psi_3\rangle \).
+\end{itemize}
+
+This process, detailed in \href{https://www.ibm.com/quantum/blog/error-correction-codes}
+{Error correcting codes for near-term quantum computers}, ensures correction
+without measuring the logical state directly, preserving quantum information.
+
+\aside{
+  \textbf{Silent Data Corruption (SDC)} occurs when errors go undetected,
+  posing significant risks in computing systems. In classical systems, SDC
+  can corrupt data silently, leading to integrity issues in storage or
+  processing. In quantum computing, undetected errors can propagate through
+  entanglements, undermining computation reliability and producing incorrect
+  results. This is particularly challenging due to the fragility of quantum
+  states, making robust error correction essential to mitigate SDC and
+  achieve fault tolerance.\footnote{See
+    \href{https://physicsworld.com/a/why-error-correction-is-quantum-computings-defining-challenge}{Why
+    error correction is quantum computing's defining challenge} for SDC
+  implications.}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End of Lecture 20
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
