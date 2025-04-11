@@ -1,4 +1,5 @@
-\section{Lecture 20: Quantum Error Correction}\label{sec:lecture20}
+\section{Lecture 20: Quantum Error Correction-- Bit Flip Errors}
+\label{sec:lecture20}
 
 Quantum circuits are highly sensitive to errors due to decoherence and
 environmental noise, making error correction a cornerstone of reliable
@@ -13,7 +14,7 @@ quantum error correction?}} This lecture contrasts classical error correction
 with quantum approaches, highlighting the unique challenges posed by quantum
 mechanics.
 
-\index{error correct!classical error detection}
+\index{error correction!classical error detection}
 \subsection*{Classical Error Correction}
 
 Classical bits, which can be either 0 or 1, are prone to errors with a
@@ -81,8 +82,8 @@ noisy environments.
 
 \vspace{0.3cm}
 
-\index{error correct!quantum error detection}
-\subsection*{Quantum Error Correction}
+\index{error correction!quantum error detection}
+\subsection*{Qubit Flip Error Correction}
 Quantum error correction is fundamentally more complex than its classical
 counterpart due to the no-cloning theorem, which states that an unknown
 quantum state cannot be perfectly copied.\footnote{For details on the
@@ -96,7 +97,7 @@ multiple physical qubits, using codes like the repetition code.
 
 \vspace{0.3cm}
 
-\index{error correct!repetition code}
+\index{error correction!repetition code}
 \dfn{Repetition Code}{
   The quantum \textbf{repetition code} encodes a single logical qubit into
   multiple physical qubits to protect against errors. For a code distance of
@@ -120,6 +121,16 @@ multiple physical qubits, using codes like the repetition code.
     \href{https://www.nature.com/articles/s41567-023-02282-2}{Protecting
     expressive circuits with a quantum error detection code} for encoding
   techniques.}
+}
+
+\index{error correction!syndrome}
+\dfn{Syndrome}{
+  In quantum computing, \textbf{syndrome} measurement is a process used in
+  quantum error correction (QEC) to identify errors without revealing the
+  quantum information stored in the qubits. The syndrome measurement provides
+  information about the type of error that has occurred, such as a bit flip
+  or a phase flip, but it does not reveal the information stored in the
+  logical qubit, thus preserving quantum superposition
 }
 
 \vspace{0.3cm}

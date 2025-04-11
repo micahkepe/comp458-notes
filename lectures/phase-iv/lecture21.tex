@@ -1,0 +1,248 @@
+\section{Lecture 21: Quantum Error Correction-- Phase Flip Errors} \label{sec:lecture21}
+
+In the previous lecture, we explored bit flip error detection and correction
+in quantum error correction, addressing errors that flip a qubit’s state from
+\( |0\rangle \) to \( |1\rangle \) or vice versa. However, quantum systems
+are also susceptible to another class of errors: phase flip errors, which
+apply a \( Z \) gate, transforming \( |\psi\rangle = \alpha |0\rangle + \beta
+|1\rangle \) into \( \alpha |0\rangle - \beta |1\rangle \). These errors
+alter the relative phase between basis states, a critical issue in quantum
+computing due to the importance of phase in superpositions and entanglement.
+In this section, we will examine how to detect and correct phase flip errors,
+highlighting their similarity to bit flip correction but with key differences
+involving Hadamard and Z gates.
+
+\index{error correction!phase flip errors}
+\subsection*{Phase Flip Error Correction}
+
+Phase flip errors are represented by the Pauli \( Z \) operator, which
+applies a -1 phase to the \( |1\rangle \) component of a qubit’s state. For a
+single qubit in \( |\psi\rangle = \alpha |0\rangle + \beta |1\rangle \), a
+phase flip results in \( Z |\psi\rangle = \alpha |0\rangle - \beta |1\rangle
+\). Unlike bit flip errors, which are detectable in the computational basis
+(\( |0\rangle, |1\rangle \)), phase flips are more apparent in the Hadamard
+basis (\( |+\rangle = \frac{|0\rangle + |1\rangle}{\sqrt{2}}, |-\rangle =
+\frac{|0\rangle - |1\rangle}{\sqrt{2}} \)), where a \( Z \) gate flips \(
+|+\rangle \) to \( |-\rangle \).
+
+To correct phase flip errors, we can adapt the repetition code used for bit
+flips by transforming the basis. The phase flip code encodes a logical qubit
+into three physical qubits, similar to the bit flip code, but uses Hadamard
+gates to switch to the \( |+\rangle, |-\rangle \) basis for error detection.
+The logical states are:
+\begin{itemize}
+  \item Logical \( |0_L\rangle = |+++\rangle \)
+  \item Logical \( |1_L\rangle = |---\rangle \)
+\end{itemize}
+
+\vspace{0.3cm}
+
+For an arbitrary state \( |\psi\rangle = \alpha |0\rangle + \beta |1\rangle
+\), the encoded state is \( \alpha |+++\rangle + \beta |---\rangle \). The
+encoding circuit is:
+
+\[
+  \begin{quantikz}
+    \lstick{$q_2 : |\psi\rangle$} & \gate{H} & \ctrl{1} & \ctrl{2} & \gate{H} & \qw \\
+    \lstick{$q_1 : |0\rangle$} & \gate{H} & \targ{} & \qw & \gate{H} & \qw \\
+    \lstick{$q_0 : |0\rangle$} & \gate{H} & \qw & \targ{} & \gate{H} & \qw \\
+  \end{quantikz}
+\]
+
+This circuit:
+\begin{enumerate}
+  \item Applies Hadamard gates to all qubits, transforming \( q_2 :
+    |\psi\rangle \to \alpha |+\rangle + \beta |-\rangle \), \( q_1, q_0 :
+    |0\rangle \to |+\rangle \).
+  \item Uses CNOTs to entangle the qubits, producing \( \alpha |+++\rangle +
+    \beta |---\rangle \).
+  \item Applies Hadamard gates again to return to the computational basis for
+    further operations, though for error detection, we work in the Hadamard
+    basis.
+\end{enumerate}
+
+To detect a phase flip (e.g., \( Z \) on \( q_1 \)), we measure syndromes
+using ancilla qubits in the Hadamard basis. A \( Z \) error on \( q_1 \)
+flips \( |+++\rangle \to |+-+\rangle \) or \( |---\rangle \to |-+-\rangle \).
+The syndrome measurement circuit is:
+
+\[
+  \begin{quantikz}
+    \lstick{$q_2$} & \gate{H} & \ctrl{3} & \qw & \qw & \gate{H} & \qw \\
+    \lstick{$q_1$} & \gate{H} & \qw & \ctrl{3} & \ctrl{3} & \gate{H} & \qw \\
+    \lstick{$q_0$} & \gate{H} & \qw & \qw & \qw & \gate{H} & \qw \\
+    \lstick{$a_1 : |0\rangle$} & \qw & \targ{} & \qw & \qw & \meter{} & \qw \\
+    \lstick{$a_0 : |0\rangle$} & \qw & \qw & \targ{} & \targ{} & \meter{} & \qw \\
+  \end{quantikz}
+\]
+
+Here, ancillas measure parities \( X_0 X_1 \) and \( X_1 X_2 \):
+\begin{itemize}
+  \item \( X_0 X_1 \): CNOTs from \( q_0 \) and \( q_1 \) to \( a_0 \),
+    measured as 1 if \( q_0 \neq q_1 \).
+  \item \( X_1 X_2 \): CNOTs from \( q_1 \) and \( q_2 \) to \( a_1 \),
+    measured as 1 if \( q_1 \neq q_2 \).
+\end{itemize}
+
+The syndrome outcomes are:
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{cccl}
+    \toprule
+    \( a_1  (X_0 X_1) \) & \( a_0  (X_1 X_2) \) & Syndrome & Action \\
+    \midrule
+    0 & 0 & 00 & No error \\
+    1 & 0 & 10 & Apply \( Z \) to \( q_0 \) \\
+    1 & 1 & 11 & Apply \( Z \) to \( q_1 \) \\
+    0 & 1 & 01 & Apply \( Z \) to \( q_2 \) \\
+    \bottomrule
+  \end{tabular}
+  \caption{Syndrome measurements for phase flip error correction.}
+\end{table}
+
+For example, a \( Z \) error on \( q_1 \) yields syndrome 11, indicating \(
+q_1 \) differs from both \( q_0 \) and \( q_2 \). Applying \( Z \) to \( q_1
+\) corrects the error, restoring \( \alpha |+++\rangle + \beta |---\rangle
+\).\footnote{See \href{https://www.ibm.com/quantum/blog/error-correction-codes}
+{Error correcting codes for near-term quantum computers} for syndrome
+measurement techniques.}
+
+This approach mirrors bit flip correction but operates in the Hadamard basis,
+leveraging the fact that a \( Z \) gate in the computational basis
+corresponds to an \( X \) gate in the Hadamard basis (\( H Z H = X \)),
+allowing us to repurpose bit flip correction circuits with basis changes.
+
+\subsubsection*{Generalizing Phase Correction to an n-Qubit System}
+
+Extending phase flip correction to an n-qubit system scales linearly in terms
+of physical qubits required. For a code distance \( d = n \), we encode one
+logical qubit into \( n \) physical qubits, producing logical states:
+
+\begin{itemize}
+  \item \( |0_L\rangle = |+\rangle^{\otimes n} \)
+  \item \( |1_L\rangle = |-\rangle^{\otimes n} \)
+\end{itemize}
+
+\vspace{0.3cm}
+
+\noindent
+The encoding circuit generalizes to:
+
+\begin{enumerate}
+  \item Apply Hadamard gates to \( q_0 : |\psi\rangle \) and \( q_1, \dots,
+    q_{n-1} : |0\rangle \).
+  \item Apply CNOTs from \( q_0 \) to each \( q_i \) (for \( i = 1, \dots,
+    n-1 \)).
+  \item Optionally apply Hadamard gates to return to the computational basis.
+\end{enumerate}
+
+\vspace{0.3cm}
+
+\noindent
+For \( n = 5 \), the circuit is:
+
+\[
+  \begin{quantikz}
+    \lstick{$q_4 : |\psi\rangle$} & \gate{H} & \ctrl{1} & \ctrl{2} & \ctrl{3} & \ctrl{4} & \gate{H} & \qw \\
+    \lstick{$q_3 : |0\rangle$} & \gate{H} & \targ{} & \qw & \qw & \qw & \gate{H} & \qw \\
+    \lstick{$q_2 : |0\rangle$} & \gate{H} & \qw & \targ{} & \qw & \qw & \gate{H} & \qw \\
+    \lstick{$q_1 : |0\rangle$} & \gate{H} & \qw & \qw & \targ{} & \qw & \gate{H} & \qw \\
+    \lstick{$q_0 : |0\rangle$} & \gate{H} & \qw & \qw & \qw & \targ{} & \gate{H} & \qw \\
+  \end{quantikz}
+\]
+
+Syndrome measurements require \( n-1 \) ancillas to measure parities \( X_i
+X_{i+1} \) for \( i = 0, \dots, n-2 \). Each ancilla detects differences
+between adjacent qubits, identifying up to \( \lfloor (n-1)/2 \rfloor \)
+errors. The number of physical qubits scales as \( O(n) \), and the circuit
+depth for encoding is linear in \( n \), as each CNOT is sequential from \(
+q_0 \). Error correction scales similarly, with \( n-1 \) syndrome
+measurements.\footnote{For scaling details, see
+  \href{https://arxiv.org/abs/1907.11157}{Quantum Error Correction: an
+Introductory Guide}.}
+
+This linear scaling makes phase flip correction feasible for larger systems,
+though practical implementations must balance qubit count against error
+rates, as more qubits increase the likelihood of multiple errors, requiring
+higher-distance codes.
+
+\ex{Phase Flip Correction for Bell State Preparation}{
+
+  Consider a Bell state preparation circuit, creating \( |\Phi^+\rangle =
+  \frac{|00\rangle + |11\rangle}{\sqrt{2}} \):
+
+  \[
+    \begin{quantikz}
+      \lstick{$q_1 : |0\rangle$} & \gate{H} & \ctrl{1} & \qw \\
+      \lstick{$q_0 : |0\rangle$} & \qw & \targ{} & \qw \\
+    \end{quantikz}
+  \]
+
+  To protect against phase flips, we encode each qubit into a 3-qubit phase
+  flip code. For \( q_1 \), we encode \( |\psi_0\rangle = \frac{|0\rangle +
+  |1\rangle}{\sqrt{2}} \) (after Hadamard) into \( \frac{|+++\rangle +
+  |---\rangle}{\sqrt{2}} \), and similarly for \( q_0 : |0\rangle \). The
+  encoded circuit, adapted for phase flip protection, requires 6 qubits (3 per
+  logical qubit):
+
+  \[
+    \begin{quantikz}
+      \lstick{$q_{1,0} : |0\rangle$} & \gate{H} & \ctrl{1} & \ctrl{2} & \gate{H} & \ctrl{3} & \qw \\
+      \lstick{$q_{1,1} : |0\rangle$} & \gate{H} & \targ{} & \qw & \gate{H} & \qw & \qw \\
+      \lstick{$q_{1,2} : |0\rangle$} & \gate{H} & \qw & \targ{} & \gate{H} & \qw & \qw \\
+      \lstick{$q_{0,0} : |0\rangle$} & \gate{H} & \ctrl{1} & \ctrl{2} & \gate{H} & \targ{} & \qw \\
+      \lstick{$q_{0,1} : |0\rangle$} & \gate{H} & \targ{} & \qw & \gate{H} & \qw & \qw \\
+      \lstick{$q_{0,2} : |0\rangle$} & \gate{H} & \qw & \targ{} & \gate{H} & \qw & \qw \\
+    \end{quantikz}
+  \]
+
+  Here, \( q_{1,0}, q_{1,1}, q_{1,2} \) encode the first logical qubit, and \(
+  q_{0,0}, q_{0,1}, q_{0,2} \) encode the second. The CNOT from \( q_{0,0} \)
+  to \( q_{1,0} \) entangles the logical qubits, approximating the Bell state
+  in the encoded space. If a phase flip occurs on \( q_{0,1} \), syndrome
+  measurements (as above) on \( q_{0,0}, q_{0,1}, q_{0,2} \) detect it with
+  syndrome 11, and a \( Z \) gate corrects it. This protects the entangled
+  state, ensuring the Bell pair’s integrity.\footnote{For encoded circuit
+    examples, see \href{https://www.nature.com/articles/s41567-023-02282-2}{Protecting
+  expressive circuits with a quantum error detection code}.}
+}
+
+\aside{
+  \textbf{FPGA: Field-Programmable Gate Array} \\
+  Field-Programmable Gate Arrays (FPGAs) are integrated circuits that can be
+  configured post-manufacturing to perform specific tasks, such as real-time
+  error correction in quantum computers. In quantum systems, the decoding and
+  encoding units for error correction are often implemented on FPGAs due to
+  their proximity to the hardware. This allows immediate application of
+  corrective operations, minimizing latency and reducing the risk of
+  decoherence during error correction cycles. FPGAs enable dynamic adjustments
+  to syndrome measurements and corrections, critical for maintaining quantum
+  state integrity.\footnote{See
+    \href{https://www.quantum-machines.co/blog-posts/quantum-error-correction}{Quantum
+  Error Correction in Real-Time with FPGAs} for implementation details.}
+}
+
+\aside{
+  \textbf{CAT Qubits} \\
+  As of time of writing (2025-04-11), a company named Alice \& Bob is developing
+  a novel type of superconducting qubit called a CAT qubit, named after
+  Schr\"{o}dinger’s cat to reflect its coherent superposition of macroscopically
+  distinct states. CAT qubits are engineered to exhibit biased noise,
+  significantly increasing bit flip error rates while suppressing phase flip
+  errors to near-negligible levels. This design reduces the overhead of error
+  correction by focusing solely on bit flip correction, which is less
+  resource-intensive. For example, their approach could lower the number of
+  physical qubits needed for fault-tolerant computation, potentially
+  accelerating practical quantum computing. However, the trade-off of higher
+  bit flip errors requires robust bit flip correction protocols.\footnote{See
+  \href{https://alice-bob.com/technology}{Alice \& Bob’s CAT Qubit Technology}
+  for details, and \href{https://arxiv.org/abs/2402.04792}{Advances in CAT
+  Qubit Error Correction} for technical insights.}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End of Lecture 21
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

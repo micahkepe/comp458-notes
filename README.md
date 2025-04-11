@@ -49,7 +49,8 @@ in LaTeX.
 | [Lecture 17](./lectures/phase-iv/lecture17.tex)  | More on Quantum Compiler Optimizations, Quantum Computer Architectures  |
 | [Lecture 18](./lectures/phase-iv/lecture18.tex)  | Quantum Circuits as DAGs, Qubit Topologies, Logical to Physical Mapping |
 | [Lecture 19](./lectures/phase-iv/lecture19.tex)  | More on Logical to Physical Mapping                                     |
-| [Lecture 20](./lectures/phase-iv/lecture20.tex)  | Quantum Error Correction                                                |
+| [Lecture 20](./lectures/phase-iv/lecture20.tex)  | Quantum Error Correction: Bit Flip Errors                               |
+| [Lecture 21](./lectures/phase-iv/lecture21.tex)  | Quantum Error Correction: Phase Flip Errors                             |
 |          <strong>Supplementary</strong>          | <em>Additional supplementary material.</em>                             |
 |   [Cheatsheet](./supplementary/cheatsheet.tex)   | Quick reference to important concepts and facts.                        |
 
