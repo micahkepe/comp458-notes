@@ -51,6 +51,8 @@ in LaTeX.
 | [Lecture 19](./lectures/phase-iv/lecture19.tex)  | More on Logical to Physical Mapping                                     |
 | [Lecture 20](./lectures/phase-iv/lecture20.tex)  | Quantum Error Correction: Bit Flip Errors                               |
 | [Lecture 21](./lectures/phase-iv/lecture21.tex)  | Quantum Error Correction: Phase Flip Errors                             |
+|            <strong>Phase V </strong>             | <em>Concluding Lectures</em>                                            |
+|  [Lecture 22](./lectures/phase-v/lecture22.tex)  | Quantum Annealers, Trapped Ion Quantum Computers                        |
 |          <strong>Supplementary</strong>          | <em>Additional supplementary material.</em>                             |
 |   [Cheatsheet](./supplementary/cheatsheet.tex)   | Quick reference to important concepts and facts.                        |
 

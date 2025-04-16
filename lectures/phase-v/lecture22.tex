@@ -1,0 +1,308 @@
+\section{Lecture 22: Quantum Annealers, Trapped Ion Quantum Computers}
+\label{sec:lecture22}
+
+\index{quantum annealers}
+\subsection*{Quantum Annealers}
+
+Quantum annealing is a metaheuristic for finding the global minimum of a
+given objective function by exploiting quantum mechanical effects such as
+quantum tunneling and quantum entanglement.
+
+\subsubsection*{Basic Principles}
+Quantum annealing is a physical implementation of quantum adiabatic
+computation, which relies on the adiabatic theorem of quantum mechanics. The
+system is initialized in a quantum superposition state (typically the ground
+state of a simple Hamiltonian), and then slowly evolved to a final
+Hamiltonian whose ground state encodes the solution to the problem.
+
+\dfn{Quantum Annealing}{
+  Quantum annealing is an optimization process that transforms a quantum
+  system from an initial Hamiltonian $H_i$ with a known ground state to a
+  final problem Hamiltonian $H_f$ whose ground state represents the solution
+  to the optimization problem. The time-dependent Hamiltonian follows:
+
+  \begin{equation*}
+    H(t) = A(t)H_i + B(t)H_f
+  \end{equation*}
+
+  where $A(t)$ decreases from $A(0) = 1$ to $A(T) = 0$ and $B(t)$ increases
+  from $B(0) = 0$ to $B(T) = 1$ over annealing time $T$.
+}
+
+\subsubsection*{D-Wave Systems}
+
+The most prominent implementation of quantum annealing hardware is by D-Wave
+Systems, which has progressed through multiple generations:
+
+\begin{itemize}
+  \item D-Wave One (2011): 128 qubits
+  \item D-Wave Two (2013): 512 qubits
+  \item D-Wave 2X (2015): 1,000+ qubits
+  \item D-Wave Advantage (2020): 5,000+ qubits
+  \item D-Wave Advantage2 (2023): Over 7,000 qubits
+\end{itemize}
+
+D-Wave's quantum annealers are particularly suited for solving quadratic
+unconstrained binary optimization (QUBO) problems, which can be mapped to the
+Ising model:
+
+\begin{equation}
+  H = \sum_{i} h_i \sigma_i^z + \sum_{i<j} J_{ij} \sigma_i^z \sigma_j^z
+\end{equation}
+
+where $\sigma_i^z$ are Pauli-Z operators, $h_i$ are local fields, and
+$J_{ij}$ are coupling strengths between qubits.
+
+\subsubsection*{Hardware Architecture}
+
+D-Wave's quantum processing units (QPUs) consist of superconducting flux
+qubits arranged in a specific topology:
+
+\begin{itemize}
+  \item Early systems: Chimera graph topology
+  \item Newer systems: Pegasus and Zephyr topologies with higher connectivity
+\end{itemize}
+
+The limited connectivity between qubits requires problem embedding, which
+maps logical problems onto the physical qubit topology, often using multiple
+physical qubits to represent a single logical qubit.
+
+\subsubsection*{Applications and Limitations}
+
+Quantum annealers have been applied to various optimization problems:
+\begin{itemize}
+  \item Portfolio optimization
+  \item Traffic flow optimization
+  \item Machine learning (training of Boltzmann machines)
+  \item Drug discovery
+  \item Material design
+\end{itemize}
+
+\vspace{0.3cm}
+
+\noindent
+However, several limitations exist:
+
+\begin{itemize}
+  \item Limited connectivity requiring complex embeddings
+  \item Quantum effects may be suppressed by noise and decoherence
+  \item Difficulty in verifying "quantumness" and quantum advantage
+  \item Problem size limitations due to available qubits and connectivity
+\end{itemize}
+
+\subsubsection*{Quantum Advantage Debate}
+The question of whether D-Wave's systems provide quantum advantage remains
+contentious. While some studies have shown modest speedups for specific
+problems, definitive evidence of exponential quantum advantage has not been
+demonstrated. Recent research suggests that quantum annealers may provide
+advantages for problems with specific structure, particularly those with
+tall, narrow energy barriers where quantum tunneling offers benefits over
+classical simulated annealing.
+
+\subsubsection*{Recent Developments}
+Recent advances in quantum annealing include:
+\begin{itemize}
+  \item Reverse annealing protocols that start from candidate solutions
+  \item Pause-and-quench annealing schedules
+  \item Improved error correction techniques
+  \item Hybrid quantum-classical algorithms that combine quantum annealing
+    with classical optimization
+\end{itemize}
+
+\aside{
+  While quantum annealers like D-Wave's systems represent an alternative
+  approach to gate-based quantum computing, they are specialized machines
+  designed for optimization problems rather than general-purpose quantum
+  computers. The debate about their quantum advantage continues, with
+  researchers exploring specific problem classes where quantum annealers
+  might outperform classical methods.
+}
+
+\index{trapped ion quantum computers}
+\subsection*{Trapped Ion Quantum Computers}
+
+Trapped ion quantum computers represent one of the most promising and mature
+platforms for quantum information processing, offering exceptional qubit
+coherence times and high-fidelity gate operations.
+
+\subsubsection*{Fundamental Principles}
+
+In trapped ion quantum computing, individual ions (typically alkaline earth
+metal ions like Ca$^+$, Sr$^+$, or rare earth ions like Yb$^+$) are confined
+using electromagnetic fields in ultra-high vacuum environments.
+
+\dfn{Ion Trap}{
+  An ion trap is a device that uses electric or magnetic fields to capture
+  charged particles in a confined region of space. The most common type used
+  in quantum computing is the linear Paul trap, which uses oscillating
+  electric fields to create a pseudopotential that confines ions in a linear
+  chain.
+}
+
+\vspace{0.3cm}
+
+\noindent
+Qubits are encoded in the internal electronic states of each ion, typically
+using:
+
+\begin{itemize}
+  \item Hyperfine ground states (e.g., $^2$S$_{1/2}$ states in $^{171}$Yb$^+$)
+  \item Zeeman sublevels of ground states
+  \item Optical transitions between ground and metastable excited states
+\end{itemize}
+
+\subsubsection*{Quantum Operations}
+
+\begin{itemize}
+  \item \textbf{Initialization:} Optical pumping techniques prepare ions in
+    well-defined initial states with high fidelity.
+
+  \item \textbf{Single-qubit gates:} Implemented using precisely controlled
+    laser pulses or microwave radiation that drive transitions between qubit
+    states. These operations can achieve fidelities exceeding 99.9\%.
+
+  \item \textbf{Two-qubit gates:} Exploit the shared motional modes of the
+    ion chain. The Coulomb interaction between ions creates collective
+    vibrational modes that can mediate entangling operations. Common
+    implementations include:
+    \begin{itemize}
+      \item M\o lmer–S\o rensen gates
+      \item Cirac-Zoller gates
+      \item Geometric phase gates
+    \end{itemize}
+
+  \item \textbf{Readout:} State-dependent fluorescence detection, where one
+    qubit state fluoresces when illuminated by a laser while the other
+    remains dark, allowing for high-fidelity measurement.
+\end{itemize}
+
+\begin{example}{M\o lmer–S\o rensen Gate}
+  The M\o lmer–S\o rensen gate uses bichromatic laser fields to drive
+  transitions that entangle pairs of ions without populating the motional
+  modes, making it robust against heating. The interaction Hamiltonian can be
+  written as:
+  \begin{equation}
+    H_{MS} = \sum_{i,j} J_{ij} \sigma_i^+ \sigma_j^+ + \sigma_i^- \sigma_j^-
+  \end{equation}
+  where $\sigma^+$ and $\sigma^-$ are the raising and lowering operators, and
+  $J_{ij}$ represents the coupling strength.
+\end{example}
+
+\subsubsection*{Key Advantages}
+
+Trapped ion quantum computers offer several notable advantages:
+
+\begin{itemize}
+  \item \textbf{Long coherence times:} Ions are naturally isolated from their
+    environment, with coherence times ranging from seconds to minutes, orders
+    of magnitude longer than most solid-state qubits.
+
+  \item \textbf{Identical qubits:} As fundamental atomic systems, each ion of
+    a given species is identical, eliminating the variability found in
+    manufactured solid-state qubits.
+
+  \item \textbf{High-fidelity operations:} Both single and two-qubit gates
+    have demonstrated fidelities well above 99\%, among the highest in any
+    quantum computing platform.
+
+  \item \textbf{All-to-all connectivity:} In small ion chains, each ion can
+    interact with any other ion in the chain, eliminating the need for swap
+    networks found in architectures with nearest-neighbor connectivity.
+\end{itemize}
+
+\subsubsection*{Scaling Challenges and Solutions}
+
+Despite their advantages, trapped ion systems face challenges in scaling to
+larger numbers of qubits:
+
+\begin{itemize}
+  \item \textbf{Ion chain stability:} As the number of ions in a single chain
+    increases, the chain becomes more susceptible to heating and instabilities.
+
+  \item \textbf{Gate speed limitations:} The speed of entangling gates
+    decreases as the ion chain grows, as motional modes become more densely
+    packed in frequency space.
+
+  \item \textbf{Laser control complexity:} Precisely addressing individual
+    ions with lasers becomes more challenging in longer chains.
+\end{itemize}
+
+Proposed solutions to these scaling challenges include:
+
+\begin{itemize}
+  \item \textbf{Quantum charge-coupled device (QCCD) architecture:} Multiple
+    small ion chains connected by ion transport between different trapping
+    zones.
+
+  \item \textbf{Photonic interconnects:} Using photons to entangle ions in
+    physically separated traps.
+
+  \item \textbf{Microfabricated trap arrays:} Creating integrated, scalable
+    ion trap chips with multiple trapping regions and built-in control
+    elements.
+
+  \item \textbf{Sympathetic cooling:} Using auxiliary "coolant" ions of a
+    different species to mitigate heating effects.
+\end{itemize}
+
+\subsubsection*{Leading Research Groups and Companies}
+
+Major players in trapped ion quantum computing include:
+
+\begin{itemize}
+  \item \textbf{Academic groups:}
+    \begin{itemize}
+      \item University of Innsbruck (Rainer Blatt)
+      \item University of Maryland/JQI (Christopher Monroe)
+      \item NIST (David Wineland, Dietrich Leibfried)
+      \item Oxford University (David Lucas)
+    \end{itemize}
+
+  \item \textbf{Companies:}
+    \begin{itemize}
+      \item IonQ (founded by Christopher Monroe and Jungsang Kim)
+      \item Quantinuum (formerly Honeywell Quantum Solutions, merged with
+        Cambridge Quantum Computing)
+      \item Alpine Quantum Technologies (AQT)
+      \item Universal Quantum
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Recent Achievements}
+
+Recent milestones in trapped ion quantum computing include:
+
+\begin{itemize}
+  \item Demonstrations of quantum error correction codes
+  \item Implementation of variational quantum algorithms and quantum simulations
+  \item Realization of high-fidelity multi-qubit gates (3+ qubits)
+  \item Creation of high-fidelity entangled states with 10+ qubits
+  \item Demonstration of quantum advantage in certain specialized tasks
+\end{itemize}
+
+Under realistic noise models for trapped ion systems, fault-tolerant quantum
+computation is achievable with gate error rates below approximately $10^{-4}$
+using standard quantum error correction codes, making trapped ions a
+promising platform for scalable quantum computation.
+
+\dfn{Quantum Volume}{
+  Quantum Volume is a hardware-agnostic metric introduced by IBM to
+  characterize the capabilities of quantum computers. It measures the largest
+  random circuit of equal width and depth that the quantum computer can
+  successfully implement. Trapped ion quantum computers have demonstrated
+  some of the highest quantum volumes among current platforms.
+}
+
+\nt{
+  While superconducting qubits have received significant attention due to
+  their rapid development by companies like IBM and Google, trapped ion
+  systems continue to set records for gate fidelities and coherence times.
+  The race between these technologies (and others like silicon spin qubits)
+  remains ongoing, with each offering distinct advantages and challenges for
+  practical quantum computing.
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End of Lecture 22
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
