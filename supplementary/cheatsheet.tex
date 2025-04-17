@@ -2,110 +2,78 @@
 
 % Local formatting for the cheatsheet
 \begingroup
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0pt plus 0.5ex}
-\raggedright
-\footnotesize
+  \setlength{\parindent}{0pt}
+  \setlength{\parskip}{0pt plus 0.5ex}
+  \raggedright
+  \footnotesize
 
-\makeatother
+  \makeatother
 
-\begin{multicols}{3}
+  \begin{multicols}{3}
+    \section*{Linear Algebra Notation}
+    \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+      \item \textbf{Bra-Ket}: Ket $|\psi\rangle = \begin{bmatrix} \alpha \\ \beta \end{bmatrix}$, Bra $\langle\psi| = [\alpha^* \; \beta^*]$
+      \item \textbf{Inner Product}: $\langle\phi|\psi\rangle = \phi^\dagger\psi = \sum_i \phi_i^*\psi_i$
+      \item \textbf{Norm}: $\|\psi\|^2 = \langle\psi|\psi\rangle = \sum_i |\psi_i|^2$
+      \item \textbf{Outer Product}: $|\psi\rangle\langle\phi| = \begin{bmatrix} \psi_1\phi_1^* & \psi_1\phi_2^* \\ \psi_2\phi_1^* & \psi_2\phi_2^* \end{bmatrix}$
+      \item \textbf{Tensor Product}: $|\psi\rangle \otimes |\phi\rangle = \begin{bmatrix} \psi_1\phi_1 \\ \psi_1\phi_2 \\ \psi_2\phi_1 \\ \psi_2\phi_2 \end{bmatrix}$
+      \item \textbf{Matrix Mult}: $(AB)_{ij} = \sum_k A_{ik}B_{kj}$
+      \item \textbf{Unitary}: $U^\dagger U = UU^\dagger = I$, preserves norms
+        and inner products
+      \item \textbf{Hermitian}: $H = H^\dagger$, eigenvalues are real
+      \item \textbf{Magnitude}: Real: $\|v\| = \sqrt{\sum_i v_i^2}$, Complex:
+        $\|v\| = \sqrt{\sum_i |v_i|^2}$
+    \end{itemize}
 
-  \section*{Linear Algebra Notation}
-  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-    \item \textbf{Bra-Ket}: Ket $|\psi\rangle = \begin{bmatrix} \alpha \\
-      \beta \end{bmatrix}$, Bra $\langle\psi| = [\alpha^* \; \beta^*]$
+    \conceptbox{Important Property}{Tensor products are \textit{not
+    commutative}: $A \otimes B \neq B \otimes A$ generally}
 
-    \item \textbf{Inner Product}: $\langle\phi|\psi\rangle = \phi^\dagger\psi
-      = \sum_i \phi_i^*\psi_i$
-
-    \item \textbf{Norm}: $\|\psi\|^2 = \langle\psi|\psi\rangle = \sum_i
-      |\psi_i|^2$
-
-    \item \textbf{Outer Product}: $|\psi\rangle\langle\phi| = \begin{bmatrix}
-        \psi_1\phi_1^* & \psi_1\phi_2^* \\ \psi_2\phi_1^* & \psi_2\phi_2^*
-      \end{bmatrix}$
-
-    \item \textbf{Tensor Product}: $|\psi\rangle \otimes |\phi\rangle =
-      \begin{bmatrix} \psi_1\phi_1 \\ \psi_1\phi_2 \\ \psi_2\phi_1 \\
-      \psi_2\phi_2 \end{bmatrix}$
-
-    \item \textbf{Matrix Mult}: $(AB)_{ij} = \sum_k A_{ik}B_{kj}$
-
-    \item \textbf{Unitary}: $U^\dagger U = UU^\dagger = I$, preserves norms
-      and inner products
-
-    \item \textbf{Hermitian}: $H = H^\dagger$, eigenvalues are real
-
-    \item \textbf{Magnitude}: Real: $\|v\| = \sqrt{\sum_i v_i^2}$, Complex:
-      $\|v\| = \sqrt{\sum_i |v_i|^2}$
-
-  \end{itemize}
-
-  \conceptbox{Important Property}{Tensor products are \textit{not commutative}:
-  $A \otimes B \neq B \otimes A$ generally}
-
-  \section*{Qubit Representation}
-  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-    \item \textbf{Dirac Notation}: $|\psi\rangle = \alpha|0\rangle +
-      \beta|1\rangle$, where $\alpha,\beta \in \mathbb{C}$ and $|\alpha|^2 +
-      |\beta|^2 = 1$
-
-    \item \textbf{Computational Basis}: $|0\rangle = \begin{bmatrix} 1 \\ 0
-        \end{bmatrix}$, $|1\rangle = \begin{bmatrix} 0 \\ 1 \end{bmatrix}$
+    \section*{Qubit Representation}
+    \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+      \item \textbf{Dirac Notation}: $|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$, where $\alpha,\beta \in \mathbb{C}$ and $|\alpha|^2 + |\beta|^2 = 1$
+      \item \textbf{Computational Basis}: $|0\rangle = \begin{bmatrix} 1 \\ 0 \end{bmatrix}$, $|1\rangle = \begin{bmatrix} 0 \\ 1 \end{bmatrix}$
     \end{itemize}
 
     \section*{Universal Bases}
     \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
       \item \textbf{Computational}: $\{|0\rangle, |1\rangle\}$ \\
         $(\theta=0, \phi=0; \theta=\pi, \phi=0)$
-
-      \item \textbf{Hadamard}: $\{|+\rangle, |-\rangle\}$ where\\
-        $|+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)$\\
-        $|-\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle)$\\
+      \item \textbf{Hadamard}: $\{|+\rangle, |-\rangle\}$ where \\
+        $|+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)$ \\
+        $|-\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle)$ \\
         $(\theta=\frac{\pi}{2}, \phi=0; \theta=\frac{\pi}{2}, \phi=\pi)$
-
-      \item \textbf{Phase}: $\{|+i\rangle, |-i\rangle\}$ where\\
-        $|+i\rangle = \frac{1}{\sqrt{2}}(|0\rangle + i|1\rangle)$\\
-        $|-i\rangle = \frac{1}{\sqrt{2}}(|0\rangle - i|1\rangle)$\\
-        $(\theta=\frac{\pi}{2}, \phi=\frac{\pi}{2}; \theta=\frac{\pi}{2},
-        \phi=-\frac{\pi}{2})$
+      \item \textbf{Phase}: $\{|+i\rangle, |-i\rangle\}$ where \\
+        $|+i\rangle = \frac{1}{\sqrt{2}}(|0\rangle + i|1\rangle)$ \\
+        $|-i\rangle = \frac{1}{\sqrt{2}}(|0\rangle - i|1\rangle)$ \\
+        $(\theta=\frac{\pi}{2}, \phi=\frac{\pi}{2}; \theta=\frac{\pi}{2}, \phi=-\frac{\pi}{2})$
     \end{itemize}
 
     \section*{Bloch Sphere}
     \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-      \item \textbf{Equation}: $|\psi\rangle = \cos\frac{\theta}{2}|0\rangle +
-        e^{i\phi}\sin\frac{\theta}{2}|1\rangle$\\
+      \item \textbf{Equation}: $|\psi\rangle = \cos\frac{\theta}{2}|0\rangle + e^{i\phi}\sin\frac{\theta}{2}|1\rangle$ \\
         where $\theta \in [0,\pi]$, $\phi \in [0,2\pi)$
-
       \item \textbf{Cartesian Projection}:
         \begin{align*}
-          x &= \sin\theta\cos\phi\\
-          y &= \sin\theta\sin\phi\\
+          x &= \sin\theta\cos\phi \\
+          y &= \sin\theta\sin\phi \\
           z &= \cos\theta
         \end{align*}
-
     \end{itemize}
 
     \section*{Quantum Measurement}
     \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-      \item \textbf{Probability}: For measuring state $|\psi\rangle$ in basis
-        $|b\rangle$:
+      \item \textbf{Probability}: For measuring state $|\psi\rangle$ in basis $|b\rangle$:
         \begin{align*}
           P(b) = |\langle b|\psi\rangle|^2
         \end{align*}
-
       \item \textbf{Post-measurement state}:
         \begin{align*}
-          |\psi_{\text{new}}\rangle = \frac{|b\rangle\langle
-          b|\psi\rangle}{\sqrt{P(b)}}
+          |\psi_{\text{new}}\rangle = \frac{|b\rangle\langle b|\psi\rangle}{\sqrt{P(b)}}
         \end{align*}
-
       \item For $|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$:
         \begin{align*}
           P(0) = |\alpha|^2, \quad P(1) = |\beta|^2
         \end{align*}
-
     \end{itemize}
 
     \section*{Single-Qubit Gates}
@@ -113,615 +81,534 @@
       \item \textbf{Properties}:
         \begin{itemize}[nosep]
           \item Reversible: $U^\dagger U = UU^\dagger = I$
-
           \item Preserve norm: $\|U|\psi\rangle\| = \||\psi\rangle\|$
-
-          \item Linear: $U(\alpha|\psi\rangle + \beta|\phi\rangle) = \alpha
-            U|\psi\rangle + \beta U|\phi\rangle$
-
+          \item Linear: $U(\alpha|\psi\rangle + \beta|\phi\rangle) = \alpha U|\psi\rangle + \beta U|\phi\rangle$
         \end{itemize}
     \end{itemize}
 
     \section*{Pauli Gates}
     \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-      \item \textbf{Pauli-X (NOT)}: $X = \begin{bmatrix} 0 & 1 \\ 1 & 0
-        \end{bmatrix}$
+      \item \textbf{Pauli-X (NOT)}: $X = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}$
         \begin{itemize}[nosep]
           \item $X|0\rangle = |1\rangle$, $X|1\rangle = |0\rangle$
           \item $X|+\rangle = |+\rangle$, $X|-\rangle = -|-\rangle$
         \end{itemize}
-
-        \item \textbf{Pauli-Y}: $Y = \begin{bmatrix} 0 & -i \\ i & 0 \end{bmatrix}$
-          \begin{itemize}[nosep]
-            \item $Y|0\rangle = i|1\rangle$, $Y|1\rangle = -i|0\rangle$
-          \end{itemize}
-
-        \item \textbf{Pauli-Z (Phase Flip)}: $Z = \begin{bmatrix} 1 & 0 \\ 0 & -1
-          \end{bmatrix}$
-          \begin{itemize}[nosep]
-            \item $Z|0\rangle = |0\rangle$, $Z|1\rangle = -|1\rangle$
-            \item $Z|+\rangle = |-\rangle$, $Z|-\rangle = |+\rangle$
-          \end{itemize}
+      \item \textbf{Pauli-Y}: $Y = \begin{bmatrix} 0 & -i \\ i & 0 \end{bmatrix}$
+        \begin{itemize}[nosep]
+          \item $Y|0\rangle = i|1\rangle$, $Y|1\rangle = -i|0\rangle$
         \end{itemize}
+      \item \textbf{Pauli-Z (Phase Flip)}: $Z = \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix}$
+        \begin{itemize}[nosep]
+          \item $Z|0\rangle = |0\rangle$, $Z|1\rangle = -|1\rangle$
+          \item $Z|+\rangle = |-\rangle$, $Z|-\rangle = |+\rangle$
+        \end{itemize}
+    \end{itemize}
 
-        \section*{Rotation Gates}
-        \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-          \item \textbf{X-rotation}: $R_X(\theta) = e^{-i\theta X/2} =
-            \begin{bmatrix} \cos\frac{\theta}{2} & -i\sin\frac{\theta}{2} \\
-            -i\sin\frac{\theta}{2} & \cos\frac{\theta}{2} \end{bmatrix}$
+    \section*{Rotation Gates}
+    \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+      \item \textbf{X-rotation}: $R_X(\theta) = e^{-i\theta X/2} = \begin{bmatrix} \cos\frac{\theta}{2} & -i\sin\frac{\theta}{2} \\ -i\sin\frac{\theta}{2} & \cos\frac{\theta}{2} \end{bmatrix}$
+      \item \textbf{Y-rotation}: $R_Y(\theta) = e^{-i\theta Y/2} = \begin{bmatrix} \cos\frac{\theta}{2} & -\sin\frac{\theta}{2} \\ \sin\frac{\theta}{2} & \cos\frac{\theta}{2} \end{bmatrix}$
+      \item \textbf{Z-rotation}: $R_Z(\theta) = e^{-i\theta Z/2} = \begin{bmatrix} e^{-i\theta/2} & 0 \\ 0 & e^{i\theta/2} \end{bmatrix}$
+    \end{itemize}
 
-          \item \textbf{Y-rotation}: $R_Y(\theta) = e^{-i\theta Y/2} =
-              \begin{bmatrix} \cos\frac{\theta}{2} & -\sin\frac{\theta}{2} \\
-              \sin\frac{\theta}{2} & \cos\frac{\theta}{2} \end{bmatrix}$
+    \section*{Other Important Gates}
+    \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+      \item \textbf{Hadamard}: $H = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}$
+        \begin{itemize}[nosep]
+          \item $H|0\rangle = |+\rangle$, $H|1\rangle = |-\rangle$
+          \item $H|+\rangle = |0\rangle$, $H|-\rangle = |1\rangle$
+          \item $H^2 = I$
+        \end{itemize}
+      \item \textbf{Phase (S)}: $S = \begin{bmatrix} 1 & 0 \\ 0 & i \end{bmatrix}$
+        \begin{itemize}[nosep]
+          \item $S|+\rangle = |+i\rangle = \frac{1}{\sqrt{2}}(|0\rangle + i|1\rangle)$
+          \item $S^2 = Z$
+        \end{itemize}
+      \item \textbf{T Gate}: $T = \begin{bmatrix} 1 & 0 \\ 0 & e^{i\pi/4} \end{bmatrix}$
+        \begin{itemize}[nosep]
+          \item $T|+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + e^{i\pi/4}|1\rangle)$
+          \item $T^2 = S$, $T^4 = Z$
+        \end{itemize}
+      \item \textbf{General Phase}: $P(\theta) = \begin{bmatrix} 1 & 0 \\ 0 & e^{i\theta} \end{bmatrix}$
+        \begin{itemize}[nosep]
+          \item $S = P(\pi/2)$, $T = P(\pi/4)$, $Z = P(\pi)$
+        \end{itemize}
+    \end{itemize}
 
-            \item \textbf{Z-rotation}: $R_Z(\theta) = e^{-i\theta Z/2} =
-                \begin{bmatrix} e^{-i\theta/2} & 0 \\ 0 & e^{i\theta/2} \end{bmatrix}$
+    \section*{Circuit Notation}
+    \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+      \item \textbf{Elements}:
+        \begin{itemize}[nosep]
+          \item Qubit: Horizontal line
+          \item Gates: Boxes with labels
+          \item Measurement: Meter symbol (if available)
+          \item Time: Left $\to$ Right
+          \item Controlled operations: Vertical line with dot
+          \item Control on $|1\rangle$: Filled dot $\bullet$
+          \item Control on $|0\rangle$: Empty dot $\circ$
+          \item Endianness: Top (MSB) $\to$ Bottom (LSB)
+        \end{itemize}
+    \end{itemize}
+
+    \conceptbox{Important}{Matrix order in circuit is opposite to
+    mathematical notation: $U_1 U_2$ in circuit = $U_2 U_1$ in matrix form}
+
+    \section*{Multi-Qubit Gates}
+    \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+      \item \textbf{CNOT} (Controlled-NOT):
+        \begin{align*}
+          \text{CNOT} = \begin{bmatrix}
+            1 & 0 & 0 & 0 \\
+            0 & 1 & 0 & 0 \\
+            0 & 0 & 0 & 1 \\
+            0 & 0 & 1 & 0
+          \end{bmatrix}
+        \end{align*}
+        \begin{itemize}[nosep]
+          \item Effect: $|c,t\rangle \rightarrow |c, t \oplus c\rangle$
+          \item $|00\rangle \to |00\rangle$, $|01\rangle \to |01\rangle$
+          \item $|10\rangle \to |11\rangle$, $|11\rangle \to |10\rangle$
+        \end{itemize}
+      \item \textbf{Controlled-Z}:
+        \begin{align*}
+          \text{CZ} = \begin{bmatrix}
+            1 & 0 & 0 & 0 \\
+            0 & 1 & 0 & 0 \\
+            0 & 0 & 1 & 0 \\
+            0 & 0 & 0 & -1
+          \end{bmatrix}
+        \end{align*}
+        \begin{itemize}[nosep]
+          \item Effect: $|x,y\rangle \to (-1)^{xy}|x,y\rangle$
+          \item Only changes $|11\rangle \to -|11\rangle$
+          \item Symmetric: Either qubit can be control
+        \end{itemize}
+      \item \textbf{Toffoli} (CCNOT):
+        \begin{itemize}[nosep]
+          \item Effect: $|x,y,z\rangle \to |x,y,z \oplus (x \cdot y)\rangle$
+          \item Flips target only if both controls are $|1\rangle$
+        \end{itemize}
+      \item \textbf{SWAP}:
+        \begin{align*}
+          \text{SWAP} = \begin{bmatrix}
+            1 & 0 & 0 & 0 \\
+            0 & 0 & 1 & 0 \\
+            0 & 1 & 0 & 0 \\
+            0 & 0 & 0 & 1
+          \end{bmatrix}
+        \end{align*}
+        \begin{itemize}[nosep]
+          \item Effect: $|a,b\rangle \to |b,a\rangle$
+          \item Implementation: $\text{CNOT}_{1,2} \cdot \text{CNOT}_{2,1} \cdot \text{CNOT}_{1,2}$
+        \end{itemize}
+      \item \textbf{Flipped CNOT}:
+        \begin{align*}
+          (H \otimes H) \cdot \text{CNOT} \cdot (H \otimes H) = \begin{bmatrix}
+            1 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 1 \\
+            0 & 0 & 1 & 0 \\
+            0 & 1 & 0 & 0
+          \end{bmatrix}
+        \end{align*}
+    \end{itemize}
+
+    \section*{Key Quantum Properties}
+    \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+      \item \textbf{Reversibility}: All quantum gates are reversible
+        \begin{itemize}[nosep]
+          \item To reverse a circuit, apply $U^\dagger$ gates in reverse order
+        \end{itemize}
+      \item \textbf{No-Cloning Theorem}: Cannot create an identical copy of
+        an unknown quantum state
+        \begin{align*}
+          \nexists U: U(|\psi\rangle \otimes |0\rangle) = |\psi\rangle \otimes |\psi\rangle
+        \end{align*}
+      \item \textbf{Entanglement}: States that cannot be factored as tensor
+        products of individual states
+        \begin{itemize}[nosep]
+          \item E.g., Bell state: $\frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)$
+        \end{itemize}
+    \end{itemize}
+
+    \section*{Bell Pair}
+    \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+      \item \textbf{Bell States} (maximally entangled):
+        \begin{align*}
+          |\Phi^+\rangle &= \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle) \\
+          |\Phi^-\rangle &= \frac{1}{\sqrt{2}}(|00\rangle - |11\rangle) \\
+          |\Psi^+\rangle &= \frac{1}{\sqrt{2}}(|01\rangle + |10\rangle) \\
+          |\Psi^-\rangle &= \frac{1}{\sqrt{2}}(|01\rangle - |10\rangle)
+        \end{align*}
+      \item \textbf{Bell-Pair Circuit}
+        \[
+          \begin{quantikz}
+            q_1 \quad \lstick{$|0\rangle$} & \gate{H} & \ctrl{1} & \meter{} \\
+            q_0 \quad \lstick{$|0\rangle$} & \qw & \gate{X} & \qw
+          \end{quantikz}
+        \]
+    \end{itemize}
+
+    \section*{Grover's Algorithm}
+    \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+      \item \textbf{Purpose}: Search unstructured database of $N$ items in
+        $O(\sqrt{N})$ time
+      \item \textbf{Algorithm}:
+        \begin{enumerate}[nosep]
+          \item Initialize: $|s\rangle = H^{\otimes n}|0\rangle^{\otimes n}$
+          \item Repeat $O(\sqrt{N})$ times:
+            \begin{itemize}[nosep]
+              \item Oracle ($O$): $O|x\rangle = (-1)^{f(x)}|x\rangle$ where
+                $f(x)=1$ for solution
+              \item Diffusion ($D$): $D = 2|s\rangle\langle s| - I$
             \end{itemize}
-
-            \section*{Other Important Gates}
-            \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-              \item \textbf{Hadamard}: $H = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 & 1 \\
-                1 & -1 \end{bmatrix}$
-                \begin{itemize}[nosep]
-                  \item $H|0\rangle = |+\rangle$, $H|1\rangle = |-\rangle$
-
-                  \item $H|+\rangle = |0\rangle$, $H|-\rangle = |1\rangle$
-
-                  \item $H^2 = I$
-                \end{itemize}
-
-                \item \textbf{Phase (S)}: $S = \begin{bmatrix} 1 & 0 \\ 0 & i \end{bmatrix}$
-                  \begin{itemize}[nosep]
-                    \item $S|+\rangle = |+i\rangle = \frac{1}{\sqrt{2}}(|0\rangle +
-                      i|1\rangle)$
-
-                    \item $S^2 = Z$
-                  \end{itemize}
-
-                \item \textbf{T Gate}: $T = \begin{bmatrix} 1 & 0 \\ 0 & e^{i\pi/4}
-                  \end{bmatrix}$
-                  \begin{itemize}[nosep]
-                    \item $T|+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + e^{i\pi/4}|1\rangle)$
-                    \item $T^2 = S$, $T^4 = Z$
-                  \end{itemize}
-
-                  \item \textbf{General Phase}: $P(\theta) = \begin{bmatrix} 1 & 0 \\ 0 &
-                    e^{i\theta} \end{bmatrix}$
-                    \begin{itemize}[nosep]
-                      \item $S = P(\pi/2)$, $T = P(\pi/4)$, $Z = P(\pi)$
-                    \end{itemize}
-                  \end{itemize}
-
-                  \section*{Circuit Notation}
-                  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-                    \item \textbf{Elements}:
-                      \begin{itemize}[nosep]
-                        \item Qubit: Horizontal line
-                        \item Gates: Boxes with labels
-                        \item Measurement: Meter symbol (if available)
-                        \item Time: Left $\to$ Right
-                        \item Controlled operations: Vertical line with dot
-                        \item Control on $|1\rangle$: Filled dot $\bullet$
-                        \item Control on $|0\rangle$: Empty dot $\circ$
-                        \item Endiannes: Top (MSB) $\to$ Bottom (LSB)
-                      \end{itemize}
-                  \end{itemize}
-                  \conceptbox{Important}{Matrix order in circuit is opposite to
-                    mathematical notation:
-
-                    $U_1 U_2$ in circuit $=$ $U_2 U_1$ in matrix form
-                  }
-
-                  \section*{Multi-Qubit Gates}
-                  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-                    \item \textbf{CNOT} (Controlled-NOT):
-                      \begin{align*}
-                        \text{CNOT} = \begin{bmatrix}
-                          1 & 0 & 0 & 0 \\
-                          0 & 1 & 0 & 0 \\
-                          0 & 0 & 0 & 1 \\
-                          0 & 0 & 1 & 0
-                        \end{bmatrix}
-                      \end{align*}
-                      \begin{itemize}[nosep]
-                        \item Effect: $|c,t\rangle \rightarrow |c, t \oplus c\rangle$
-                        \item $|00\rangle \to |00\rangle$, $|01\rangle \to |01\rangle$
-                        \item $|10\rangle \to |11\rangle$, $|11\rangle \to |10\rangle$
-                      \end{itemize}
-
-                    \item \textbf{Controlled-Z}:
-                      \begin{align*}
-                        \text{CZ} = \begin{bmatrix}
-                          1 & 0 & 0 & 0 \\
-                          0 & 1 & 0 & 0 \\
-                          0 & 0 & 1 & 0 \\
-                          0 & 0 & 0 & -1
-                        \end{bmatrix}
-                      \end{align*}
-                      \begin{itemize}[nosep]
-                        \item Effect: $|x,y\rangle \to (-1)^{xy}|x,y\rangle$
-                        \item Only changes $|11\rangle \to -|11\rangle$
-                        \item Symmetric: Either qubit can be control
-                      \end{itemize}
-
-                    \item \textbf{Toffoli} (CCNOT):
-                      \begin{itemize}[nosep]
-                        \item Effect: $|x,y,z\rangle \to |x,y,z \oplus (x \cdot y)\rangle$
-                        \item Flips target only if both controls are $|1\rangle$
-                      \end{itemize}
-
-                    \item \textbf{SWAP}:
-                      \begin{align*}
-                        \text{SWAP} = \begin{bmatrix}
-                          1 & 0 & 0 & 0 \\
-                          0 & 0 & 1 & 0 \\
-                          0 & 1 & 0 & 0 \\
-                          0 & 0 & 0 & 1
-                        \end{bmatrix}
-                      \end{align*}
-                      \begin{itemize}[nosep]
-                        \item Effect: $|a,b\rangle \to |b,a\rangle$
-
-                        \item Implementation: $\text{CNOT}_{1,2} \cdot \text{CNOT}_{2,1}
-                          \cdot \text{CNOT}_{1,2}$
-                      \end{itemize}
-
-                    \item \textbf{Flipped CNOT}:
-                      \begin{align*}
-                        (H \otimes H) \cdot \text{CNOT} \cdot (H \otimes H) = \begin{bmatrix}
-                          1 & 0 & 0 & 0 \\
-                          0 & 0 & 0 & 1 \\
-                          0 & 0 & 1 & 0 \\
-                          0 & 1 & 0 & 0
-                        \end{bmatrix}
-                      \end{align*}
-                  \end{itemize}
-
-                  \section*{Key Quantum Properties}
-                  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-                    \item \textbf{Reversibility}: All quantum gates are reversible
-                      \begin{itemize}[nosep]
-                        \item To reverse a circuit, apply $U^\dagger$ gates in reverse order
-                      \end{itemize}
-
-                    \item \textbf{No-Cloning Theorem}: Cannot create an identical copy of an
-                      unknown quantum state
-                      \begin{align*}
-                        \nexists U: U(|\psi\rangle \otimes |0\rangle) = |\psi\rangle \otimes
-                        |\psi\rangle
-                      \end{align*}
-
-                    \item \textbf{Entanglement}: States that cannot be factored as tensor
-                      products of individual states
-                      \begin{itemize}[nosep]
-                        \item E.g., Bell state: $\frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)$
-                      \end{itemize}
-                  \end{itemize}
-
-                  \section*{Bell Pair}
-                  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-                    \item \textbf{Bell States} (maximally entangled):
-                      \begin{align*}
-                        |\Phi^+\rangle &= \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)\\
-                        |\Phi^-\rangle &= \frac{1}{\sqrt{2}}(|00\rangle - |11\rangle)\\
-                        |\Psi^+\rangle &= \frac{1}{\sqrt{2}}(|01\rangle + |10\rangle)\\
-                        |\Psi^-\rangle &= \frac{1}{\sqrt{2}}(|01\rangle - |10\rangle)
-                      \end{align*}
-
-                    \item Bell-Pair Circuit
-                      \[
-                        \begin{quantikz}
-                          q_1 \quad \lstick{$\zero$} & \gate{H} & \ctrl{1} & \meter{} \\
-                          q_0 \quad \lstick{$\zero$} & \qw & \gate{X} & \qw \\
-                        \end{quantikz}
-                      \]
-                  \end{itemize}
-
-                  \section*{Grover's Algorithm}
-                  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-                    \item \textbf{Purpose}: Search unstructured database of $N$ items in
-                      $O(\sqrt{N})$ time
-
-                    \item \textbf{Algorithm}:
-                      \begin{enumerate}[nosep]
-                        \item Initialize: $|s\rangle = H^{\otimes n}|0\rangle^{\otimes n}$
-                        \item Repeat $O(\sqrt{N})$ times:
-                          \begin{itemize}[nosep]
-                            \item Oracle ($O$): $O|x\rangle = (-1)^{f(x)}|x\rangle$ where
-                              $f(x)=1$ for solution
-
-                            \item Diffusion ($D$): $D = 2|s\rangle\langle s| - I$
-                          \end{itemize}
-
-                        \item Measure to find solution with high probability
-                      \end{enumerate}
-
-                      \conceptbox{Important Insight}{Grover's algorithm
-                        provides quadratic speedup over classical search, which
-                      is proven to be optimal for quantum algorithms}
-
-                    \item \textbf{Circuit}
-                      \[
-                        \resizebox{0.25\textwidth}{!}{
-                          \begin{quantikz}
-                            \lstick{$q_{n - 1}$} & \gate{H} & \gate[5]{\shortstack{$f(x)$ \\ Oracle}} & \qw & \gate[5]{\text{Diffusion Circuit}} & \meter{} \\
-                            \lstick{$q_{n - 2}$} & \gate{H} & & & & \meter{} \\
-                            \vdots & \vdots & & \vdots & & \vdots \\
-                            \lstick{$q_1$} & \gate{H} & & & & \meter{} \\
-                            \lstick{$q_0$} & \gate{H} & & & & \meter{}
-                          \end{quantikz}
-                        }
-                      \]
-
-                      \[
-                        \hspace{1cm}
-                        \underbrace{\hspace{3cm}}_{\text{Repeat } \sqrt{2^n} \text{ times}}
-                      \]
-
-                    \item \textbf{General Diffusion Circuit}: Layer of H,
-                      then layer of X, H on LSB, then Controlled-X layer over
-                      all qubits, another H on LSB, then layer of X, and then
-                      layer of H
-
-                    \item \textbf{phase kickback}: when a controlled
-                      operation transfers a phase from the target qubit to
-                      the control qubit(s)
-                  \end{itemize}
-
-                  \section*{Quantum Implementations of Classical Logic Gates}
-                  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-                    \item \textbf{OR Gate}: Computes $c = a \lor b$
-                      \begin{align*}
-                        \begin{quantikz}
-                          \lstick{$|a\rangle$} & \ctrl{1} & \ctrl{2} & \qw \\
-                          \lstick{$|b\rangle$} & \ctrl{1} & \targ{} & \qw \\
-                          \lstick{$|c\rangle$} & \targ{} & \targ{} & \qw
-                        \end{quantikz}
-                      \end{align*}
-                      \begin{itemize}[nosep]
-                        \item Effect: $|a,b,c\rangle \to |a,b,c \oplus (a \lor b)\rangle$
-                        \item Truth Table: $|000\rangle \to |000\rangle$, $|010\rangle \to |011\rangle$
-                        \item $|100\rangle \to |101\rangle$, $|110\rangle \to |111\rangle$
-                      \end{itemize}
-
-                    \item \textbf{NOR Gate}: Computes $c = \lnot(a \lor b)$
-                      \begin{align*}
-                        \begin{quantikz}
-                          \lstick{$|a\rangle$} & \ctrl{1} & \ctrl{2} & \qw & \qw \\
-                          \lstick{$|b\rangle$} & \ctrl{1} & \targ{} & \qw & \qw \\
-                          \lstick{$|c\rangle$} & \targ{} & \targ{} & \gate{X} & \qw
-                        \end{quantikz}
-                      \end{align*}
-                      \begin{itemize}[nosep]
-                        \item Effect: $|a,b,c\rangle \to |a,b,c \oplus \lnot(a \lor b)\rangle$
-                        \item Truth Table: $|000\rangle \to |001\rangle$, $|010\rangle \to |010\rangle$
-                        \item $|100\rangle \to |100\rangle$, $|110\rangle \to |110\rangle$
-                      \end{itemize}
-
-                    \item \textbf{AND Gate}: Computes $c = a \land b$
-                      \begin{align*}
-                        \begin{quantikz}
-                          \lstick{$|a\rangle$} & \ctrl{1} & \qw \\
-                          \lstick{$|b\rangle$} & \ctrl{1} & \qw \\
-                          \lstick{$|c\rangle$} & \targ{} & \qw
-                        \end{quantikz}
-                      \end{align*}
-                      \begin{itemize}[nosep]
-                        \item Effect: $|a,b,c\rangle \to |a,b,c \oplus (a \land b)\rangle$
-                        \item Truth Table: $|000\rangle \to |000\rangle$, $|010\rangle \to |010\rangle$
-                        \item $|100\rangle \to |100\rangle$, $|110\rangle \to |111\rangle$
-                        \item Direct implementation using Toffoli gate
-                      \end{itemize}
-
-                    \item \textbf{NAND Gate}: Computes $c = \lnot(a \land b)$
-                      \begin{align*}
-                        \begin{quantikz}
-                          \lstick{$|a\rangle$} & \ctrl{1} & \qw & \qw \\
-                          \lstick{$|b\rangle$} & \ctrl{1} & \qw & \qw \\
-                          \lstick{$|c\rangle$} & \targ{} & \gate{X} & \qw
-                        \end{quantikz}
-                      \end{align*}
-                      \begin{itemize}[nosep]
-                        \item Effect: $|a,b,c\rangle \to |a,b,c \oplus \lnot(a \land b)\rangle$
-                        \item Truth Table: $|000\rangle \to |001\rangle$, $|010\rangle \to |011\rangle$
-                        \item $|100\rangle \to |101\rangle$, $|110\rangle \to |110\rangle$
-                      \end{itemize}
-
-                    \item \textbf{XOR Gate}: Computes $c = a \oplus b$
-                      \begin{align*}
-                        \begin{quantikz}
-                          \lstick{$|a\rangle$} & \ctrl{1} & \qw \\
-                          \lstick{$|b\rangle$} & \targ{} & \qw
-                        \end{quantikz}
-                      \end{align*}
-                      \begin{itemize}[nosep]
-                        \item For 3-qubit implementation:
-                          \begin{align*}
-                            \begin{quantikz}
-                              \lstick{$|a\rangle$} & \ctrl{2} & \qw \\
-                              \lstick{$|b\rangle$} & \qw & \ctrl{1} & \qw \\
-                              \lstick{$|c\rangle$} & \targ{} & \targ{} & \qw
-                            \end{quantikz}
-                          \end{align*}
-                        \item Effect: $|a,b,c\rangle \to |a,b,c \oplus (a \oplus b)\rangle$
-                        \item Truth Table: $|000\rangle \to |000\rangle$, $|010\rangle \to |011\rangle$
-                        \item $|100\rangle \to |101\rangle$, $|110\rangle \to |110\rangle$
-                      \end{itemize}
-
-                    \item \textbf{XNOR Gate}: Computes $c = \lnot(a \oplus b)$
-                      \begin{align*}
-                        \begin{quantikz}
-                          \lstick{$|a\rangle$} & \ctrl{2} & \qw \\
-                          \lstick{$|b\rangle$} & \qw & \ctrl{1} & \qw \\
-                          \lstick{$|c\rangle$} & \targ{} & \targ{} & \gate{X} & \qw
-                        \end{quantikz}
-                      \end{align*}
-
-                      \begin{itemize}[nosep]
-                        \item Effect: $|a,b,c\rangle \to |a,b,c \oplus \lnot(a \oplus b)\rangle$
-
-                        \item Truth Table: $|000\rangle \to |001\rangle$, $|010\rangle \to |010\rangle$
-
-                        \item $|100\rangle \to |100\rangle$, $|110\rangle \to |111\rangle$
-
-                      \end{itemize}
-                  \end{itemize}
-
-                  \conceptbox{Important Note}{The output qubit $|c\rangle$
-                    should be initialized to $|0\rangle$ for classical logic
-                    gate operation. The circuits preserve input states
-                    ($|a\rangle$ and $|b\rangle$) allowing for reversible
-                  computation.}
-
-                  \section*{CNF and ANF for SAT}
-                  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-                    \item \textbf{CNF (Conjunctive Normal Form)}:
-                      \begin{itemize}[nosep]
-                        \item Form: $\bigwedge_i (\lor_j l_{ij})$, $l_{ij} =
-                          x_k$ or $\neg x_k$ (literals)
-
-                        \item E.g., $(\neg A \lor \neg C) \land (J \lor P)$
-
-                        \item Quantum: OR gates per clause, multi-controlled
-                          $X$ for AND, $O(\text{\# clauses})$ ancilla
-
-                        \item Circuit: \[
-                            \begin{quantikz}
-                              \lstick{$x_1$} & \ctrl{2} & \qw \\
-                              \lstick{$x_2$} & \ctrl{1} & \qw \\
-                              \lstick{$a_1$} & \targ{} & \ctrl{2} \\
-                              \lstick{$x_3$} & \ctrl{1} & \qw \\
-                              \lstick{$a_2$} & \targ{} & \targ{}
-                            \end{quantikz}
-                          \]
-                      \end{itemize}
-
-                    \item \textbf{ANF (Algebraic Normal Form)}:
-                      \begin{itemize}[nosep]
-                        \item Form: XOR of AND terms, e.g., $f = J \oplus C J$
-
-                        \item Conversion: From CNF via truth table or Boolean
-                          algebra
-
-                        \item Quantum: CNOT/Toffoli for XOR/AND, $O(1)$
-                          ancilla (typically 1)
-
-                        \item Circuit: \[
-                            \begin{quantikz}
-                              \lstick{$x_1$} & \qw & \qw \\
-                              \lstick{$x_2$} & \ctrl{2} & \qw \\
-                              \lstick{$x_3$} & \ctrl{1} & \qw \\
-                              \lstick{$a$} & \targ{} & \targ{}
-                            \end{quantikz}
-                          \]
-                      \end{itemize}
-
-                    \item \textbf{Comparison}:
-                      \begin{itemize}[nosep]
-                        \item CNF: Intuitive, scales with clauses, higher depth
-                        \item ANF: Compact, typically fewer ancilla, lower
-                          depth, needs conversion
-                      \end{itemize}
-                  \end{itemize}
-
-                  \conceptbox{ANF Advantage}{Can reduce ancilla qubits,
-                  simplifies oracle for Grover’s SAT}
-
-                  \section*{Variational Quantum Algorithms (VQA)}
-                  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-                    \item \textbf{Overview}: Hybrid quantum–classical
-                      algorithms that iteratively optimize a parameterized
-                      quantum circuit.
-                    \item \textbf{Process}:
-                      \begin{enumerate}[nosep]
-                        \item \textit{State Preparation}: Create an ansatz
-                          $\ket{\psi(\theta)}$.
-                        \item \textit{Measurement}: Evaluate a cost function
-                          $C(\theta)$ based on quantum measurement outcomes.
-                        \item \textit{Optimization}: Adjust the parameters
-                          $\theta$ using a classical optimizer.
-                      \end{enumerate}
-                    \item \textbf{Example} (Bell State Preparation):
-                      \[
-                        \ket{\psi(\theta)} = \mathrm{CNOT}\Bigl(R_y(\theta)\ket{0}\otimes\ket{0}\Bigr)
-                      \]
-                      with cost function
-                      \[
-                        C(\theta)=1-|\langle\Phi^+|\psi(\theta)\rangle|^2,
-                      \]
-                      where $\ket{\Phi^+}=\frac{1}{\sqrt{2}}(\ket{00}+\ket{11})$.
-                  \end{itemize}
-
-                  \section*{Quantum Approximate Optimization Algorithm (QAOA)}
-                  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-                    \item \textbf{Purpose}: Approximate solutions to
-                      combinatorial optimization problems (e.g., \textsc{Max-Cut})
-                      using a hybrid quantum-classical approach
-
-                    \item \textbf{Key Components}:
-                      \begin{itemize}[nosep]
-                        \item \textit{Cost Hamiltonian} ($H_C$): Encodes
-                          problem, e.g., $H_C = \sum_{\langle i,j \rangle}
-                          Z_i Z_j$ for \textsc{Max-Cut}
-
-                        \item \textit{Mixing Hamiltonian} ($H_M$): Drives
-                          exploration, typically $H_M = \sum_i X_i$
-
-                        \item \textit{Ansatz}: $\ket{\psi(\gamma, \beta)} =
-                          \prod_{p=1}^P e^{-i\beta_p H_M} e^{-i\gamma_p H_C}
-                          \ket{s}$, where $\ket{s} = H^{\otimes n}
-                          \ket{0}^{\otimes n}$
-
-                        \item \textit{Goal}: Minimize $\langle \psi(\gamma,
-                          \beta) | H_C | \psi(\gamma, \beta) \rangle$
-                      \end{itemize}
-
-                    \item \textbf{Steps}:
-                      \begin{enumerate}[nosep]
-                        \item Initialize: $\ket{s} = H^{\otimes n}
-                          \ket{0}^{\otimes n}$ (e.g., $n=10$ for `$10
-                          \mathrm{~N} \rightarrow \mathrm{H}$`)
-
-                        \item Apply $P$ layers of $e^{-i\gamma_p H_C}$ and
-                          $e^{-i\beta_p H_M}$
-
-                        \item Measure $\langle H_C \rangle$
-
-                        \item Optimize $\gamma_p, \beta_p$ classically
-
-                        \item Repeat until convergence
-                      \end{enumerate}
-
-                    \item \textbf{\textsc{Max-Cut} Circuit ($P=1$)}:
-                      \[
-                        \resizebox{0.25\textwidth}{!}{
-                          \begin{quantikz}
-                            \lstick{$q_0$} & \gate{H} & \gate{e^{-i\gamma Z Z}} & \gate{e^{-i\gamma Z Z}} & \gate{R_X(2\beta)} & \meter{} \\
-                            \lstick{$q_1$} & \gate{H} & \gate[2]{Z Z} & \qw & \gate{R_X(2\beta)} & \meter{} \\
-                            \lstick{$q_2$} & \gate{H} & \qw & \gate[2]{Z Z} & \gate{R_X(2\beta)} & \meter{} \\
-                            \lstick{$q_3$} & \gate{H} & \qw & \qw & \gate{R_X(2\beta)} & \meter{}
-                          \end{quantikz}
-                        }
-                      \]
-
-                    \item \textbf{Gate Implementation}:
-                      \begin{itemize}[nosep]
-                        \item $e^{-i\gamma Z_i Z_j}$: CNOT, $R_Z(2\gamma)$, CNOT
-                        \item $e^{-i\beta X_i}$: $R_X(2\beta)$
-                      \end{itemize}
-
-                    \item \textbf{Properties}:
-                      \begin{itemize}[nosep]
-                        \item \textit{Advantages}: NISQ-friendly (small $P$),
-                          scales to exact solution as $P \to \infty$
-                        \item \textit{Limitations}: Barren plateaus, unproven
-                          speedup
-                      \end{itemize}
-                  \end{itemize}
-
-                  \conceptbox{QAOA Insight}{Hybrid approach leverages quantum
-                    circuits for state preparation and classical optimization
-                    for parameter tuning, balancing NISQ constraints with
-                  computational power}
-
-                  \section*{Advanced QAOA}
-                  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-                    \item \textbf{Cost Hamiltonian} ($H_C$):
-                      \begin{itemize}[nosep]
-                        \item Encodes the optimization objective. For any computational basis state \(\ket{x}\), the operator satisfies
-                          \[
-                            H_C \ket{x} = C(x) \ket{x},
-                          \]
-                          where \(C(x)\) is the classical cost evaluated on bitstring \(x\).
-                        \item \textbf{Max-Cut Example}: The cost function is defined as
-                          \[
-                            C = \frac{1}{2} \sum_{(i,j) \in E} \Bigl(I - Z_i Z_j\Bigr),
-                          \]
-                          which assigns a cost based on the number of edges cut by a partition.
-                      \end{itemize}
-                    \item \textbf{Mixing Hamiltonian} ($H_M$):
-                      \begin{itemize}[nosep]
-                        \item Drives exploration of the solution space; standard form:
-                          \[
-                            H_M = \sum_i X_i.
-                          \]
-                        \item Advanced variants (e.g., XY mixers) can preserve additional problem constraints.
-                      \end{itemize}
-                    \item \textbf{Circuit Structure}:
-                      \begin{enumerate}[nosep]
-                        \item \textit{Initialization}: Prepare the uniform superposition via \(\ket{s}=H^{\otimes n}\ket{0}^{\otimes n}\).
-                        \item \textit{Alternating Layers}: For each layer \(p=1,\dots,P\) apply:
-                          \begin{itemize}[nosep]
-                            \item Cost evolution: \(e^{-i\gamma_p H_C}\).
-                            \item Mixer evolution: \(e^{-i\beta_p H_M}\).
-                          \end{itemize}
-                        \item \textit{Measurement}: Read out in the computational basis.
-                      \end{enumerate}
-                    \item \textbf{Parameter Optimization}:
-                      \begin{itemize}[nosep]
-                        \item Classical methods (e.g., COBYLA, BFGS) adjust \(\{\gamma_p,\beta_p\}\).
-                        \item Initialization strategies include random starts, linear ramps, or layer-by-layer training.
-                      \end{itemize}
-                    \item \textbf{Scaling \& Limitations}:
-                      \begin{itemize}[nosep]
-                        \item Increasing \(P\) can improve approximation quality (approaching adiabatic dynamics) but raises challenges such as barren plateaus and hardware noise.
-                      \end{itemize}
-                  \end{itemize}
-
-                  \section*{QUBO}
-                  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-                    \item \textbf{General Form of Cost Function}:
-                      \begin{align*}
-                        c(x) = \sum_{i = 0}^{n - 1} \sum_{j = 0}^{n - 1} c_{ij} x_i x_j + \sum_{i = 0}^{n - 1} c_i x_i
-                      \end{align*}
-
-                    \item \textbf{X-Basis $\leftrightarrow$ s-Basis Conversions}:
-                      \begin{align*}
-                        x_i &= \frac{1}{2}(1 - s_i)\\
-                        s_i &= 1 - 2x_i = (-1)^{x_i}
-                      \end{align*}
-                      where $s_i \in \{-1,1\}$ are spin variables
-
-                    \item \textbf{Matrix Exponentiation}:
-                      \begin{align*}
-                        e^{-i\theta X} &= R_X(2\theta) = \begin{bmatrix} \cos\theta & -i\sin\theta \\ -i\sin\theta & \cos\theta \end{bmatrix} \\
-                        e^{-i\theta Y} &= R_Y(2\theta) = \begin{bmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{bmatrix} \\
-                        e^{-i\theta Z} &= R_Z(2\theta) = \begin{bmatrix} e^{-i\theta} & 0 \\ 0 & e^{i\theta} \end{bmatrix}
-                      \end{align*}
-
-                    \item \textbf{Expected Value}:
-                      \begin{align*}
-                        \langle H_C \rangle &= \langle\psi|H_C|\psi\rangle\\
-                                            &= \sum_x c(x)|\langle x|\psi\rangle|^2\\
-                                            &= \sum_x c(x)P(x)
-                      \end{align*}
-                      where $P(x)$ is the probability of measuring bitstring $x$
-                  \end{itemize}
-
-                  \section*{Circuit Equivalences}
-                  \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
-                    \item \textbf{CNOT Variants}:
-                      \begin{itemize}[nosep]
-                        \item $\text{CNOT} = \text{CX} = (I \otimes H) \cdot \text{CZ} \cdot (I \otimes H)$
-                        \item Flipped CNOT: $(H \otimes H) \cdot \text{CNOT} \cdot (H \otimes H)$ (swaps control and target)
-                      \end{itemize}
-                    \item \textbf{Pauli Transformations}:
-                      \begin{itemize}[nosep]
-                        \item $H X H = Z$
-                        \item $H Z H = X$
-                        \item $X Y X = -Y$, $Y Z Y = -Z$, $Z X Z = -X$
-                      \end{itemize}
-                    \item \textbf{Phase Gate Relations}:
-                      \begin{itemize}[nosep]
-                        \item $S = T^2$, $Z = S^2 = T^4$
-                        \item $H S H = \frac{1}{\sqrt{2}} \begin{bmatrix} 1 & -i \\ i & 1 \end{bmatrix}$ (rotates basis)
-                      \end{itemize}
-                    \item \textbf{Rotation Decompositions}:
-                      \begin{itemize}[nosep]
-                        \item $R_X(\theta) = H R_Z(\theta) H$
-                        \item $R_Y(\theta) = S^\dagger R_Z(\theta) S$
-                      \end{itemize}
-                  \end{itemize}
-
-                \end{multicols}
-                \endgroup
+          \item Measure to find solution with high probability
+        \end{enumerate}
+
+      \conceptbox{Important Insight}{Grover's algorithm provides quadratic
+      speedup over classical search, which is proven to be optimal for
+      quantum algorithms}
+
+      \item \textbf{Circuit}
+        \[
+          \resizebox{0.25\textwidth}{!}{
+            \begin{quantikz}
+              \lstick{$q_{n-1}$} & \gate{H} & \gate[5]{\shortstack{$f(x)$ \\ Oracle}} & \qw & \gate[5]{\text{Diffusion Circuit}} & \meter{} \\
+              \lstick{$q_{n-2}$} & \gate{H} & & & & \meter{} \\
+              \vdots & \vdots & & \vdots & & \vdots \\
+              \lstick{$q_1$} & \gate{H} & & & & \meter{} \\
+              \lstick{$q_0$} & \gate{H} & & & & \meter{}
+            \end{quantikz}
+          }
+        \]
+        \[
+          \hspace{1cm}
+          \underbrace{\hspace{3cm}}_{\text{Repeat } \sqrt{2^n} \text{ times}}
+        \]
+      \item \textbf{General Diffusion Circuit}: Layer of H, then layer of X,
+        H on LSB, then Controlled-X layer over all qubits, another H on LSB,
+        then layer of X, and then layer of H
+      \item \textbf{Phase Kickback}: When a controlled operation transfers a
+        phase from the target qubit to the control qubit(s)
+    \end{itemize}
+
+    \section*{Quantum Implementations of Classical Logic Gates}
+    \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+      \item \textbf{OR Gate}: Computes $c = a \lor b$
+        \begin{align*}
+          \begin{quantikz}
+            \lstick{$|a\rangle$} & \ctrl{1} & \ctrl{2} & \qw \\
+            \lstick{$|b\rangle$} & \ctrl{1} & \targ{} & \qw \\
+            \lstick{$|c\rangle$} & \targ{} & \targ{} & \qw
+          \end{quantikz}
+        \end{align*}
+        \begin{itemize}[nosep]
+          \item Effect: $|a,b,c\rangle \to |a,b,c \oplus (a \lor b)\rangle$
+          \item Truth Table: $|000\rangle \to |000\rangle$, $|010\rangle \to |011\rangle$
+          \item $|100\rangle \to |101\rangle$, $|110\rangle \to |111\rangle$
+        \end{itemize}
+      \item \textbf{NOR Gate}: Computes $c = \lnot(a \lor b)$
+        \begin{align*}
+          \begin{quantikz}
+            \lstick{$|a\rangle$} & \ctrl{1} & \ctrl{2} & \qw & \qw \\
+            \lstick{$|b\rangle$} & \ctrl{1} & \targ{} & \qw & \qw \\
+            \lstick{$|c\rangle$} & \targ{} & \targ{} & \gate{X} & \qw
+          \end{quantikz}
+        \end{align*}
+        \begin{itemize}[nosep]
+          \item Effect: $|a,b,c\rangle \to |a,b,c \oplus \lnot(a \lor b)\rangle$
+          \item Truth Table: $|000\rangle \to |001\rangle$, $|010\rangle \to |010\rangle$
+          \item $|100\rangle \to |100\rangle$, $|110\rangle \to |110\rangle$
+        \end{itemize}
+      \item \textbf{AND Gate}: Computes $c = a \land b$
+        \begin{align*}
+          \begin{quantikz}
+            \lstick{$|a\rangle$} & \ctrl{1} & \qw \\
+            \lstick{$|b\rangle$} & \ctrl{1} & \qw \\
+            \lstick{$|c\rangle$} & \targ{} & \qw
+          \end{quantikz}
+        \end{align*}
+        \begin{itemize}[nosep]
+          \item Effect: $|a,b,c\rangle \to |a,b,c \oplus (a \land b)\rangle$
+          \item Truth Table: $|000\rangle \to |000\rangle$, $|010\rangle \to |010\rangle$
+          \item $|100\rangle \to |100\rangle$, $|110\rangle \to |111\rangle$
+          \item Direct implementation using Toffoli gate
+        \end{itemize}
+      \item \textbf{NAND Gate}: Computes $c = \lnot(a \land b)$
+        \begin{align*}
+          \begin{quantikz}
+            \lstick{$|a\rangle$} & \ctrl{1} & \qw & \qw \\
+            \lstick{$|b\rangle$} & \ctrl{1} & \qw & \qw \\
+            \lstick{$|c\rangle$} & \targ{} & \gate{X} & \qw
+          \end{quantikz}
+        \end{align*}
+        \begin{itemize}[nosep]
+          \item Effect: $|a,b,c\rangle \to |a,b,c \oplus \lnot(a \land b)\rangle$
+          \item Truth Table: $|000\rangle \to |001\rangle$, $|010\rangle \to |011\rangle$
+          \item $|100\rangle \to |101\rangle$, $|110\rangle \to |110\rangle$
+        \end{itemize}
+      \item \textbf{XOR Gate}: Computes $c = a \oplus b$
+        \begin{align*}
+          \begin{quantikz}
+            \lstick{$|a\rangle$} & \ctrl{1} & \qw \\
+            \lstick{$|b\rangle$} & \targ{} & \qw
+          \end{quantikz}
+        \end{align*}
+        \begin{itemize}[nosep]
+          \item For 3-qubit implementation:
+            \begin{align*}
+              \begin{quantikz}
+                \lstick{$|a\rangle$} & \ctrl{2} & \qw \\
+                \lstick{$|b\rangle$} & \qw & \ctrl{1} & \qw \\
+                \lstick{$|c\rangle$} & \targ{} & \targ{} & \qw
+              \end{quantikz}
+            \end{align*}
+          \item Effect: $|a,b,c\rangle \to |a,b,c \oplus (a \oplus b)\rangle$
+          \item Truth Table: $|000\rangle \to |000\rangle$, $|010\rangle \to |011\rangle$
+          \item $|100\rangle \to |101\rangle$, $|110\rangle \to |110\rangle$
+        \end{itemize}
+      \item \textbf{XNOR Gate}: Computes $c = \lnot(a \oplus b)$
+        \begin{align*}
+          \begin{quantikz}
+            \lstick{$|a\rangle$} & \ctrl{2} & \qw \\
+            \lstick{$|b\rangle$} & \qw & \ctrl{1} & \qw \\
+            \lstick{$|c\rangle$} & \targ{} & \targ{} & \gate{X} & \qw
+          \end{quantikz}
+        \end{align*}
+        \begin{itemize}[nosep]
+          \item Effect: $|a,b,c\rangle \to |a,b,c \oplus \lnot(a \oplus b)\rangle$
+          \item Truth Table: $|000\rangle \to |001\rangle$, $|010\rangle \to |010\rangle$
+          \item $|100\rangle \to |100\rangle$, $|110\rangle \to |111\rangle$
+        \end{itemize}
+    \end{itemize}
+
+    \conceptbox{Important Note}{The output qubit $|c\rangle$ should be
+    initialized to $|0\rangle$ for classical logic gate operation. The
+    circuits preserve input states ($|a\rangle$ and $|b\rangle$) allowing for
+    reversible computation.}
+
+    \section*{CNF and ANF for SAT}
+    \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+      \item \textbf{CNF (Conjunctive Normal Form)}:
+        \begin{itemize}[nosep]
+          \item Form: $\bigwedge_i (\lor_j l_{ij})$, $l_{ij} = x_k$ or $\neg x_k$ (literals)
+          \item E.g., $(\neg A \lor \neg C) \land (J \lor P)$
+          \item Quantum: OR gates per clause, multi-controlled $X$ for AND,
+            $O(\text{\# clauses})$ ancilla
+          \item Circuit:
+            \[
+              \begin{quantikz}
+                \lstick{$x_1$} & \ctrl{2} & \qw \\
+                \lstick{$x_2$} & \ctrl{1} & \qw \\
+                \lstick{$a_1$} & \targ{} & \ctrl{2} \\
+                \lstick{$x_3$} & \ctrl{1} & \qw \\
+                \lstick{$a_2$} & \targ{} & \targ{}
+              \end{quantikz}
+            \]
+        \end{itemize}
+      \item \textbf{ANF (Algebraic Normal Form)}:
+        \begin{itemize}[nosep]
+          \item Form: XOR of AND terms, e.g., $f = J \oplus C J$
+          \item Conversion: From CNF via truth table or Boolean algebra
+          \item Quantum: CNOT/Toffoli for XOR/AND, $O(1)$ ancilla (typically 1)
+          \item Circuit:
+            \[
+              \begin{quantikz}
+                \lstick{$x_1$} & \qw & \qw \\
+                \lstick{$x_2$} & \ctrl{2} & \qw \\
+                \lstick{$x_3$} & \ctrl{1} & \qw \\
+                \lstick{$a$} & \targ{} & \targ{}
+              \end{quantikz}
+            \]
+        \end{itemize}
+      \item \textbf{Comparison}:
+        \begin{itemize}[nosep]
+          \item CNF: Intuitive, scales with clauses, higher depth
+          \item ANF: Compact, typically fewer ancilla, lower depth, needs
+            conversion
+        \end{itemize}
+    \end{itemize}
+
+    \conceptbox{ANF Advantage}{Can reduce ancilla qubits, simplifies oracle
+    for Grover’s SAT}
+
+    \section*{Variational Quantum Algorithms (VQA)}
+    \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+      \item \textbf{Overview}: Hybrid quantum–classical algorithms that
+        iteratively optimize a parameterized quantum circuit.
+      \item \textbf{Process}:
+        \begin{enumerate}[nosep]
+          \item \textit{State Preparation}: Create an ansatz $\ket{\psi(\theta)}$.
+          \item \textit{Measurement}: Evaluate a cost function $C(\theta)$
+            based on quantum measurement outcomes.
+          \item \textit{Optimization}: Adjust the parameters $\theta$ using a
+            classical optimizer.
+        \end{enumerate}
+      \item \textbf{Example} (Bell State Preparation):
+        \[
+          \ket{\psi(\theta)} = \mathrm{CNOT}\Bigl(R_y(\theta)\ket{0}\otimes\ket{0}\Bigr)
+        \]
+        with cost function
+        \[
+          C(\theta)=1-|\langle\Phi^+|\psi(\theta)\rangle|^2,
+        \]
+        where $\ket{\Phi^+}=\frac{1}{\sqrt{2}}(\ket{00}+\ket{11})$.
+    \end{itemize}
+
+    \section*{Quantum Approximate Optimization Algorithm (QAOA)}
+    \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+      \item \textbf{Purpose}: Approximate solutions to combinatorial
+        optimization problems (e.g., \textsc{Max-Cut}) using a hybrid
+        quantum-classical approach
+      \item \textbf{Key Components}:
+        \begin{itemize}[nosep]
+          \item \textit{Cost Hamiltonian} ($H_C$): Encodes problem, e.g.,
+            $H_C = \sum_{\langle i,j \rangle} Z_i Z_j$ for \textsc{Max-Cut}
+          \item \textit{Mixing Hamiltonian} ($H_M$): Drives exploration,
+            typically $H_M = \sum_i X_i$
+          \item \textit{Ansatz}: $\ket{\psi(\gamma, \beta)} = \prod_{p=1}^P e^{-i\beta_p H_M} e^{-i\gamma_p H_C} \ket{s}$, where $\ket{s} = H^{\otimes n} \ket{0}^{\otimes n}$
+          \item \textit{Goal}: Minimize $\langle \psi(\gamma, \beta) | H_C | \psi(\gamma, \beta) \rangle$
+        \end{itemize}
+      \item \textbf{Steps}:
+        \begin{enumerate}[nosep]
+          \item Initialize: $\ket{s} = H^{\otimes n} \ket{0}^{\otimes n}$
+            (e.g., $n=10$ for `$10 \mathrm{~N} \rightarrow \mathrm{H}$`)
+          \item Apply $P$ layers of $e^{-i\gamma_p H_C}$ and $e^{-i\beta_p H_M}$
+          \item Measure $\langle H_C \rangle$
+          \item Optimize $\gamma_p, \beta_p$ classically
+          \item Repeat until convergence
+        \end{enumerate}
+      \item \textbf{\textsc{Max-Cut} Circuit ($P=1$)}:
+        \[
+          \resizebox{0.25\textwidth}{!}{
+            \begin{quantikz}
+              \lstick{$q_0$} & \gate{H} & \gate{e^{-i\gamma Z Z}} & \gate{e^{-i\gamma Z Z}} & \gate{R_X(2\beta)} & \meter{} \\
+              \lstick{$q_1$} & \gate{H} & \gate[2]{Z Z} & \qw & \gate{R_X(2\beta)} & \meter{} \\
+              \lstick{$q_2$} & \gate{H} & \qw & \gate[2]{Z Z} & \gate{R_X(2\beta)} & \meter{} \\
+              \lstick{$q_3$} & \gate{H} & \qw & \qw & \gate{R_X(2\beta)} & \meter{}
+            \end{quantikz}
+          }
+        \]
+      \item \textbf{Gate Implementation}:
+        \begin{itemize}[nosep]
+          \item $e^{-i\gamma Z_i Z_j}$: CNOT, $R_Z(2\gamma)$, CNOT
+          \item $e^{-i\beta X_i}$: $R_X(2\beta)$
+        \end{itemize}
+      \item \textbf{Properties}:
+        \begin{itemize}[nosep]
+          \item \textit{Advantages}: NISQ-friendly (small $P$), scales to
+            exact solution as $P \to \infty$
+          \item \textit{Limitations}: Barren plateaus, unproven speedup
+        \end{itemize}
+    \end{itemize}
+
+    \conceptbox{QAOA Insight}{Hybrid approach leverages quantum circuits for
+    state preparation and classical optimization for parameter tuning,
+    balancing NISQ constraints with computational power}
+
+    \section*{Advanced QAOA}
+    \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+      \item \textbf{Cost Hamiltonian} ($H_C$):
+        \begin{itemize}[nosep]
+          \item Encodes the optimization objective. For any computational
+            basis state \(\ket{x}\), the operator satisfies
+            \[
+              H_C \ket{x} = C(x) \ket{x},
+            \]
+            where \(C(x)\) is the classical cost evaluated on bitstring \(x\).
+          \item \textbf{Max-Cut Example}: The cost function is defined as
+            \[
+              C = \frac{1}{2} \sum_{(i,j) \in E} \Bigl(I - Z_i Z_j\Bigr),
+            \]
+            which assigns a cost based on the number of edges cut by a partition.
+        \end{itemize}
+      \item \textbf{Mixing Hamiltonian} ($H_M$):
+        \begin{itemize}[nosep]
+          \item Drives exploration of the solution space; standard form:
+            \[
+              H_M = \sum_i X_i.
+            \]
+          \item Advanced variants (e.g., XY mixers) can preserve additional
+            problem constraints.
+        \end{itemize}
+      \item \textbf{Circuit Structure}:
+        \begin{enumerate}[nosep]
+          \item \textit{Initialization}: Prepare the uniform superposition
+            via \(\ket{s}=H^{\otimes n}\ket{0}^{\otimes n}\).
+          \item \textit{Alternating Layers}: For each layer \(p=1,\dots,P\) apply:
+            \begin{itemize}[nosep]
+              \item Cost evolution: \(e^{-i\gamma_p H_C}\).
+              \item Mixer evolution: \(e^{-i\beta_p H_M}\).
+            \end{itemize}
+          \item \textit{Measurement}: Read out in the computational basis.
+        \end{enumerate}
+      \item \textbf{Parameter Optimization}:
+        \begin{itemize}[nosep]
+          \item Classical methods (e.g., COBYLA, BFGS) adjust \(\{\gamma_p,\beta_p\}\).
+          \item Initialization strategies include random starts, linear
+            ramps, or layer-by-layer training.
+        \end{itemize}
+      \item \textbf{Scaling \& Limitations}:
+        \begin{itemize}[nosep]
+          \item Increasing \(P\) can improve approximation quality
+            (approaching adiabatic dynamics) but raises challenges such as
+            barren plateaus and hardware noise.
+        \end{itemize}
+    \end{itemize}
+
+    \section*{QUBO}
+    \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+      \item \textbf{General Form of Cost Function}:
+        \begin{align*}
+          c(x) = \sum_{i = 0}^{n - 1} \sum_{j = 0}^{n - 1} c_{ij} x_i x_j +
+          \sum_{i = 0}^{n - 1} c_i x_i
+        \end{align*}
+      \item \textbf{X-Basis $\leftrightarrow$ s-Basis Conversions}:
+        \begin{align*}
+          x_i &= \frac{1}{2}(1 - s_i) \\
+          s_i &= 1 - 2x_i = (-1)^{x_i}
+        \end{align*}
+        where $s_i \in \{-1,1\}$ are spin variables
+      \item \textbf{Matrix Exponentiation}:
+        \begin{align*}
+          e^{-i\theta X} &= R_X(2\theta) = \begin{bmatrix} \cos\theta & -i\sin\theta \\ -i\sin\theta & \cos\theta \end{bmatrix} \\
+          e^{-i\theta Y} &= R_Y(2\theta) = \begin{bmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{bmatrix} \\
+          e^{-i\theta Z} &= R_Z(2\theta) = \begin{bmatrix} e^{-i\theta} & 0 \\ 0 & e^{i\theta} \end{bmatrix}
+        \end{align*}
+      \item \textbf{Expected Value}:
+        \begin{align*}
+          \langle H_C \rangle &= \langle\psi|H_C|\psi\rangle \\
+                              &= \sum_x c(x)|\langle x|\psi\rangle|^2 \\
+                              &= \sum_x c(x)P(x)
+        \end{align*}
+        where $P(x)$ is the probability of measuring bitstring $x$
+    \end{itemize}
+
+    \section*{Circuit Equivalences}
+    \begin{itemize}[leftmargin=*,nosep,topsep=0pt]
+      \item \textbf{CNOT Variants}:
+        \begin{itemize}[nosep]
+          \item $\text{CNOT} = \text{CX} = (I \otimes H) \cdot \text{CZ} \cdot (I \otimes H)$
+          \item Flipped CNOT: $(H \otimes H) \cdot \text{CNOT} \cdot (H
+            \otimes H)$ (swaps control and target)
+        \end{itemize}
+      \item \textbf{Pauli Transformations}:
+        \begin{itemize}[nosep]
+          \item $H X H = Z$
+          \item $H Z H = X$
+          \item $X Y X = -Y$, $Y Z Y = -Z$, $Z X Z = -X$
+        \end{itemize}
+      \item \textbf{Phase Gate Relations}:
+        \begin{itemize}[nosep]
+          \item $S = T^2$, $Z = S^2 = T^4$
+          \item $H S H = \frac{1}{\sqrt{2}} \begin{bmatrix} 1 & -i \\ i & 1 \end{bmatrix}$ (rotates basis)
+        \end{itemize}
+      \item \textbf{Rotation Decompositions}:
+        \begin{itemize}[nosep]
+          \item $R_X(\theta) = H R_Z(\theta) H$
+          \item $R_Y(\theta) = S^\dagger R_Z(\theta) S$
+        \end{itemize}
+    \end{itemize}
+
+  \end{multicols}
+
+\endgroup
