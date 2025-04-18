@@ -1,0 +1,318 @@
+\section{Lecture 23: Neutral Atom Quantum Computers, Photonic Quantum Computers}
+\label{sec:lecture23}
+
+\index{neutral atom quantum computers}
+\subsection*{Neutral Atom Quantum Computers}
+
+Neutral atom quantum computers represent a promising platform for quantum
+computing, leveraging individual neutral atoms as qubits. These atoms are
+typically trapped using optical tweezers or other trapping methods, allowing
+for precise control and manipulation.
+
+\subsubsection*{Basic Principles}
+
+In neutral atom quantum computing, qubits are encoded in the internal states
+of the atoms, such as hyperfine levels or Rydberg states. Rydberg states, in
+particular, are used for their strong interactions, which enable entangling
+operations between distant atoms.
+
+\vspace{0.3cm}
+
+\noindent
+The basic operations include:
+
+\begin{itemize}
+  \item \textbf{State Preparation:} Cooling and trapping atoms, then
+    preparing them in the desired quantum state.
+  \item \textbf{Single-Qubit Gates:} Manipulated using laser pulses to drive
+    transitions between atomic states.
+  \item \textbf{Two-Qubit Gates:} Achieved through Rydberg interactions,
+    where the excitation of one atom affects another within the blockade
+    radius.
+  \item \textbf{Measurement:} Typically done by fluorescence detection or
+    other methods to read out the atomic states.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\dfn{Rydberg Blockade}{
+  The \textbf{Rydberg blockade} is a phenomenon where the excitation of one
+  atom to a Rydberg state prevents nearby atoms from being excited due to
+  strong van der Waals interactions. This enables entangling gates with a
+  Hamiltonian of the form:
+
+  \begin{equation*}
+    H = \sum_i \frac{\Omega_i}{2} \sigma_x^i + \sum_i \frac{\Delta_i}{2}
+    \sigma_z^i + \sum_{i<j} V_{ij} n_i n_j
+  \end{equation*}
+
+  where $\Omega_i$ is the Rabi frequency, $\Delta_i$ is the detuning,
+  $V_{ij}$ is the interaction strength, and $n_i$ is the Rydberg state
+  projector.
+}
+
+\subsubsection*{Hardware Implementations}
+
+Leading companies in this field include QuEra and Pasqal. For example,
+QuEra's Aquila system operates with up to 256 qubits in analogue mode,
+utilizing Rydberg interactions for computation\footnote{See
+\href{https://www.quera.com/aquila}{Aquila website}}. Pasqal offers systems
+with up to 100 qubits, supporting both digital and analog computation modes
+\footnote{See \href{https://www.pasqal.com/hardware}{Pasql website}}.
+
+\begin{table}[h]
+  \centering
+  \caption{Key Neutral Atom Quantum Computing Systems}
+  \begin{tabular}{|l|c|c|}
+    \hline
+    \textbf{Company} & \textbf{System} & \textbf{Qubit Count} \\
+    \hline
+    QuEra & Aquila & Up to 256 (analogue) \\
+    Pasqal & Fresnel & Up to 100 \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\index{neutral atom quantum computers!advantages}
+\subsubsection*{Advantages}
+
+\begin{itemize}
+  \item \textbf{Scalability:} Neutral atom systems can potentially scale to
+    thousands of qubits, limited mainly by laser power and optical system
+    performance.
+  \item \textbf{Long Coherence Times:} Trap lifetimes can be very long, with
+    reported times up to 6000 seconds at cryogenic temperatures \footnote{See
+    \href{https://epjquantumtechnology.springeropen.com/articles/10.1140/epjqt/s40507-023-00190-1}{Neutral atom quantum computing hardware: performance and end-user perspective}}.
+  \item \textbf{High Gate Fidelities:} Two-qubit gate fidelities have reached
+    $\sim$0.995, surpassing the threshold for error correction.
+\end{itemize}
+
+\index{neutral atom quantum computers!challenges}
+\subsubsection*{Challenges}
+
+\begin{itemize}
+  \item \textbf{Preparation Times:} Rearranging atoms into desired
+    configurations can be time-consuming, especially as the number of qubits
+    increases.
+  \item \textbf{Gate Speeds:} While gate fidelities are high, the speed of
+    operations is slower compared to superconducting qubits, with two-qubit
+    gates taking around 1 $\mu$s.
+\end{itemize}
+
+\index{neutral atom quantum computers!recent development@\textit{recent development}}
+\subsubsection*{Recent Developments}
+
+Recent advancements, particularly noted in 2024, include:
+
+\begin{itemize}
+  \item \textbf{Accurate Entangling Gates:} Demonstration of two-qubit
+    operations with 99.5\% fidelity using reconfigurable atom arrays\footnote{
+      See \href{https://phys.org/news/2024-09-neutral-atom-quantum-milestones.html}{
+        Neutral atom innovations by quantum systems accelerator mark quantum
+    computing milestones}}.
+
+  \item \textbf{Error Correction:} Implementation of quantum low-density
+    parity-check (qLDPC) codes, which reduce the resource overhead for error
+    correction
+
+  \item \textbf{Applications:} Successful use in quantum simulation for
+    material science (e.g., high-temperature superconductors) and in solving
+    combinatorial optimization problems, such as the Maximum Independent Set
+\end{itemize}
+
+\nt{
+  Research suggests neutral atom quantum computers are gaining traction due
+  to their scalability and high-fidelity operations. Companies like QuEra and
+  Pasqal are pushing the boundaries, with applications already showing
+  promise in specialized domains.
+}
+
+\index{photonic quantum computers}
+\subsection*{Photonic Quantum Computers}
+
+Photonic quantum computers use photons as qubits, offering a different
+approach to quantum computing with unique advantages and challenges.
+
+\subsubsection*{Basic Principles}
+
+In photonic quantum computing, qubits are encoded in properties of photons,
+such as polarization, path, or time-bin. Photons are particularly suitable
+for quantum communication due to their ability to travel long distances with
+low loss.
+
+\vspace{0.3cm}
+
+\noindent
+Key operations include:
+
+\begin{itemize}
+  \item \textbf{State Preparation:} Generating single photons or entangled
+    photon pairs.
+  \item \textbf{Single-Qubit Gates:} Implemented using linear optical
+    elements like beam splitters and phase shifters.
+  \item \textbf{Two-Qubit Gates:} Achieved through interference and
+    measurement, often requiring post-selection or feed-forward techniques.
+  \item \textbf{Measurement:} Detected using photon-number-resolving
+    detectors or other methods.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\dfn{Linear Optical Quantum Computing}{
+  \textbf{Linear optical quantum computing} uses linear optical elements to
+  manipulate photonic qubits. The Knill-Laflamme-Milburn (KLM) protocol
+  enables universal quantum computing with linear optics, ancilla photons,
+  and post-selection, described by the transformation:
+
+  \begin{equation*}
+    U = e^{i (a^\dagger b + a b^\dagger) \theta}
+  \end{equation*}
+
+  where $a$ and $b$ are photon creation operators, and $\theta$ is the phase
+  shift.
+}
+
+\subsubsection*{Hardware Implementations}
+
+Major players in photonic quantum computing include PsiQuantum and Xanadu.
+PsiQuantum is developing a manufacturable photonic quantum computer using
+silicon photonics, with plans for a commercial system by 2029\footnote{See
+\href{https://thequantuminsider.com/2025/03/25/sources-psiquantum-raising-750-million-to-push-photonic-quantum-computers-toward-commercial-reality/}{Sources: PsiQuantum Raising \$750 Million to Push Photonic Quantum Computers Toward Commercial Reality}}
+In 2025, PsiQuantum announced the Omega chipset, a utility-scale photonic
+quantum computing chipset with improved components, such as better photon
+detectors and reduced signal loss in optical waveguides
+\footnote{See \href{https://thequantuminsider.com/2025/02/26/psiquantum-announces-omega-a-manufacturable-photonic-quantum-computing-chipset/}{PsiQuantum Announces Omega, a Manufacturable Photonic Quantum Computing Chipset}}
+
+\vspace{0.3cm}
+
+Additionally, a scale model of a photonic quantum computer called Aurora was
+demonstrated in 2025, using 35 photonic chips to synthesize large cluster
+states and implement quantum error correction \footnote{\href{https://www.nature.com/articles/s41586-024-08406-9}{Scaling and networking a modular photonic quantum computer
+}}.
+
+\begin{table}[h]
+  \centering
+  \caption{Key Photonic Quantum Computing Systems}
+  \begin{tabular}{|l|c|c|}
+    \hline
+    \textbf{Company/Project} & \textbf{System} & \textbf{Status} \\
+    \hline
+    PsiQuantum & Omega & In development, commercial by 2029 \\
+    Aurora & Scale model & 35 chips, demonstrated 2025 \\
+    Xanadu & Borealis & Cloud-accessible prototype \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\subsection*{Photonic Quantum Computers}
+
+Photonic quantum computers use photons as qubits, offering a different
+approach to quantum computing with unique advantages and challenges.
+
+\index{photonic quantum computers!advantages}
+\subsubsection*{Advantages}
+
+\begin{itemize}
+  \item \textbf{Room-Temperature Operation:} Most components operate at room
+    temperature, reducing cooling requirements.
+  \item \textbf{Integration with Networks:} Photons can be easily transmitted
+    over fiber optics, facilitating integration with classical and quantum
+    networks.
+  \item \textbf{Low Decoherence:} Photons are less susceptible to decoherence
+    compared to other qubit modalities.
+\end{itemize}
+
+\index{photonic quantum computers!challenges}
+\subsubsection*{Challenges}
+
+\begin{itemize}
+  \item \textbf{High Loss Rates:} Current photonic systems suffer from
+    significant optical losses, with total losses around 56\% in some
+    components. Fault tolerance requires loss budgets of $\sim$1\%, which is
+    a major hurdle.
+  \item \textbf{Scalability:} While photons are ideal for communication,
+    creating and manipulating large numbers of entangled photons is challenging.
+\end{itemize}
+
+\index{photonic quantum computers!recent development@\textit{recent development}}
+\subsubsection*{Recent Developments}
+
+Significant progress in 2025 includes:
+
+\begin{itemize}
+  \item \textbf{Aurora System:} A 35-chip photonic quantum computer that
+    demonstrated the synthesis of a cluster state with 86.4 billion modes and
+    implemented a quantum error correction code.
+  \item \textbf{PsiQuantum's Funding and Progress:} In 2025, PsiQuantum
+    raised at least \$750 million to advance its photonic quantum computing
+    technology, with significant government support from the U.S., Australia,
+    and the UK.
+  \item \textbf{Component Improvements:} Developments in photon detectors,
+    optical waveguides, and high-speed switches have improved the performance
+    of photonic systems.
+\end{itemize}
+
+\index{photonic quantum computers!applications}
+\subsubsection*{Applications}
+
+Photonic quantum computers are particularly suited for:
+
+\begin{itemize}
+  \item \textbf{Quantum Communication:} Enabling secure communication
+    protocols like quantum key distribution.
+  \item \textbf{Quantum Simulation:} Simulating quantum systems that are
+    difficult to model classically.
+  \item \textbf{General Quantum Computing:} Once fault tolerance is achieved,
+    they could perform a wide range of computational tasks.
+\end{itemize}
+
+\nt{
+  The evidence leans toward photonic quantum computers being a strong
+  contender for quantum communication and networking, with significant
+  investments in 2025 signaling confidence in their commercial potential.
+  However, overcoming loss rates remains a critical challenge.
+}
+
+%%%%%%%%%%%%%
+
+\subsection*{Comparison and Future Outlook}
+
+Both neutral atom and photonic quantum computers offer distinct advantages
+and face unique challenges.
+
+\begin{itemize}
+  \item \textbf{Neutral Atom Systems:} More mature in terms of qubit numbers
+    and gate fidelities, with systems already operating with hundreds of
+    qubits. However, they require cryogenic temperatures for some operations
+    and have slower gate speeds.
+  \item \textbf{Photonic Systems:} Operate at room temperature and have
+    natural advantages for communication and networking. However, they
+    currently suffer from high loss rates and are less mature in terms of
+    large-scale implementation.
+\end{itemize}
+
+The future of quantum computing may see a combination of these technologies,
+with photonic systems handling communication and neutral atom systems
+performing computations, or vice versa. Alternatively, one technology might
+emerge as the leader once fault tolerance is achieved.
+
+\vspace{0.3cm}
+
+In terms of timelines, PsiQuantum aims to deliver a commercial photonic
+quantum computer by 2029, while neutral atom systems are already being used
+for specific applications today. Research suggests that hybrid approaches or
+advancements in error correction could accelerate progress in both fields.
+
+\vspace{0.3cm}
+
+\aside{
+  The race to build practical quantum computers continues, with both neutral
+  atom and photonic approaches showing significant promise. As research
+  progresses, we can expect to see larger systems, improved error correction,
+  and new applications emerging in the coming years.
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End of Lecture 23
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

@@ -6,7 +6,7 @@ The latest version of the notes can be found [here](https://micahkepe.com/comp45
 
 This repository is meant as an educational resource and collaboration space
 for reinforcing the concepts learned in the course. The notes are written fully
-in LaTeX.
+in $\LaTeX$.
 
 > [!IMPORTANT]
 > These notes are a work-in-progress and are being updated as I progress through
@@ -53,6 +53,7 @@ in LaTeX.
 | [Lecture 21](./lectures/phase-iv/lecture21.tex)  | Quantum Error Correction: Phase Flip Errors                             |
 |            <strong>Phase V </strong>             | <em>Concluding Lectures</em>                                            |
 |  [Lecture 22](./lectures/phase-v/lecture22.tex)  | Quantum Annealers, Trapped Ion Quantum Computers                        |
+|  [Lecture 23](./lectures/phase-v/lecture23.tex)  | Neutral Atom Quantum Computers, Photonic Quantum Computers              |
 |          <strong>Supplementary</strong>          | <em>Additional supplementary material.</em>                             |
 |   [Cheatsheet](./supplementary/cheatsheet.tex)   | Quick reference to important concepts and facts.                        |
 
