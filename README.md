@@ -1,17 +1,18 @@
 # [COMP 458: Quantum Computing Algorithms 🧬](https://micahkepe.com/comp458-notes/)
 
-Personal course notes from COMP 458: Quantum Computing Algorithms (Spring 25).
+Complete course notes from COMP 458: Quantum Computing Algorithms (Spring 25).
 
-The latest version of the notes can be found [here](https://micahkepe.com/comp458-notes/).
+The latest version of these notes is available at [micahkepe.com/comp458-notes](https://micahkepe.com/comp458-notes/).
 
 This repository is meant as an educational resource and collaboration space
 for reinforcing the concepts learned in the course. The notes are written fully
 in $\LaTeX$.
 
 > [!IMPORTANT]
-> These notes are a work-in-progress and are being updated as I progress through
-> the course. If you find any errors or have any suggestions for improvement,
-> feel free to open an issue or a pull request.
+> These notes are a work-in-progress and will undergo updates and revisions
+> as new developments arise, mistakes are corrected, etc. If you find any
+> errors or have any suggestions for improvement, feel free to open an issue
+> or a pull request.
 
 > [!NOTE]
 > Personally, I compile the `*.tex` using the VimTeX plugin for Vim/Neovim, but
@@ -66,6 +67,9 @@ in $\LaTeX$.
 If you find any errors or have any suggestions for improvement, feel free to
 open an issue or a pull request. I would be happy to review and merge any
 contributions.
+
+Please see the [CONTRIBUTING.md](./.github/CONTRIBUTING.md) for details on
+how to contribute.
 
 ---
 
