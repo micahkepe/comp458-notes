@@ -7,7 +7,6 @@
 \subsection*{Problem Statement}
 
 Given a bitstring \( x \in \{0, 1\}^n \) and a function
-
 \[
   f(x) =
   \begin{cases}
@@ -40,7 +39,6 @@ The general structure of Grover's algorithm is as follows:
   \item \textbf{State Preparation:} Initialize all qubits in the state
     \(\ket{0}^{\otimes n}\) and apply \( H^{\otimes n} \) to create a uniform
     superposition:
-
     \[
       \ket{s} = H^{\otimes n} \ket{0}^{\otimes n} = \frac{1}{\sqrt{2^n}}
       \sum_{x \in \{0,1\}^n} \ket{x}.
@@ -52,7 +50,6 @@ The general structure of Grover's algorithm is as follows:
     \begin{itemize}
       \item \textbf{Oracle \(O\):} Flip the phase of the marked state(s);
         that is, for every \( x \),
-
         \[
           O \ket{x} = (-1)^{f(x)} \ket{x}.
         \]
@@ -62,13 +59,11 @@ The general structure of Grover's algorithm is as follows:
 
       \item \textbf{Diffusion Operator \(D\):} Reflect all amplitudes about
         the average amplitude. This operator is given by
-
         \[
           D = 2\ket{s}\bra{s} - I.
         \]
 
         In practice, \( D \) is implemented as
-
         \[
           D = H^{\otimes n} \; X^{\otimes n} \; (CZ) \; X^{\otimes n} \;
           H^{\otimes n},
@@ -81,7 +76,6 @@ The general structure of Grover's algorithm is as follows:
 \end{enumerate}
 
 The high-level circuit for an \( n \)-qubit Grover algorithm is illustrated as:
-
 \[
 \begin{quantikz}
   \lstick{$q_{n - 1}$} & \gate{H} &  \gate[5]{\shortstack{$f(x)$ \\ Oracle}} & \qw & \gate[5]{\text{Diffusion Circuit}} & \meter{} \\
@@ -91,7 +85,6 @@ The high-level circuit for an \( n \)-qubit Grover algorithm is illustrated as:
   \lstick{$q_0$} & \gate{H} &  & & & \meter{}
 \end{quantikz}
 \]
-
 \[
   \hspace{1.5cm}
   \underbrace{\hspace{6cm}}_{\text{Repeat } \sqrt{2^n} \text{ times}}
@@ -177,7 +170,6 @@ which multiplies the state \(\ket{11}\) by \(-1\).
 \vspace{0.3cm}
 
 \textbf{Diffusion Operator:} For 2 qubits, the diffusion operator is given by:
-
 \[
   D = H^{\otimes 2}\; X^{\otimes 2}\; CZ\; X^{\otimes 2}\; H^{\otimes 2}.
 \]
@@ -185,7 +177,6 @@ which multiplies the state \(\ket{11}\) by \(-1\).
 \vspace{0.3cm}
 
 \textbf{2-Qubit Grover Circuit:}
-
 \[
 \begin{quantikz}
   \lstick{$\ket{0}$} & \gate{H} & \ctrl{1} & \gate{H} & \gate{X} & \qw & \ctrl{1} & \qw & \gate{X} & \gate{H} & \meter{} \\
@@ -225,7 +216,6 @@ Grover's algorithm can be summarized in the following pseudocode:
   \ket{0}^{\otimes n} \).\\
 
   Apply \( H^{\otimes n} \) to obtain the uniform superposition:
-
   \[
     \ket{s} = H^{\otimes n}\ket{0}^{\otimes n} = \frac{1}{\sqrt{2^n}} \sum_{x
     \in \{0,1\}^n} \ket{x}.
@@ -235,7 +225,6 @@ Grover's algorithm can be summarized in the following pseudocode:
   \right\rfloor \)}{
 
     Apply the Oracle \( O \) which performs:
-
     \[
       O\ket{x} = (-1)^{f(x)}\ket{x},
     \]

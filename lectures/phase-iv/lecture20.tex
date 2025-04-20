@@ -20,7 +20,6 @@ mechanics.
 Classical bits, which can be either 0 or 1, are prone to errors with a
 probability \( p \in [0, 1] \), where the bit flips with probability \( p \)
 and remains correct with probability \( 1 - p \). This is formally expressed as:
-
 \[
   b =
   \begin{cases}
@@ -106,7 +105,6 @@ multiple physical qubits, using codes like the repetition code.
   This is achieved by starting with the initial qubit in \( |\psi\rangle \)
   and two ancilla qubits in \( |0\rangle \), then applying CNOT gates from
   the original qubit to the ancillas:
-
   \[
     \begin{quantikz}
       \lstick{$q_0 \: \ket{\psi}$} & \ctrl{1} & \ctrl{2} & \qw \\

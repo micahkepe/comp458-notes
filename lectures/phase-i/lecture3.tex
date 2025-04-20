@@ -3,7 +3,6 @@
 \dfn{Qubit}{A \textbf{qubit} \index{qubit} is the fundamental unit of quantum
   information. Unlike a classical bit, which is either $0$ or $1$, a qubit
   can exist in a \vocab{superposition} \index{superposition} of states:
-
   \[
     |\psi\rangle = \alpha|0\rangle + \beta|1\rangle, \quad \text{where }
     \alpha, \beta \in \mathbb{C} \text{ and } ||\alpha||^2 + ||\beta||^2 = 1
@@ -63,7 +62,6 @@ In contrast, for quantum computing:
     basis states
 
     \ii Computational basis vectors:
-
     \[
       |0\rangle = \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \quad
       |1\rangle = \begin{bmatrix} 0 \\ 1 \end{bmatrix}
@@ -80,12 +78,10 @@ In contrast, for quantum computing:
 
     \ii \textbf{Hadamard Basis:}
     \index{universal bases!Hadamard basis}
-
     \[
       |+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle) = \begin{bmatrix}
       1/\sqrt{2} \\ 1/\sqrt{2} \end{bmatrix}
     \]
-
     \[
       |-\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle) = \begin{bmatrix}
       1/\sqrt{2} \\ -1/\sqrt{2} \end{bmatrix}
@@ -93,9 +89,7 @@ In contrast, for quantum computing:
 
     \ii \textbf{Phase/ Circular Polarization Basis:}
     \index{universal bases!phase basis}
-
     \[ |L\rangle = \ket{+i} = \frac{1}{\sqrt{2}}(|0\rangle + i|1\rangle) \]
-
     \[|R\rangle = \ket{-i} = \frac{1}{\sqrt{2}}(|0\rangle - i|1\rangle) \]
 
 \end{itemize}}
@@ -128,7 +122,6 @@ In contrast, for quantum computing:
 
 Rearranging the Bloch sphere formula, we obtain that $\theta$ and
 $\phi$ can be expressed as:
-
 \[
   \theta = 2\arccos(\alpha_1), \quad \phi = -i
   \ln\left(\frac{\alpha_2}{\sin\left(\frac{\theta}{2}\right)}\right)
@@ -141,7 +134,6 @@ $\phi$ can be expressed as:
 
 \ex{Factoring Out the Global Phase}{
   Let's say that we have the following quantum state vector $\ket{\psi}$:
-
   \[
     \begin{aligned}
       \ket{\psi} & = \frac{1}{\sqrt{2}}\lt(i \zero + \one\rt) \\

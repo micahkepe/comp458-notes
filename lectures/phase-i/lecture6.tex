@@ -12,7 +12,6 @@ construct quantum circuits using these gates.
 \dfn{Controlled X Gate}{(CNOT) is a two-qubit gate that flips the target qubit
   if the control qubit is in state $\ket{1}$, and does nothing if the control
   qubit is in state $\ket{0}$. The matrix representation of CNOT is given by:
-
   \[
     CNOT = CX = \begin{pmatrix}
       1 & 0 & 0 & 0 \\
@@ -93,7 +92,6 @@ Applying the CNOT gate to a two-qubit state $\ket{\psi} = \alpha\ket{00} +
 
 \dfn{Controlled-Z Gate}{(CZ) applies a phase flip if both qubits are in state
   $\ket{1}$:
-
   \[
     CZ = \begin{pmatrix}
       1 & 0 & 0 & 0 \\
@@ -106,7 +104,6 @@ Applying the CNOT gate to a two-qubit state $\ket{\psi} = \alpha\ket{00} +
 
 
 Applying the CZ gate to a 2-qubit system, we obtain:
-
 \[
   CZ \ket{00} = \ket{00}, \quad
   CZ \ket{01} = \ket{01}, \quad
@@ -149,7 +146,6 @@ mathematical representations of the same quantum circuit.
   products, we adopt the convention of representing qubits from most
   significant to least significant in our mathematical expressions. For an
   $n$-qubit system:
-
   \[
   \ket{q_{n-1}q_{n-2}...q_1q_0} = \ket{q_{n-1}} \otimes \ket{q_{n-2}} \otimes
   ... \otimes \ket{q_1} \otimes \ket{q_0}
@@ -171,7 +167,6 @@ qubits:
 \end{align*}
 
 This circuit can be represented mathematically in equivalent ways:
-
 \[
   (H \otimes H)\ket{q_1q_0} = (H\ket{q_1}) \otimes (H\ket{q_0}) = H\ket{q_1}
   \otimes H\ket{q_0}
@@ -192,7 +187,6 @@ respect these dependencies. For the CNOT gate:
 The mathematical representation must preserve the control-target
 relationship, though intermediate calculations may use different but
 equivalent orderings:
-
 \[
   CNOT_{1,0}\ket{q_1q_0} = CNOT(\ket{q_1} \otimes \ket{q_0})
 \]

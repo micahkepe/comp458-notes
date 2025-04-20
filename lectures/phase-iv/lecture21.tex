@@ -40,7 +40,6 @@ The logical states are:
 For an arbitrary state \( |\psi\rangle = \alpha |0\rangle + \beta |1\rangle
 \), the encoded state is \( \alpha |+++\rangle + \beta |---\rangle \). The
 encoding circuit is:
-
 \[
   \begin{quantikz}
     \lstick{$q_2 : |\psi\rangle$} & \gate{H} & \ctrl{1} & \ctrl{2} & \gate{H} & \qw \\
@@ -65,7 +64,6 @@ To detect a phase flip (e.g., \( Z \) on \( q_1 \)), we measure syndromes
 using ancilla qubits in the Hadamard basis. A \( Z \) error on \( q_1 \)
 flips \( |+++\rangle \to |+-+\rangle \) or \( |---\rangle \to |-+-\rangle \).
 The syndrome measurement circuit is:
-
 \[
   \begin{quantikz}
     \lstick{$q_2$} & \gate{H} & \ctrl{3} & \qw & \qw & \gate{H} & \qw \\
@@ -141,7 +139,6 @@ The encoding circuit generalizes to:
 
 \noindent
 For \( n = 5 \), the circuit is:
-
 \[
   \begin{quantikz}
     \lstick{$q_4 : |\psi\rangle$} & \gate{H} & \ctrl{1} & \ctrl{2} & \ctrl{3} & \ctrl{4} & \gate{H} & \qw \\
@@ -171,7 +168,6 @@ higher-distance codes.
 
   Consider a Bell state preparation circuit, creating \( |\Phi^+\rangle =
   \frac{|00\rangle + |11\rangle}{\sqrt{2}} \):
-
   \[
     \begin{quantikz}
       \lstick{$q_1 : |0\rangle$} & \gate{H} & \ctrl{1} & \qw \\
@@ -185,7 +181,6 @@ higher-distance codes.
   |---\rangle}{\sqrt{2}} \), and similarly for \( q_0 : |0\rangle \). The
   encoded circuit, adapted for phase flip protection, requires 6 qubits (3 per
   logical qubit):
-
   \[
     \begin{quantikz}
       \lstick{$q_{1,0} : |0\rangle$} & \gate{H} & \ctrl{1} & \ctrl{2} & \gate{H} & \ctrl{3} & \qw \\
