@@ -8,7 +8,6 @@ No-Cloning Theorem}\label{sec:lecture7}
 }
 
 \sol{\boxed{\textbf{Infinite}}
-
   \[
     P(b) = \norm{\langle b | \psi \rangle}^2
   \]
@@ -30,7 +29,6 @@ No-Cloning Theorem}\label{sec:lecture7}
 \qs{Output of Quantum Circuit}{
 
   What is the output quantum state of the following quantum circuit:
-
   \[
     \begin{quantikz}
       q_2 \quad \lstick{$\zero$} & \gate{X} & \gate{X} & \meter{} \\
@@ -64,7 +62,6 @@ No-Cloning Theorem}\label{sec:lecture7}
 
   The control and target qubits of a CNOT gate can be swapped using Hadamard
   gates:
-
   \[
     (H \otimes H) \cdot CNOT_{\text{control,target}} \cdot (H \otimes H) =
     CNOT_{\text{target,control}}
@@ -82,7 +79,6 @@ No-Cloning Theorem}\label{sec:lecture7}
   The $CX(q_0 \rightarrow q_1)$ gate, also known as $CNOT_{target,control}$,
   is a variant of the CNOT gate where the control and target qubits are
   swapped. Its matrix representation is:
-
   \[
     CNOT_{target,control} = \begin{pmatrix}
       1 & 0 & 0 & 0 \\
@@ -101,7 +97,6 @@ No-Cloning Theorem}\label{sec:lecture7}
 The control and target qubits of a CNOT gate can be swapped using Hadamard
 ($H$) gates applied to both qubits. Mathematically, this operation is
 represented as:
-
 \[
   (H \otimes H) \cdot \text{CNOT}_{\text{control,target}} \cdot (H \otimes H)
   = \text{CNOT}_{\text{target,control}}
@@ -109,7 +104,6 @@ represented as:
 
 
 The transformed CNOT gate is:
-
 \[
   (H \otimes H) \cdot \text{CNOT} \cdot (H \otimes H).
 \]
@@ -119,7 +113,6 @@ The transformed CNOT gate is:
 \textbf{Step 1: Compute $\text{CNOT} \cdot (H \otimes H)$}
 
 First, multiply the CNOT matrix with $H \otimes H$:
-
 \[
   \text{CNOT} \cdot (H \otimes H) = \begin{pmatrix}
     1 & 0 & 0 & 0 \\
@@ -135,7 +128,6 @@ First, multiply the CNOT matrix with $H \otimes H$:
 \]
 
 This results in:
-
 \[
   \text{CNOT} \cdot (H \otimes H) = \frac{1}{2} \begin{pmatrix}
     1 & 1 & 1 & 1 \\
@@ -153,7 +145,6 @@ CNOT gate's effect.
 \textbf{Step 2: Multiply $(H \otimes H)$ to the Above Result}
 
 Now, multiply $H \otimes H$ from the left:
-
 \[
   (H \otimes H) \cdot \frac{1}{2} \begin{pmatrix}
     1 & 1 & 1 & 1 \\
@@ -164,7 +155,6 @@ Now, multiply $H \otimes H$ from the left:
 \]
 
 Expanding this:
-
 \[
   \frac{1}{2} \begin{pmatrix}
     1 & 1 & 1 & 1 \\
@@ -180,7 +170,6 @@ Expanding this:
 \]
 
 After computation, the resulting matrix is:
-
 \[
   \text{CNOT}_{\text{target,control}} = \begin{pmatrix}
     1 & 0 & 0 & 0 \\
@@ -201,7 +190,6 @@ swapped.
 \dfn{SWAP Gate}{
   The SWAP gate exchanges the states of two qubits. Its matrix representation
   is:
-
   \[
     SWAP = \begin{pmatrix}
       1 & 0 & 0 & 0 \\
@@ -212,7 +200,6 @@ swapped.
   \]
 
   The action of SWAP on basis states is given by:
-
   \[
     SWAP\ket{ab} = \ket{ba}, \quad a,b \in \{0,1\}
   \]
@@ -262,7 +249,6 @@ it extends to $n$-qubits.
 
 \dfn{Toffoli Gate}{(CCX) is a three-qubit gate with two control qubits and
   one target qubit. Its matrix representation is:
-
   \[
     \textsc{Toffoli} = \begin{pmatrix}
       1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
@@ -331,7 +317,6 @@ As you would expect, multi-controlled $X$ gates are Hermitian.
   In this example, the quantum circuit consists of a sequence of Hermitian
   gates: the Hadamard ($H$), Pauli-Z ($Z$), and Pauli-X ($X$) gates. These
   gates satisfy the property:
-
   \[
     H = H^\dagger, \quad X = X^\dagger, \quad Z = Z^\dagger
   \]
@@ -342,7 +327,6 @@ As you would expect, multi-controlled $X$ gates are Hermitian.
 
   The circuit above first applies $H$, then $Z$, then $X$ twice (which
   cancels itself out), then $Z$ again, and finally $H$ again. This results in:
-
   \[
     H Z X X Z H = I
   \]
@@ -365,7 +349,6 @@ As you would expect, multi-controlled $X$ gates are Hermitian.
   Mathematically, if a quantum circuit is represented by a unitary matrix
   $U$, its reverse is represented by $U^{\dagger}$, and since quantum gates
   are unitary, they satisfy the property:
-
   \[
     U^{\dagger} U = U U^{\dagger} = I
   \]
@@ -379,7 +362,6 @@ As you would expect, multi-controlled $X$ gates are Hermitian.
 In classical computing, operations such as the AND gate lose information.
 For example, given the output of an AND gate, we cannot uniquely determine
 the original input:
-
 \[
   (0,0) \mapsto 0, \quad (0,1) \mapsto 0, \quad (1,0) \mapsto 0, \quad
   (1,1) \mapsto 1
@@ -442,7 +424,6 @@ reversible operations.
 
   In this example, the quantum circuit consists of a sequence of unitary
   gates: the Hadamard ($H$) and the Pauli-X ($X$) gates. These gates satisfy:
-
   \[
     H = H^\dagger, \quad X = X^\dagger
   \]
@@ -450,7 +431,6 @@ reversible operations.
   Since these gates are their own inverses (\textit{i.e.,} $H H = I$ and $X X
   = I$), if we apply the same sequence of gates in reverse order, they cancel
   out, leaving the identity operation:
-
   \[
     H X X H = I
   \]
@@ -476,14 +456,12 @@ information is conserved.
 
 \ex{Example of Reversing a Quantum Circuit}{
   Consider a circuit composed of gates $A$, $B$, and $C$:
-
   \[
     |\psi_{\text{final}}\rangle = CBA|\psi_{\text{initial}}\rangle.
   \]
 
   The reverse circuit applies $C^{\dagger}$, $B^{\dagger}$, and $A^{\dagger}$
   in reverse order:
-
   \[
     |\psi_{\text{reversed}}\rangle =
     A^{\dagger}B^{\dagger}C^{\dagger}|\psi_{\text{final}}\rangle =
@@ -504,7 +482,6 @@ information is conserved.
 
   Consider two qubits in states $\ket{\psi}$ and $\ket{0}$. The no-cloning
   theorem implies that there is no unitary operation $U$ such that:
-
   \[
     U(\ket{\psi} \otimes \ket{0}) = \ket{\psi} \otimes \ket{\psi}.
   \]
@@ -517,18 +494,15 @@ information is conserved.
   Assume a unitary operator $U$ exists that can clone an arbitrary quantum
   state $\ket{\psi}$. Then, for two different states $\ket{\psi}$ and
   $\ket{\phi}$, we would have:
-
   \[
     U(\ket{\psi} \otimes \ket{0}) = \ket{\psi} \otimes \ket{\psi},
   \]
-
   \[
     U(\ket{\phi} \otimes \ket{0}) = \ket{\phi} \otimes \ket{\phi}.
   \]
 
   Now, consider the superposition state $\ket{\xi} = a\ket{\psi} +
   b\ket{\phi}$. Applying $U$ to $\ket{\xi} \otimes \ket{0}$ should produce:
-
   \[
     U(\ket{\xi} \otimes \ket{0}) = aU(\ket{\psi} \otimes \ket{0}) +
     bU(\ket{\phi} \otimes \ket{0}) = a(\ket{\psi} \otimes \ket{\psi}) +
@@ -536,14 +510,12 @@ information is conserved.
   \]
 
   However, if $U$ could clone $\ket{\xi}$, the result should be:
-
   \[
     U(\ket{\xi} \otimes \ket{0}) = \ket{\xi} \otimes \ket{\xi} = (a\ket{\psi}
     + b\ket{\phi}) \otimes (a\ket{\psi} + b\ket{\phi}).
   \]
 
   Expanding this, we get:
-
   \[
     \ket{\xi} \otimes \ket{\xi} = a^2(\ket{\psi} \otimes \ket{\psi}) +
     ab(\ket{\psi} \otimes \ket{\phi}) + ab(\ket{\phi} \otimes \ket{\psi}) +

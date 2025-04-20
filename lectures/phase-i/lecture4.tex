@@ -10,7 +10,6 @@ representations.
   is given by:
 
   \index{qubit!superposition}
-
   \[
     |\psi\rangle = \alpha |0\rangle + \beta |1\rangle, \quad \text{where }
     \alpha, \beta \in \mathbb{C} \text{ and } |\alpha|^2 + |\beta|^2 = 1.
@@ -22,7 +21,6 @@ representations.
 
 When a qubit is measured in the computational basis $\{|0\rangle,
 |1\rangle\}$, it collapses to one of the basis states with probability:
-
 \[
   \boxed{
     P(0) = \norm{\alpha_1}^2, \quad P(1) = \norm{\alpha_2}^2.
@@ -30,7 +28,6 @@ When a qubit is measured in the computational basis $\{|0\rangle,
 \]
 
 The post-measurement state is:
-
 \[
   \boxed{
     |\psi_{\text{measurement}}\rangle = \frac{|b\rangle \langle b | \psi
@@ -47,7 +44,6 @@ postulate and ensures proper normalization of the post-measurement state.
 In the computational basis, the probability of measuring $|b\rangle$ is:
 
 \index{universal bases!computational!measurement}
-
 \[
   \boxed{
     P(b) = \norm{\langle b | \psi \rangle}^2
@@ -70,7 +66,6 @@ In the computational basis, the probability of measuring $|b\rangle$ is:
 
 \textbf{Quantum gates} are unitary matrices that transform qubits. A general
 qubit transformation is given by:
-
 \[
   |\psi_{\text{final}}\rangle = U |\psi_{\text{initial}}\rangle
 \]
@@ -213,7 +208,6 @@ quantum circuits, consider using the \texttt{quantikz} package in \LaTeX:
 
 \ex{Example: Complex Circuit Analysis}{Consider the circuit applying the
   sequence $HZH$ to $|0\rangle$:
-
   \[
     \begin{aligned}
       |\psi_1\rangle &= H|0\rangle = \frac{1}{\sqrt{2}}(|0\rangle +
@@ -228,7 +222,6 @@ quantum circuits, consider using the \texttt{quantikz} package in \LaTeX:
 
   This sequence performs a NOT operation on $|0\rangle$ using only Hadamard and
   Phase-flip gates.
-
   \[
     \begin{quantikz}
       \lstick{$|0\rangle$} & \gate{H} & \gate{Z} & \gate{H} & \one \\
@@ -237,7 +230,6 @@ quantum circuits, consider using the \texttt{quantikz} package in \LaTeX:
 }
 
 \ex{Another Circuit Example}{
-
   \[
     \begin{aligned}
       XY \zero & = X \begin{bmatrix} 0 & -i \\ i & 0 \end{bmatrix} \begin{bmatrix} 1 \\ 0 \end{bmatrix}\\
@@ -247,7 +239,6 @@ quantum circuits, consider using the \texttt{quantikz} package in \LaTeX:
       & = \begin{bmatrix} i \\ 0 \end{bmatrix} = i \one
     \end{aligned}
   \]
-
   \[
     \begin{quantikz}
       \lstick{$\zero$} & \gate{Y} & \gate{X} & i \zero \\

@@ -19,7 +19,6 @@ to SAT}\label{sec:lecture10}
   possible $2^n$ states, allowing Grover's algorithm to explore all bitstring
   permutations simultaneously. For $n$ qubits starting at $|0\rangle^{\otimes
   n}$, applying $H^{\otimes n}$ yields:
-
   \[
     |s\rangle = H^{\otimes n} |0\rangle^{\otimes n} = \frac{1}{\sqrt{2^n}}
     \sum_{x \in \{0,1\}^n} |x\rangle.
@@ -38,7 +37,6 @@ to SAT}\label{sec:lecture10}
 
 The quantum OR gate computes $c = a \lor b$ using a combination of CNOT and
 Toffoli gates. Below is the two-way OR implementation:
-
 \[
   \begin{quantikz}
     \lstick{$|a\rangle$} & \ctrl{1} & \ctrl{2} & \qw \\
@@ -69,7 +67,6 @@ b$).
 
 A NOR gate ($c = \neg (a \lor b)$) can be implemented by adding an $X$ gate
 on the output qubit after the OR circuit:
-
 \[
   \begin{quantikz}
     \lstick{$|a\rangle$} & \ctrl{1} & \ctrl{2} & \qw \\
@@ -95,7 +92,6 @@ on the output qubit after the OR circuit:
 \subsubsection*{AND Gate}
 
 An AND gate ($c = a \land b$) is directly implemented with a Toffoli gate:
-
 \[
   \begin{quantikz}
     \lstick{$| a \rangle$} & \ctrl{1} & \qw \\
@@ -119,7 +115,6 @@ An AND gate ($c = a \land b$) is directly implemented with a Toffoli gate:
 \index{quantum gates!NAND gate}
 \subsubsection*{NAND Gate}
 A NAND gate ($c = \neg (a \land b)$) adds an $X$ gate after the AND:
-
 \[
   \begin{quantikz}
     \lstick{$|a\rangle$} & \ctrl{1} & \qw \\
@@ -150,7 +145,6 @@ A NAND gate ($c = \neg (a \land b)$) adds an $X$ gate after the AND:
   the target qubit to the control qubit(s). In Grover's algorithm, the oracle
   uses this to mark solution states. Consider a simple example with a
   controlled-$X$ and phase:
-
   \[
     \begin{quantikz}
       \lstick{$|+\rangle$} & \ctrl{1} & \qw \\
@@ -163,7 +157,6 @@ A NAND gate ($c = \neg (a \land b)$) adds an $X$ gate after the AND:
   \frac{1}{2}(|00\rangle - |01\rangle + |10\rangle - |11\rangle)$.
 
   After CNOT:
-
   \[
     \frac{1}{2}(|00\rangle - |01\rangle + |11\rangle - |10\rangle) =
     \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle) \otimes \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle) =

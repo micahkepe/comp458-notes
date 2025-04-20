@@ -57,7 +57,6 @@ decomposes into three CX gates, amplifying the importance of efficient mapping.
 
   Consider a simple logical circuit with a single CNOT gate between two qubits,
   q0 and q1:
-
   \[
     \begin{quantikz}
       \qw & \ctrl{1} & \qw \\
@@ -73,7 +72,6 @@ decomposes into three CX gates, amplifying the importance of efficient mapping.
 
   Map q0 to p0 and q1 to p1, where p0 and p1 are adjacent. The physical circuit
   remains:
-
   \[
     \begin{quantikz}
       \lstick{p0 (q0)} & \ctrl{1} & \qw \\
@@ -98,7 +96,6 @@ decomposes into three CX gates, amplifying the importance of efficient mapping.
   \end{enumerate}
 
   The physical circuit becomes:
-
   \[
     \begin{quantikz}
       \lstick{p0 (q0)} & \qw & \qw & \ctrl{1} & \qw & \qw \\
@@ -155,7 +152,6 @@ Heavy-hex Architecture} for mapping optimization techniques.}
 \ex{Larger Circuit Mapping Example}{
 
   Consider a three-qubit logical circuit:
-
   \[
     \begin{quantikz}
       \lstick{q0} & \ctrl{1} & \qw & \ctrl{2} & \qw \\
@@ -167,7 +163,6 @@ Heavy-hex Architecture} for mapping optimization techniques.}
 
   On a heavy-hex segment (p0-p1-p2), an optimal mapping (q0 to p0, q1 to p1, q2
   to p2) executes the first two gates directly but requires a SWAP for CX q0 q2:
-
   \[
     \begin{quantikz}
       \lstick{p0 (q0)} & \ctrl{1} & \qw & \qw & \ctrl{1} & \qw \\

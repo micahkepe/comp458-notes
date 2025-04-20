@@ -6,7 +6,6 @@
 \qs{Quantum Circuit Final State}{
   Given this circuit diagram and assuming an initial state $\ket{\psi_i}
   =\ket{00}$, what will the final state $\ket{\psi_f}$ measure?
-
   \[
     \begin{quantikz}
       q_1 \quad \lstick{$\zero$} & \ctrl{0} & \gate{X} & \ctrl{1} & \swap{1}
@@ -80,7 +79,6 @@ The Bell-Pair circuit is the most analogous thing to quantum computing's
 \texttt{Hello, world!} program. It prepares a maximally entangled two-qubit
 state (a Bell state).
 
-
 \[
   \begin{quantikz}
     q_1 \quad \lstick{$\zero$} & \gate{H} & \ctrl{1} & \meter{} \\
@@ -92,19 +90,16 @@ state (a Bell state).
 \index{entanglement!proof@\textit{proof}}
 \begin{proof}{\textbf{Showing Full Entanglement Mathematically}}
   Starting with the initial state:
-
   \[
     \ket{\psi_0} = \ket{0}_1 \otimes \ket{0}_0 = \ket{00},
   \]
 
   we first apply a Hadamard gate on qubit \(q_1\):
-
   \[
     H\ket{0} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}).
   \]
 
   Thus, the state after the Hadamard becomes:
-
   \[
     (H \otimes I)\ket{00} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) \otimes
     \ket{0} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{10}).
@@ -112,13 +107,11 @@ state (a Bell state).
 
   Next, we apply the CNOT gate with qubit \(q_1\) as the control and qubit
   \(q_0\) as the target. The CNOT gate acts as follows:
-
   \[
     \text{CNOT}\,\ket{00} = \ket{00}, \quad \text{CNOT}\,\ket{10} = \ket{11}.
   \]
 
   Thus, the final state after the CNOT is:
-
   \[
     \boxed{
       \ket{\psi_{\text{Bell}}} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11}).
@@ -140,7 +133,6 @@ state (a Bell state).
 \begin{enumerate}
   \item Entangled circuits cannot be expressed as a product state. For
     example, the Bell state
-
     \[
       \ket{\psi_{\text{Bell}}} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})
     \]
@@ -162,7 +154,6 @@ The Bell state can be generalized to an \(n\)-qubit system, often taking the
 form of a Greenberger–Horne–Zeilinger (GHZ) state:
 
 \index{entanglement!GHZ state}
-
 \[
   \begin{quantikz}
     q_{n - 1}\quad \lstick{$\zero$} & \gate{H} & \ctrl{1} & \qw & \qw & \qw \\
@@ -189,7 +180,6 @@ form of a Greenberger–Horne–Zeilinger (GHZ) state:
 \end{enumerate}
 
 The resulting state:
-
 \[
   \boxed{
     \ket{\psi_f} = \frac{1}{\sqrt{2}}\lt(\ket{00\cdots 00} +
@@ -210,7 +200,6 @@ match the measured value.
 }
 
 \ex{Alternative $n$-Qubit Bell Circuit}{
-
   \[
     \begin{quantikz}
       q_{n-1} \quad \lstick{$\zero$} & \gate{H} & \ctrl{1} & \ctrl{2} &
@@ -256,7 +245,6 @@ match the measured value.
 
 There also exists the middle ground of partially-entangled systems where only
 some of the qubits are entangled while others have independent states.
-
 \[
   \begin{quantikz}
     q_2 \quad \lstick{$\zero$} & \gate{H} & \qw & \qw \\
@@ -268,7 +256,6 @@ some of the qubits are entangled while others have independent states.
 In this case, \(q_1\) and \(q_0\) become entangled through the CNOT gate,
 while \(q_2\) remains in a superposition state but independent of the other
 qubits. The final state is:
-
 \[
   \ket{\psi_f} = \frac{1}{\sqrt{2}}\ket{+}_2 \otimes
   \frac{1}{\sqrt{2}}(\ket{00}_{10} + \ket{11}_{10})

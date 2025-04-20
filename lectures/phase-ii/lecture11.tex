@@ -103,7 +103,6 @@ Algebraic Normal Form (ANF) reduces this to $O(1)$ ancilla—typically one—by
 expressing the SAT problem as a single XOR polynomial.
 
 \textbf{CNF (Lecture 10):}
-
 \[
   (\neg A \lor \neg C) \land (\neg A \lor J \lor P) \land (\neg C \lor \neg
   J) \land (\neg C \lor \neg P) \land J \land (J \lor \neg P)
@@ -122,7 +121,6 @@ anf = ANFform([P, J, C, A], truth_table)  # Output: J XOR C J
 \textbf{Resulting ANF:} $f = J \oplus C J$ (simplified form from truth table).
 
 \textbf{Truth Table Verification:}
-
 \[
   \begin{array}{cccc|c}
     P & J & C & A & f \\
