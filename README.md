@@ -6,7 +6,7 @@ The latest version of these notes is available at [micahkepe.com/comp458-notes](
 
 This repository is meant as an educational resource and collaboration space
 for reinforcing the concepts learned in the course. The notes are written fully
-in $\LaTeX$.
+in $\text\LaTeX$.
 
 > [!IMPORTANT]
 > These notes are a work-in-progress and will undergo updates and revisions
